@@ -1,23 +1,102 @@
-# Frontend de SportifyClub
+# Frontend - SportifyClub
 
-Aplicación React (Vite) que proporciona la interfaz gráfica para reservar pistas deportivas.
+## Descripción
+Interfaz de usuario desarrollada con React y Vite para la plataforma de reservas de pistas deportivas.
 
-## Estructura principal
+## Tecnologías
+- React 18
+- Vite
+- Tailwind CSS
+- Axios para API calls
+- React Router para navegación
+- Context API + useReducer para estado
+- Hooks personalizados avanzados
+
+## Instalación
+
+```bash
+cd frontend/sportifyclub-frontend
+npm install
+```
+
+## Configuración
+Crear archivo `.env` basado en `.env.example`:
+
+```env
+VITE_API_URL=http://localhost:4000/api
+```
+
+## Uso
+
+### Desarrollo
+```bash
+npm run dev  # Inicia servidor de desarrollo en http://localhost:5173
+```
+
+### Build
+```bash
+npm run build  # Genera build de producción
+```
+
+### Preview
+```bash
+npm run preview  # Vista previa del build
+```
+
+## Estructura del Código
 
 ```
-frontend/sportifyclub-frontend/
-  src/
-    api/         - configuración de Axios (interceptores, baseURL)
-    components/  - componentes reutilizables (CardPista, Navbar, Footer)
-    context/     - Context API para autenticación y reservas
-    hooks/       - hooks personalizados (useAuth, useFetch, useFormValidation, etc.)
-    pages/       - páginas principales (Home, Pistas, Login, Register, Admin, etc.)
-    reducers/    - lógica de estado con useReducer
-    styles/      - CSS del proyecto (variables, componentes, páginas)
-    assets/      - imágenes y recursos
-    main.jsx     - entrada de la aplicación
-    App.jsx      - componente raíz con rutas
-  index.html  - HTML base
+src/
+├── api/              # Configuración de Axios
+├── components/       # Componentes reutilizables
+├── context/          # Context API (Auth, Reserva)
+├── hooks/            # Hooks personalizados avanzados
+├── pages/            # Páginas de la aplicación
+├── reducers/         # Reducers para estado complejo
+├── styles/           # CSS modular con variables
+├── assets/           # Recursos estáticos
+├── App.jsx           # Componente raíz con rutas
+└── main.jsx          # Punto de entrada
+```
+
+## Funcionalidades Clave
+
+### Hooks Avanzados
+- `useAuth`: Gestión de autenticación
+- `useFetch`: Fetching de datos con loading/error
+- `useFormValidation`: Validación de formularios
+- `useDebounce`: Optimización de búsquedas
+- `useModal`: Gestión de modales
+- `useReservaValidation`: Validación específica de reservas
+
+### Componentización
+- Componentes modulares y reutilizables
+- Separación clara de responsabilidades
+- Props drilling minimizado con Context
+
+### Estilos
+- Variables CSS globales para colores, spacings, etc.
+- CSS modular por componente
+- Diseño responsive
+- Tema deportivo con colores Barça
+
+## Rutas Principales
+- `/`: Home
+- `/pistas`: Catálogo de pistas
+- `/pistas/:id`: Detalle de pista
+- `/login`: Login
+- `/register`: Registro
+- `/perfil`: Perfil de usuario
+- `/mis-reservas`: Reservas del usuario
+- `/admin`: Panel de administración
+- `/club`: Panel de club
+
+## UX/UI
+- Diseño intuitivo y responsive
+- Navegación clara con Navbar y Footer
+- Formularios validados con feedback visual
+- Estados de loading y error
+- Iconos de Lucide React
   vite.config.js - configuración de Vite
 ```
 

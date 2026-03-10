@@ -637,9 +637,9 @@ sportifyclub/
 
 ## 📚 Documentación Adicional
 
-- [Backend Seed README](backend/src/seed/README.md) - Detalles sobre el seeding de datos
-- [Modelos de Base de Datos](backend/MODELOS_BASE_DATOS.md) - Esquemas detallados de MongoDB
-- [Diagrama de Relaciones](backend/DIAGRAMA_RELACIONES.md) - Relaciones entre colecciones y queries
+- [Backend Seed README](../backend/src/seed/README.md) - Detalles sobre el seeding de datos
+- [Modelos de Base de Datos](../backend/MODELOS_BASE_DATOS.md) - Esquemas detallados de MongoDB
+- [Diagrama de Relaciones](../backend/DIAGRAMA_RELACIONES.md) - Relaciones entre colecciones y queries
 
 ---
 

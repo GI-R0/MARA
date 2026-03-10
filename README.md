@@ -9,27 +9,6 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-7+-green)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
----
-
-## 📋 Tabla de Contenidos
-
-- [¿Qué es SportifyClub?](#-qué-es-sportifyclub)
-- [Arquitectura General](#-arquitectura-general)
-- [Tecnologías](#-tecnologías)
-- [Instalación y Configuración](#-instalación-y-configuración)
-- [Modelos de Datos](#-modelos-de-datos)
-- [API REST](#-api-rest)
-- [Autenticación y Roles](#-autenticación-y-roles)
-- [Flujo de la Aplicación](#-flujo-de-la-aplicación)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Decisiones Técnicas](#-decisiones-técnicas)
-- [Testing y Debugging](#-testing-y-debugging)
-- [Despliegue](#-despliegue)
-- [Contribución](#-contribución)
-- [Licencia](#-licencia)
-
----
-
 ## 🎯 ¿Qué es SportifyClub?
 
 SportifyClub es una **plataforma web completa** para la reserva de instalaciones deportivas. Similar a Booking.com pero especializado en pistas deportivas (pádel, tenis, fútbol, baloncesto, etc.).
@@ -48,6 +27,74 @@ SportifyClub es una **plataforma web completa** para la reserva de instalaciones
 - **📊 Dashboards**: Estadísticas para clubs y administradores
 - **🖼️ Gestión de Imágenes**: Upload de fotos de pistas (Cloudinary)
 - **🔒 Seguridad**: JWT, rate limiting, validaciones completas
+
+## 🚀 Inicio Rápido
+
+### Prerrequisitos
+- Node.js 18+
+- MongoDB 7+
+- npm o yarn
+
+### Instalación
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/GI-R0/SPORTS.git
+   cd sportifyclub
+   ```
+
+2. **Backend**
+   ```bash
+   cd backend
+   npm install
+   # Configurar .env (ver .env.example)
+   npm run seed  # Para cargar datos iniciales
+   npm run dev
+   ```
+
+3. **Frontend**
+   ```bash
+   cd ../frontend/sportifyclub-frontend
+   npm install
+   # Configurar .env (ver .env.example)
+   npm run dev
+   ```
+
+### Acceso
+- **Frontend**: http://localhost:5173
+- **Backend**: http://localhost:4000
+- **Admin**: admin@sportify.com / admin123
+
+## 📁 Estructura del Proyecto
+
+```
+sportifyclub/
+├── backend/          # 🖥️ API REST (Node.js + Express)
+├── frontend/         # 🌐 Interfaz React
+├── docs/             # 📚 Documentación completa
+├── QUICK_START.txt   # Inicio rápido
+└── CHECKLIST_ENTREGA.txt  # Checklist de entrega
+```
+
+## 📚 Documentación
+
+- [Documentación Completa](docs/README_COMPLETO.md) - Detalles técnicos, arquitectura, API
+- [Backend](backend/README.md) - Configuración y uso del backend
+- [Frontend](frontend/README.md) - Configuración y uso del frontend
+
+## 🛠️ Tecnologías
+
+- **Backend**: Node.js, Express, MongoDB, JWT, Cloudinary
+- **Frontend**: React, Vite, Tailwind CSS, Axios
+- **Herramientas**: Faker.js para datos de prueba, ESLint
+
+## 📧 Contacto
+
+Para soporte o preguntas: [Tu email]
+
+## 📄 Licencia
+
+MIT License - ver [LICENSE](LICENSE) para más detalles.
 - **📱 Responsive**: Diseño móvil-first
 
 ---
