@@ -30,17 +30,25 @@
   --font-md: 1rem;
   --font-lg: 1.125rem;
   --font-xl: 1.5rem;
+  --form-max-width: 32rem; /* ancho máximo común para formularios */
 }
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #0a0e27 100%);
+  background: linear-gradient(135deg, var(--background-color) 0%, var(--barca-dark) 50%, var(--background-color) 100%);
   color: var(--font-color);
   line-height: 1.6;
   position: relative;
   overflow-x: hidden;
+}
+
+/* global placeholder color for form inputs */
+input::placeholder,
+textarea::placeholder {
+  color: var(--gray-600);
+  opacity: 1;
 }
 
 body::before {
@@ -166,14 +174,14 @@ body::after {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--barca-gold) 0%, #ffc700 100%);
+  background: linear-gradient(135deg, var(--barca-gold) 0%, var(--barca-gold) 100%);
   color: var(--barca-dark);
   font-weight: 700;
   box-shadow: 0 4px 15px rgba(237, 187, 0, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #ffc700 0%, var(--barca-gold) 100%);
+  background: linear-gradient(135deg, var(--barca-gold) 0%, var(--barca-gold) 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(237, 187, 0, 0.4);
 }

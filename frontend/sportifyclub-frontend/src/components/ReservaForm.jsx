@@ -21,68 +21,131 @@ export default function ReservaForm({
 
   const today = new Date().toISOString().split("T")[0];
 
+  // Validar formato de hora (HH:MM)
+  const validateHourFormat = (hourString) => {
+    return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(hourString);
+  };
+
+  // Validar que la hora esté en los horarios disponibles
+  const isHourAvailable = (selectedHour) => {
+    return availableTimes.includes(selectedHour);
+  };
+
+  // Validar duración
+  const isValidDuration = (dur) => {
+    const durNum = Number(dur);
+    return durNum >= 1 && durNum <= 3;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
+    // Validar si el usuario está autenticado
     if (!user) {
       setError("Tienes que iniciar sesión para reservar");
       setTimeout(() => navigate("/login"), 1500);
       return;
     }
 
-    const fechaSeleccionada = new Date(date);
-    const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-
-    if (fechaSeleccionada < hoy) {
-      setError("No puedes reservar en fechas pasadas");
+    // Validar campos requeridos
+    if (!date || !hour || !duracion) {
+      setError("Por favor completa todos los campos requeridos");
       return;
     }
 
-    if (!hour) {
-      setError("Por favor selecciona una hora");
+    // Validar formato de fecha
+    const fechaSeleccionada = new Date(date);
+    if (isNaN(fechaSeleccionada.getTime())) {
+      setError("Fecha inválida. Por favor selecciona una fecha válida");
+      return;
+    }
+
+    // Validar que no sea fecha pasada
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    if (fechaSeleccionada < hoy) {
+      setError("No puedes hacer reservas en fechas pasadas");
+      return;
+    }
+
+    // Validar formato de hora
+    if (!validateHourFormat(hour)) {
+      setError("Formato de hora inválido. Usa HH:MM");
+      return;
+    }
+
+    // Validar que la hora esté disponible
+    if (!isHourAvailable(hour)) {
+      setError("La hora seleccionada no está disponible");
+      return;
+    }
+
+    // Validar duración
+    if (!isValidDuration(duracion)) {
+      setError("La duración debe ser entre 1 y 3 horas");
+      return;
+    }
+
+    // Validar precio
+    if (precioHora <= 0) {
+      setError("Error: precio de la pista no válido");
       return;
     }
 
     setLoading(true);
 
     try {
-      await API.post("/reservas", {
+      const response = await API.post("/reservas", {
         usuario: user._id,
         pista: pistaId,
         fecha: date,
         hora: hour,
-        duracion: duracion,
+        duracion: Number(duracion),
       });
 
-      setSuccess(
-        `¡Reserva confirmada para el ${date} a las ${hour} h (${duracion}h)!`
-      );
-      setDate("");
-      setHour("");
-      setDuracion(1);
+      if (response.status === 201) {
+        setSuccess(
+          `¡Reserva confirmada para el ${date} a las ${hour} h (${duracion}h)!`
+        );
+        // Limpiar formulario
+        setDate("");
+        setHour("");
+        setDuracion(1);
+        
+        // Redirigir después de 2 segundos
+        setTimeout(() => navigate("/mis-reservas"), 2000);
+      }
     } catch (err) {
       const mensaje =
-        err.response?.data?.msg || "No se pudo completar la reserva";
+        err.response?.data?.msg || 
+        err.response?.data?.message ||
+        err.message ||
+        "No se pudo completar la reserva. Intenta nuevamente";
+      
       setError(mensaje);
+      console.error("Error en reserva:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const total = precioHora * duracion;
+  const total = precioHora > 0 ? (precioHora * duracion).toFixed(2) : 0;
+  const hasAvailableTimes = availableTimes && availableTimes.length > 0;
 
   return (
     <form onSubmit={handleSubmit} className="reserva-form">
-      {success && <div className="reserva-success">{success}</div>}
+      {success && <div className="reserva-success">✓ {success}</div>}
 
-      {error && <div className="reserva-error">{error}</div>}
+      {error && <div className="reserva-error">✕ {error}</div>}
 
       <div className="reserva-field">
-        <label className="reserva-label">Fecha de la reserva</label>
+        <label htmlFor="fecha" className="reserva-label">
+          Fecha de la reserva *
+        </label>
         <input
+          id="fecha"
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
@@ -90,39 +153,50 @@ export default function ReservaForm({
           required
           disabled={loading}
           className="reserva-input"
+          aria-label="Fecha de la reserva"
         />
       </div>
 
       <div className="reserva-field">
-        <label className="reserva-label">Hora disponible</label>
-        <select
-          value={hour}
-          onChange={(e) => setHour(e.target.value)}
-          required
-          disabled={loading || availableTimes.length === 0}
-          className="reserva-select"
-        >
-          <option value="">Selecciona una hora</option>
-          {availableTimes.length === 0 ? (
-            <option disabled>No hay horarios disponibles</option>
-          ) : (
-            availableTimes.map((h) => (
+        <label htmlFor="hora" className="reserva-label">
+          Hora disponible *
+        </label>
+        {!hasAvailableTimes ? (
+          <div className="reserva-no-available">
+            No hay horarios disponibles para esta pista
+          </div>
+        ) : (
+          <select
+            id="hora"
+            value={hour}
+            onChange={(e) => setHour(e.target.value)}
+            required
+            disabled={loading || !hasAvailableTimes}
+            className="reserva-select"
+            aria-label="Hora disponible"
+          >
+            <option value="">Selecciona una hora</option>
+            {availableTimes.map((h) => (
               <option key={h} value={h}>
-                {h}
+                {h} hs
               </option>
-            ))
-          )}
-        </select>
+            ))}
+          </select>
+        )}
       </div>
 
       <div className="reserva-field">
-        <label className="reserva-label">Duración (horas)</label>
+        <label htmlFor="duracion" className="reserva-label">
+          Duración (horas) *
+        </label>
         <select
+          id="duracion"
           value={duracion}
           onChange={(e) => setDuracion(Number(e.target.value))}
           required
           disabled={loading}
           className="reserva-select"
+          aria-label="Duración en horas"
         >
           <option value={1}>1 hora</option>
           <option value={2}>2 horas</option>
@@ -133,22 +207,38 @@ export default function ReservaForm({
       {precioHora > 0 && (
         <div className="reserva-summary">
           <div className="summary-row">
-            <span className="summary-label">Precio Total:</span>
-            <span className="summary-total">{total.toFixed(2)}€</span>
+            <span className="summary-label">Precio por hora:</span>
+            <span className="summary-price">{precioHora.toFixed(2)}€</span>
           </div>
-          <p className="summary-detail">
-            {precioHora}€/hora × {duracion} hora{duracion > 1 ? "s" : ""}
-          </p>
+          <div className="summary-row">
+            <span className="summary-label">Duración:</span>
+            <span className="summary-price">{duracion}h</span>
+          </div>
+          <div className="summary-row summary-total-row">
+            <span className="summary-label">Total:</span>
+            <span className="summary-total">{total}€</span>
+          </div>
         </div>
       )}
 
       <button
         type="submit"
-        disabled={loading || !date || !hour}
+        disabled={loading || !date || !hour || !hasAvailableTimes}
         className="btn-reservar"
       >
-        {loading ? "Reservando..." : "Confirmar Reserva"}
+        {loading ? (
+          <>
+            <span className="spinner"></span>
+            Reservando...
+          </>
+        ) : (
+          "Confirmar Reserva"
+        )}
       </button>
+
+      <p className="reserva-help-text">
+        * Campos obligatorios. Asegúrate de seleccionar fecha, hora y duración correctas.
+      </p>
     </form>
   );
 }

@@ -86,13 +86,13 @@ export default function ClubPanel() {
         </div>
 
         <div className="actions-grid">
-          <Link to="/admin/pistas" className="action-card">
+          <Link to="/club/pistas" className="action-card">
             <span className="action-icon">🎾</span>
             <h3 className="action-title">Gestionar Pistas</h3>
             <p className="action-desc">Añadir, editar o eliminar pistas</p>
           </Link>
 
-          <Link to="/admin/reservas" className="action-card green">
+          <Link to="/mis-reservas" className="action-card green">
             <span className="action-icon">📅</span>
             <h3 className="action-title">Ver Reservas</h3>
             <p className="action-desc">Control total de horarios</p>

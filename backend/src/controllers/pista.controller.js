@@ -71,6 +71,9 @@ export const getEstadisticasClub = async (req, res) => {
     }).select("total");
 
     const ingresosMes = reservasMes.reduce((sum, r) => sum + (r.total || 0), 0);
+    
+    // Calcular valoración promedio (por ahora 4.8 como default, puede mejorarse con rating real)
+    // TODO: Implementar sistema de ratings en modelo Pista
     const valoracion = 4.8;
 
     res.json({
@@ -96,34 +99,51 @@ export const createPista = async (req, res) => {
       club: req.user._id,
     });
     const saved = await pista.save();
-    res.status(201).json(saved);
+    const populated = await Pista.findById(saved._id).populate("club", "name email");
+    res.status(201).json(populated);
   } catch (err) {
-    res.status(400).json({ msg: "Error al crear pista" });
+    console.error("[ERROR] Creating pista:", err.message);
+    res.status(400).json({ msg: "Error al crear pista", error: err.message });
   }
 };
 
 export const updatePista = async (req, res) => {
   try {
-    const pista = await Pista.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    })
-      .populate("club", "name")
-      .lean();
+    const pista = await Pista.findById(req.params.id);
 
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
-    res.json(pista);
+
+    // Verificar que el usuario es el dueño de la pista (club)
+    if (pista.club.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ msg: "No tienes permiso para actualizar esta pista" });
+    }
+
+    const updated = await Pista.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    }).populate("club", "name email");
+
+    res.json(updated);
   } catch (err) {
-    res.status(400).json({ msg: "Error actualizando pista" });
+    console.error("[ERROR] Updating pista:", err.message);
+    res.status(400).json({ msg: "Error actualizando pista", error: err.message });
   }
 };
 
 export const deletePista = async (req, res) => {
   try {
-    const pista = await Pista.findByIdAndDelete(req.params.id);
+    const pista = await Pista.findById(req.params.id);
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
+
+    // Verificar que el usuario es el dueño de la pista (club)
+    if (pista.club.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ msg: "No tienes permiso para eliminar esta pista" });
+    }
+
+    await Pista.findByIdAndDelete(req.params.id);
     res.json({ msg: "Pista eliminada correctamente" });
   } catch (err) {
-    res.status(500).json({ msg: "Error al eliminar pista" });
+    console.error("[ERROR] Deleting pista:", err.message);
+    res.status(500).json({ msg: "Error al eliminar pista", error: err.message });
   }
 };

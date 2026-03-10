@@ -75,7 +75,7 @@ SportifyClub es una **plataforma web completa** para la reserva de instalaciones
          │  │  🎮 Controladores: lógica de negocio      │    │
          │  │  ✅ Validadores: express-validator        │    │
          │  │  🛡️ Middlewares: auth, rate limiting     │    │
-         └─────────────────────────────────────────┘    │
+         │  └─────────────────────────────────────────┘    │
          └─────────────────────┬────────────────────────────┘
                                │ MongoDB Driver
                                │
@@ -558,7 +558,7 @@ sportifyclub/
 ├── 📄 QUICK_START.txt             # Inicio rápido
 ├── 📄 CHECKLIST_ENTREGA.txt       # Checklist de entrega
 ├── 📄 CORREO_ENTREGA.txt          # Instrucciones de entrega
-├── 📄 RESUM_ENTREGA.txt         # Resumen del proyecto
+├── 📄 RESUMEN_ENTREGA.txt         # Resumen del proyecto
 │
 ├── backend/                       # 🖥️ API REST
 │   ├── 📄 package.json
@@ -632,6 +632,14 @@ sportifyclub/
     └── scripts/                # 🔧 Utilidades frontend
         └── 📄 fetchPistas.js
 ```
+
+---
+
+## 📚 Documentación Adicional
+
+- [Backend Seed README](backend/src/seed/README.md) - Detalles sobre el seeding de datos
+- [Modelos de Base de Datos](backend/MODELOS_BASE_DATOS.md) - Esquemas detallados de MongoDB
+- [Diagrama de Relaciones](backend/DIAGRAMA_RELACIONES.md) - Relaciones entre colecciones y queries
 
 ---
 
@@ -876,5 +884,3 @@ _**SportifyClub** - Hecho con ❤️ para amantes del deporte y la tecnología_
 ---
 
 *Última actualización: Marzo 2026*
-
-

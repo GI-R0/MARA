@@ -107,7 +107,7 @@ export default function Perfil() {
         </div>
 
         <p className="perfil-footer">
-          SportifyClub © 2025 • Tu plataforma de reservas deportivas
+          SportifyClub © {new Date().getFullYear()} • Tu plataforma de reservas deportivas
         </p>
       </div>
     </div>

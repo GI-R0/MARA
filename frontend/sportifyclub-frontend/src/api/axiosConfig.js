@@ -18,7 +18,12 @@ API.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
       delete API.defaults.headers.common["Authorization"];
-      window.location.href = "/login";
+      // Redirigir solo si no estamos ya en login
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    } else if (error.response?.status === 403) {
+      console.warn("Acceso denegado (403):", error.response.data.msg);
     }
     return Promise.reject(error);
   }

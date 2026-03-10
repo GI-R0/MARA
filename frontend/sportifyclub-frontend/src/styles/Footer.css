@@ -1,9 +1,9 @@
 .footer {
   position: relative;
-  background: linear-gradient(135deg, var(--barca-dark) 0%, #0a0e27 100%);
+  background: linear-gradient(135deg, var(--barca-dark) 0%, var(--background-color) 100%);
   color: var(--font-color);
-  padding: 4rem 0 2rem;
-  margin-top: 4rem;
+  padding: var(--spacing-xl) 0 var(--spacing-lg);
+  margin-top: var(--spacing-xl);
   overflow: hidden;
 }
 
@@ -38,9 +38,9 @@
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
   border-bottom: 1px solid rgba(237, 187, 0, 0.2);
 }
 
@@ -72,10 +72,12 @@
 }
 
 .footer-text {
-  color: var(--gray-600);
+  /* texto principal del footer debe ser claro sobre fondo oscuro */
+  color: var(--font-color);
   line-height: 1.6;
   max-width: 300px;
 }
+
 
 .footer-heading {
   font-size: 1.125rem;
@@ -96,17 +98,19 @@
 }
 
 .footer-links li {
-  color: var(--gray-600);
+  color: var(--font-color);
   transition: color 0.3s, transform 0.3s;
   cursor: pointer;
 }
 
+
 .footer-links a {
-  color: var(--gray-600);
+  color: var(--font-color);
   text-decoration: none;
   transition: color 0.3s, transform 0.3s;
   display: inline-block;
 }
+
 
 .footer-links li:hover,
 .footer-links a:hover {
@@ -120,10 +124,11 @@
 }
 
 .footer-bottom p {
-  color: var(--gray-600);
+  color: var(--font-color);
   font-size: 0.875rem;
   margin: 0;
 }
+
 
 @media (max-width: 640px) {
   .footer {

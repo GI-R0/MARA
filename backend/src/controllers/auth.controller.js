@@ -9,16 +9,17 @@ export const register = async (req, res) => {
   }
 
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     const userExist = await User.findOne({ email: email.toLowerCase().trim() });
     if (userExist)
-      return res.status(400).json({ msg: "Este correo ya está registrado" });
+      return res.status(409).json({ msg: "Este correo ya está registrado" });
 
     const user = await User.create({
       name: name.trim(),
       email: email.toLowerCase().trim(),
       password,
+      role: role && ["user", "club", "admin"].includes(role) ? role : "user",
     });
 
     const token = jwt.sign(
@@ -27,14 +28,15 @@ export const register = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    const { password: _, ...userWithoutPass } = user.toObject();
+    const userResponse = user.toJSON();
     res.status(201).json({
       msg: "Registro completado con éxito",
       token,
-      user: userWithoutPass,
+      user: userResponse,
     });
   } catch (err) {
-    res.status(500).json({ msg: "Error al registrar usuario" });
+    console.error("[ERROR] Registering user:", err.message);
+    res.status(500).json({ msg: "Error al registrar usuario", error: err.message });
   }
 };
 
@@ -61,10 +63,11 @@ export const login = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    const { password: _, ...userWithoutPass } = user.toObject();
-    res.json({ token, user: userWithoutPass });
+    const userResponse = user.toJSON();
+    res.json({ token, user: userResponse });
   } catch (err) {
-    res.status(500).json({ msg: "Error del servidor" });
+    console.error("[ERROR] Login:", err.message);
+    res.status(500).json({ msg: "Error del servidor", error: err.message });
   }
 };
 

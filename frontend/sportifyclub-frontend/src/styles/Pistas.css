@@ -10,12 +10,14 @@
 .pistas-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #111827;
-  margin-bottom: 1rem;
+  /* uso de color con contraste WCAG y sombra para destacarse */
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--spacing-lg);
 }
 .pistas-subtitle {
   font-size: 1.25rem;
-  color: #4b5563;
+  color: var(--gray-600);
   max-width: 42rem;
   margin: 0 auto;
 }
@@ -48,23 +50,29 @@
 }
 .search-icon {
   position: absolute;
-  left: 0.75rem;
+  left: var(--spacing-md);
   top: 50%;
   transform: translateY(-50%);
-  color: #9ca3af;
+  color: var(--gray-600);
+  pointer-events: none;
 }
 .search-input {
   width: 100%;
-  padding: 0.5rem 1rem 0.5rem 2.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid #e5e7eb;
-  font-size: 1rem;
+  /* espacio extra izquierdo para que no se superponga con el icono */
+  padding: 0.5rem 1rem 0.5rem 3.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-100);
+  font-size: var(--font-md);
   transition: all 0.2s;
   box-sizing: border-box;
 }
+.search-input::placeholder {
+  color: var(--gray-600);
+  opacity: 1; /* mostrar claramente */
+}
 .search-input:focus {
   outline: none;
-  border-color: #6366f1;
+  border-color: var(--barca-light-blue);
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
 }
 .filters-wrapper {

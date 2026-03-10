@@ -48,6 +48,7 @@ export const createReserva = async (req, res) => {
       pista: pistaId,
       fecha: fechaDate,
       hora,
+      estado: { $ne: "cancelada" },
     }).session(session);
 
     if (existe) {
@@ -90,7 +91,8 @@ export const createReserva = async (req, res) => {
     res.status(201).json(populated);
   } catch (err) {
     await session.abortTransaction();
-    res.status(500).json({ msg: "Error creando reserva" });
+    console.error("[ERROR] Creating reserva:", err.message);
+    res.status(500).json({ msg: "Error creando reserva", error: err.message });
   } finally {
     session.endSession();
   }
