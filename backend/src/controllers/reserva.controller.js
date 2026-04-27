@@ -2,6 +2,7 @@ import Reserva from "../models/Reserva.js";
 import Pista from "../models/Pista.js";
 import { validationResult } from "express-validator";
 import mongoose from "mongoose";
+import { parse, addHours } from "date-fns";
 
 export const createReserva = async (req, res) => {
   const errors = validationResult(req);
@@ -37,6 +38,12 @@ export const createReserva = async (req, res) => {
       return res.status(404).json({ msg: "Pista no encontrada" });
     }
 
+    // Calcular startTime y endTime de la nueva reserva
+    const fechaStr = fechaDate.toISOString().split("T")[0];
+    const startTime = new Date(`${fechaStr}T${hora}:00`);
+    const endTime = addHours(startTime, duracion);
+
+    // Verificar que la hora esté en horariosDisponibles (al menos la inicial)
     if (!pista.horariosDisponibles?.includes(hora)) {
       await session.abortTransaction();
       return res
@@ -44,14 +51,18 @@ export const createReserva = async (req, res) => {
         .json({ msg: "Hora no disponible para esta pista" });
     }
 
-    const existe = await Reserva.findOne({
+    // Verificar conflictos: si hay alguna reserva que se solape
+    const conflicto = await Reserva.findOne({
       pista: pistaId,
-      fecha: fechaDate,
-      hora,
       estado: { $ne: "cancelada" },
+      $or: [
+        { startTime: { $lt: endTime }, endTime: { $gt: startTime } },
+        { startTime: { $gte: startTime, $lt: endTime } },
+        { endTime: { $gt: startTime, $lte: endTime } },
+      ],
     }).session(session);
 
-    if (existe) {
+    if (conflicto) {
       await session.abortTransaction();
       return res
         .status(400)
@@ -71,15 +82,7 @@ export const createReserva = async (req, res) => {
           total,
         },
       ],
-      { session }
-    );
-
-    await Pista.findByIdAndUpdate(
-      pistaId,
-      {
-        $pull: { horariosDisponibles: hora },
-      },
-      { session }
+      { session },
     );
 
     await session.commitTransaction();
@@ -100,11 +103,30 @@ export const createReserva = async (req, res) => {
 
 export const getReservas = async (req, res) => {
   try {
-    const reservas = await Reserva.find()
-      .populate({ path: "pista", select: "nombre ubicacion precioHora" })
-      .populate({ path: "usuario", select: "name email" })
-      .lean();
-    res.json(reservas);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const [reservas, total] = await Promise.all([
+      Reserva.find()
+        .populate({ path: "pista", select: "nombre ubicacion precioHora" })
+        .populate({ path: "usuario", select: "name email" })
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 })
+        .lean(),
+      Reserva.countDocuments(),
+    ]);
+
+    res.json({
+      reservas,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    });
   } catch (err) {
     res.status(500).json({ msg: "Error al obtener reservas" });
   }
@@ -130,10 +152,29 @@ export const getReservaById = async (req, res) => {
 
 export const getMisReservas = async (req, res) => {
   try {
-    const reservas = await Reserva.find({ usuario: req.user._id })
-      .populate({ path: "pista", select: "nombre ubicacion precioHora" })
-      .lean();
-    res.json(reservas);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const [reservas, total] = await Promise.all([
+      Reserva.find({ usuario: req.user._id })
+        .populate({ path: "pista", select: "nombre ubicacion precioHora" })
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 })
+        .lean(),
+      Reserva.countDocuments({ usuario: req.user._id }),
+    ]);
+
+    res.json({
+      reservas,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    });
   } catch (err) {
     res.status(500).json({ msg: "Error al obtener tus reservas" });
   }
@@ -169,43 +210,22 @@ export const updateReserva = async (req, res) => {
 };
 
 export const deleteReserva = async (req, res) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
-    const reserva = await Reserva.findById(req.params.id).session(session);
+    const reserva = await Reserva.findById(req.params.id);
     if (!reserva) {
-      await session.abortTransaction();
       return res.status(404).json({ msg: "Reserva no encontrada" });
     }
 
     const isOwner = reserva.usuario.toString() === req.user._id.toString();
     const isAdmin = req.user.role === "admin";
     if (!isOwner && !isAdmin) {
-      await session.abortTransaction();
       return res.status(403).json({ msg: "Acceso denegado" });
     }
 
-    const pistaId = reserva.pista;
-    const hora = reserva.hora;
-
-    await Reserva.findByIdAndDelete(req.params.id).session(session);
-
-    await Pista.findByIdAndUpdate(
-      pistaId,
-      {
-        $addToSet: { horariosDisponibles: hora },
-      },
-      { session }
-    );
-
-    await session.commitTransaction();
+    await Reserva.findByIdAndDelete(req.params.id);
 
     res.json({ msg: "Reserva eliminada correctamente" });
   } catch (err) {
-    await session.abortTransaction();
     res.status(500).json({ msg: "Error al eliminar reserva" });
-  } finally {
-    session.endSession();
   }
 };

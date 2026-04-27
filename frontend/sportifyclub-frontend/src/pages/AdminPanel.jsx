@@ -46,7 +46,6 @@ export default function AdminPanel() {
           {adminMenus.map((menu) => (
             <Link key={menu.path} to={menu.path} className="action-card white">
               <div className="action-icon">
-                
                 {menu.icon === "Personas" && "👥"}
                 {menu.icon === "Tenis" && "🎾"}
                 {menu.icon === "Calendario" && "📅"}

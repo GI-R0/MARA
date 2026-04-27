@@ -46,14 +46,14 @@ export const useAsync = (asyncFunction, dependencies = [], options = {}) => {
       } catch (err) {
         if (mountedRef.current) {
           setError(
-            err.response?.data?.message || err.message || "Error desconocido"
+            err.response?.data?.message || err.message || "Error desconocido",
           );
           setLoading(false);
         }
         throw err;
       }
     },
-    [asyncFunction, cacheKey, cacheDuration]
+    [asyncFunction, cacheKey, cacheDuration],
   );
 
   useEffect(() => {

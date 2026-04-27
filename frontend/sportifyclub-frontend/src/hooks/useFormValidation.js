@@ -16,7 +16,7 @@ export const useFormValidation = (initialValues, validationRules) => {
       }
       return "";
     },
-    [validationRules, values]
+    [validationRules, values],
   );
 
   const handleChange = useCallback(
@@ -29,7 +29,7 @@ export const useFormValidation = (initialValues, validationRules) => {
         setErrors((prev) => ({ ...prev, [name]: error }));
       }
     },
-    [touched, validateField]
+    [touched, validateField],
   );
 
   const handleBlur = useCallback(
@@ -39,7 +39,7 @@ export const useFormValidation = (initialValues, validationRules) => {
       const error = validateField(name, value);
       setErrors((prev) => ({ ...prev, [name]: error }));
     },
-    [validateField]
+    [validateField],
   );
 
   const validateAll = useCallback(() => {
@@ -59,7 +59,7 @@ export const useFormValidation = (initialValues, validationRules) => {
       Object.keys(validationRules).reduce((acc, key) => {
         acc[key] = true;
         return acc;
-      }, {})
+      }, {}),
     );
 
     return isValid;

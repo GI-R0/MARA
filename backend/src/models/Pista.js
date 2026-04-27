@@ -58,8 +58,47 @@ const pistaSchema = new mongoose.Schema(
         "Tierra batida",
       ],
     },
+
+    ratings: [
+      {
+        usuario: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        puntuacion: {
+          type: Number,
+          min: [1, "Puntuación mínima: 1"],
+          max: [5, "Puntuación máxima: 5"],
+          required: true,
+        },
+        comentario: {
+          type: String,
+          maxlength: [500, "El comentario no puede exceder 500 caracteres"],
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    ratingPromedio: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
+
+pistaSchema.methods.calcularRatingPromedio = function () {
+  if (this.ratings.length === 0) {
+    this.ratingPromedio = 0;
+  } else {
+    const suma = this.ratings.reduce((acc, r) => acc + r.puntuacion, 0);
+    this.ratingPromedio = (suma / this.ratings.length).toFixed(1);
+  }
+  return this.ratingPromedio;
+};
 
 export default mongoose.model("Pista", pistaSchema);

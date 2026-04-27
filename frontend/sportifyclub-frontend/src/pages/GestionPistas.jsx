@@ -45,6 +45,7 @@ export default function GestionPistas() {
       setPistas(res.data);
       setError(null);
     } catch (err) {
+      console.error("Error fetching pistas:", err);
       setError("No se pudieron cargar las pistas.");
     } finally {
       setLoading(false);
@@ -112,6 +113,7 @@ export default function GestionPistas() {
       closeModal();
       fetchPistas();
     } catch (err) {
+      console.error("Error saving pista:", err);
       alert("Error al guardar la pista");
     }
   };
@@ -123,6 +125,7 @@ export default function GestionPistas() {
       await API.delete(`/pistas/${id}`);
       fetchPistas();
     } catch (err) {
+      console.error("Error deleting pista:", err);
       alert("Error al eliminar la pista");
     }
   };

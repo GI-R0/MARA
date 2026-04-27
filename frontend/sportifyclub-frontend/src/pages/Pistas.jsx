@@ -18,9 +18,10 @@ export default function Pistas() {
   const fetchPistas = async () => {
     try {
       setLoading(true);
-      const res = await API.get("/pistas");
-      setPistas(res.data);
+      const res = await API.get("/pistas?limit=100");
+      setPistas(res.data.pistas);
     } catch (err) {
+      console.error("Error fetching pistas:", err);
       setError("No se pudieron cargar las pistas");
     } finally {
       setLoading(false);

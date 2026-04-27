@@ -41,13 +41,13 @@ export const reservaReducer = (state, action) => {
           action.payload,
           state.filters,
           state.sortBy,
-          state.sortOrder
+          state.sortOrder,
         ),
         loading: false,
         error: null,
       };
 
-    case reservaActions.ADD_RESERVA:
+    case reservaActions.ADD_RESERVA: {
       const newReservas = [...state.reservas, action.payload];
       return {
         ...state,
@@ -56,13 +56,14 @@ export const reservaReducer = (state, action) => {
           newReservas,
           state.filters,
           state.sortBy,
-          state.sortOrder
+          state.sortOrder,
         ),
       };
+    }
 
-    case reservaActions.UPDATE_RESERVA:
+    case reservaActions.UPDATE_RESERVA: {
       const updatedReservas = state.reservas.map((r) =>
-        r._id === action.payload._id ? action.payload : r
+        r._id === action.payload._id ? action.payload : r,
       );
       return {
         ...state,
@@ -71,13 +72,14 @@ export const reservaReducer = (state, action) => {
           updatedReservas,
           state.filters,
           state.sortBy,
-          state.sortOrder
+          state.sortOrder,
         ),
       };
+    }
 
-    case reservaActions.DELETE_RESERVA:
+    case reservaActions.DELETE_RESERVA: {
       const remainingReservas = state.reservas.filter(
-        (r) => r._id !== action.payload
+        (r) => r._id !== action.payload,
       );
       return {
         ...state,
@@ -86,9 +88,10 @@ export const reservaReducer = (state, action) => {
           remainingReservas,
           state.filters,
           state.sortBy,
-          state.sortOrder
+          state.sortOrder,
         ),
       };
+    }
 
     case reservaActions.SET_ERROR:
       return {
@@ -103,7 +106,7 @@ export const reservaReducer = (state, action) => {
         error: null,
       };
 
-    case reservaActions.FILTER_BY_STATUS:
+    case reservaActions.FILTER_BY_STATUS: {
       const newFilters = {
         ...state.filters,
         status: action.payload,
@@ -115,11 +118,12 @@ export const reservaReducer = (state, action) => {
           state.reservas,
           newFilters,
           state.sortBy,
-          state.sortOrder
+          state.sortOrder,
         ),
       };
+    }
 
-    case reservaActions.FILTER_BY_DATE:
+    case reservaActions.FILTER_BY_DATE: {
       const dateFilters = {
         ...state.filters,
         dateRange: action.payload,
@@ -131,9 +135,10 @@ export const reservaReducer = (state, action) => {
           state.reservas,
           dateFilters,
           state.sortBy,
-          state.sortOrder
+          state.sortOrder,
         ),
       };
+    }
 
     case reservaActions.SORT_RESERVAS:
       return {
@@ -144,7 +149,7 @@ export const reservaReducer = (state, action) => {
           state.reservas,
           state.filters,
           action.payload.sortBy,
-          action.payload.sortOrder
+          action.payload.sortOrder,
         ),
       };
 

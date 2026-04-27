@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { addHours } from "date-fns";
 
 const reservaSchema = new mongoose.Schema(
   {
@@ -37,10 +38,31 @@ const reservaSchema = new mongoose.Schema(
       default: "pendiente",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
+// Virtuales para startTime y endTime
+reservaSchema.virtual("startTime").get(function () {
+  const fechaStr = this.fecha.toISOString().split("T")[0]; // YYYY-MM-DD
+  const dateTimeStr = `${fechaStr}T${this.hora}:00`;
+  return new Date(dateTimeStr);
+});
 
-reservaSchema.index({ pista: 1, fecha: 1, hora: 1 }, { unique: true });
+reservaSchema.virtual("endTime").get(function () {
+  return addHours(this.startTime, this.duracion);
+});
+
+// Asegurar que los virtuales se incluyan en JSON
+reservaSchema.set("toJSON", { virtuals: true });
+reservaSchema.set("toObject", { virtuals: true });
+
+reservaSchema.index(
+  { pista: 1, fecha: 1, hora: 1 },
+  { unique: false, partialFilterExpression: { estado: { $ne: "cancelada" } } },
+);
+
+reservaSchema.index({ usuario: 1, fecha: -1 });
+
+reservaSchema.index({ pista: 1, fecha: 1 });
 
 export default mongoose.model("Reserva", reservaSchema);

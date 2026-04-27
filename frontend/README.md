@@ -1,9 +1,11 @@
 # Frontend - SportifyClub
 
 ## Descripción
+
 Interfaz de usuario desarrollada con React y Vite para la plataforma de reservas de pistas deportivas.
 
 ## Tecnologías
+
 - React 18
 - Vite
 - Tailwind CSS
@@ -20,6 +22,7 @@ npm install
 ```
 
 ## Configuración
+
 Crear archivo `.env` basado en `.env.example`:
 
 ```env
@@ -29,16 +32,19 @@ VITE_API_URL=http://localhost:4000/api
 ## Uso
 
 ### Desarrollo
+
 ```bash
 npm run dev  # Inicia servidor de desarrollo en http://localhost:5173
 ```
 
 ### Build
+
 ```bash
 npm run build  # Genera build de producción
 ```
 
 ### Preview
+
 ```bash
 npm run preview  # Vista previa del build
 ```
@@ -62,6 +68,7 @@ src/
 ## Funcionalidades Clave
 
 ### Hooks Avanzados
+
 - `useAuth`: Gestión de autenticación
 - `useFetch`: Fetching de datos con loading/error
 - `useFormValidation`: Validación de formularios
@@ -70,17 +77,20 @@ src/
 - `useReservaValidation`: Validación específica de reservas
 
 ### Componentización
+
 - Componentes modulares y reutilizables
 - Separación clara de responsabilidades
 - Props drilling minimizado con Context
 
 ### Estilos
+
 - Variables CSS globales para colores, spacings, etc.
 - CSS modular por componente
 - Diseño responsive
 - Tema deportivo con colores Barça
 
 ## Rutas Principales
+
 - `/`: Home
 - `/pistas`: Catálogo de pistas
 - `/pistas/:id`: Detalle de pista
@@ -92,12 +102,14 @@ src/
 - `/club`: Panel de club
 
 ## UX/UI
+
 - Diseño intuitivo y responsive
 - Navegación clara con Navbar y Footer
 - Formularios validados con feedback visual
 - Estados de loading y error
 - Iconos de Lucide React
   vite.config.js - configuración de Vite
+
 ```
 
 ### Flujo de datos principal
@@ -172,9 +184,11 @@ La interfaz es responsiva y minimalista, con atención a la accesibilidad básic
 Estas decisiones permiten un balance entre claridad de código y capacidad de escalar si se añaden nuevas funcionalidades.
 
 1. Configura `frontend/sportifyclub-frontend/.env`:
-   ```
-   VITE_API_URL=http://localhost:4000/api
-   ```
+```
+
+VITE_API_URL=http://localhost:4000/api
+
+````
 2. `npm install` (dentro de la carpeta del frontend)
 3. `npm run dev` para desarrollo
 4. Abre `http://localhost:5173`
@@ -183,7 +197,7 @@ Estas decisiones permiten un balance entre claridad de código y capacidad de es
 
 ```bash
 npm run build
-```
+````
 
 Genera archivos optimizados en `dist/`.
 

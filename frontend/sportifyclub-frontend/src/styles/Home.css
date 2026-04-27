@@ -127,7 +127,11 @@
 
 .btn-hero {
   display: inline-block;
-  background: linear-gradient(135deg, var(--barca-gold) 0%, var(--barca-gold) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--barca-gold) 0%,
+    var(--barca-gold) 100%
+  );
   color: var(--barca-dark);
   font-weight: bold;
   font-size: 1.25rem;
@@ -140,7 +144,11 @@
 }
 
 .btn-hero:hover {
-  background: linear-gradient(135deg, var(--barca-gold) 0%, var(--barca-gold) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--barca-gold) 0%,
+    var(--barca-gold) 100%
+  );
   transform: scale(1.05) translateY(-2px);
   box-shadow: 0 15px 40px rgba(237, 187, 0, 0.6);
 }

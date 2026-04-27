@@ -43,8 +43,8 @@ export const useReservaValidation = () => {
       return "La duración debe ser mayor a 0";
     }
 
-    if (duracion > 4) {
-      return "La duración máxima es de 4 horas";
+    if (duracion > 3) {
+      return "La duración máxima es de 3 horas";
     }
 
     return "";
@@ -59,7 +59,7 @@ export const useReservaValidation = () => {
 
       const horaError = validateHora(
         reservaData.hora,
-        reservaData.horariosDisponibles
+        reservaData.horariosDisponibles,
       );
       if (horaError) errors.hora = horaError;
 
@@ -69,7 +69,7 @@ export const useReservaValidation = () => {
       setValidationErrors(errors);
       return Object.keys(errors).length === 0;
     },
-    [validateFecha, validateHora, validateDuracion]
+    [validateFecha, validateHora, validateDuracion],
   );
 
   const clearErrors = useCallback(() => {

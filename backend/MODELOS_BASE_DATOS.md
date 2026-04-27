@@ -1,12 +1,14 @@
 # Modelos de Base de Datos
 
 ## User
+
 - name: String, required
 - email: String, unique, required
 - password: String, required, select: false
 - role: String, enum: ['user', 'club', 'admin'], default: 'user'
 
 ## Pista
+
 - nombre: String, required
 - deporte: String, enum: ['Pádel', 'Tenis', ...]
 - precioHora: Number, required
@@ -17,6 +19,7 @@
 - superficie: String
 
 ## Reserva
+
 - usuario: ObjectId ref User, required
 - pista: ObjectId ref Pista, required
 - fecha: Date, required

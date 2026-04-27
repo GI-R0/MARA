@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../api/axiosConfig";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import "../styles/ReservaForm.css";
 export default function ReservaForm({
   pistaId,
   precioHora = 0,
-  availableTimes = [],
+  availableTimes: initialAvailableTimes = [],
 }) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -15,23 +15,59 @@ export default function ReservaForm({
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [duracion, setDuracion] = useState(1);
+  const [availableTimes, setAvailableTimes] = useState(initialAvailableTimes);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const today = new Date().toISOString().split("T")[0];
 
-  // Validar formato de hora (HH:MM)
+  // Cargar horarios disponibles cuando cambie la fecha
+  useEffect(() => {
+    if (date && pistaId) {
+      const cargarHorarios = async () => {
+        try {
+          const res = await API.get(`/pistas/${pistaId}?fecha=${date}`);
+          setAvailableTimes(res.data.horariosDisponibles || []);
+        } catch (err) {
+          console.error("Error cargando horarios:", err);
+          setAvailableTimes(initialAvailableTimes);
+        }
+      };
+      cargarHorarios();
+    } else {
+      setAvailableTimes(initialAvailableTimes);
+    }
+  }, [date, pistaId, initialAvailableTimes]);
+
+  // Resetear hora si no está disponible en los nuevos horarios
+  useEffect(() => {
+    if (hour && !availableTimes.includes(hour)) {
+      setHour("");
+    }
+  }, [availableTimes, hour]);
+
   const validateHourFormat = (hourString) => {
     return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(hourString);
   };
 
-  // Validar que la hora esté en los horarios disponibles
   const isHourAvailable = (selectedHour) => {
     return availableTimes.includes(selectedHour);
   };
 
-  // Validar duración
+  const isValidDuration = (dur) => {
+    const durNum = Number(dur);
+    return durNum >= 1 && durNum <= 3;
+  };
+
+  const validateHourFormat = (hourString) => {
+    return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(hourString);
+  };
+
+  const isHourAvailable = (selectedHour) => {
+    return availableTimes.includes(selectedHour);
+  };
+
   const isValidDuration = (dur) => {
     const durNum = Number(dur);
     return durNum >= 1 && durNum <= 3;
@@ -42,27 +78,23 @@ export default function ReservaForm({
     setError("");
     setSuccess("");
 
-    // Validar si el usuario está autenticado
     if (!user) {
       setError("Tienes que iniciar sesión para reservar");
       setTimeout(() => navigate("/login"), 1500);
       return;
     }
 
-    // Validar campos requeridos
     if (!date || !hour || !duracion) {
       setError("Por favor completa todos los campos requeridos");
       return;
     }
 
-    // Validar formato de fecha
     const fechaSeleccionada = new Date(date);
     if (isNaN(fechaSeleccionada.getTime())) {
       setError("Fecha inválida. Por favor selecciona una fecha válida");
       return;
     }
 
-    // Validar que no sea fecha pasada
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
     if (fechaSeleccionada < hoy) {
@@ -70,25 +102,21 @@ export default function ReservaForm({
       return;
     }
 
-    // Validar formato de hora
     if (!validateHourFormat(hour)) {
       setError("Formato de hora inválido. Usa HH:MM");
       return;
     }
 
-    // Validar que la hora esté disponible
     if (!isHourAvailable(hour)) {
       setError("La hora seleccionada no está disponible");
       return;
     }
 
-    // Validar duración
     if (!isValidDuration(duracion)) {
       setError("La duración debe ser entre 1 y 3 horas");
       return;
     }
 
-    // Validar precio
     if (precioHora <= 0) {
       setError("Error: precio de la pista no válido");
       return;
@@ -107,23 +135,22 @@ export default function ReservaForm({
 
       if (response.status === 201) {
         setSuccess(
-          `¡Reserva confirmada para el ${date} a las ${hour} h (${duracion}h)!`
+          `¡Reserva confirmada para el ${date} a las ${hour} h (${duracion}h)!`,
         );
-        // Limpiar formulario
+
         setDate("");
         setHour("");
         setDuracion(1);
-        
-        // Redirigir después de 2 segundos
+
         setTimeout(() => navigate("/mis-reservas"), 2000);
       }
     } catch (err) {
       const mensaje =
-        err.response?.data?.msg || 
+        err.response?.data?.msg ||
         err.response?.data?.message ||
         err.message ||
         "No se pudo completar la reserva. Intenta nuevamente";
-      
+
       setError(mensaje);
       console.error("Error en reserva:", err);
     } finally {
@@ -237,7 +264,8 @@ export default function ReservaForm({
       </button>
 
       <p className="reserva-help-text">
-        * Campos obligatorios. Asegúrate de seleccionar fecha, hora y duración correctas.
+        * Campos obligatorios. Asegúrate de seleccionar fecha, hora y duración
+        correctas.
       </p>
     </form>
   );

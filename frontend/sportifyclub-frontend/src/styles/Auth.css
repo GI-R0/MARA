@@ -1,6 +1,11 @@
 .login-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--gray-100), #ffffff, var(--gray-200));
+  background: linear-gradient(
+    135deg,
+    var(--gray-100),
+    #ffffff,
+    var(--gray-200)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,7 +103,11 @@
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 .btn-submit:hover {
-  background: linear-gradient(to right, var(--barca-light-blue), var(--barca-gold));
+  background: linear-gradient(
+    to right,
+    var(--barca-light-blue),
+    var(--barca-gold)
+  );
   transform: scale(1.02);
 }
 .btn-submit:disabled {
@@ -119,7 +128,7 @@
 }
 .login-footer {
   margin-top: 2rem;
-  text-center;
+  text-align: center;
 }
 .footer-text {
   color: #4b5563;

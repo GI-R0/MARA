@@ -4,7 +4,7 @@
   padding: 3rem 1rem;
 }
 .dashboard-container {
-  max-width: 72rem; 
+  max-width: 72rem;
   margin: 0 auto;
 }
 .dashboard-header {
@@ -44,7 +44,8 @@
 .stat-card {
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   padding: 2rem;
   text-align: center;
@@ -116,7 +117,7 @@
 .action-icon {
   font-size: 3.75rem;
   margin-bottom: 1rem;
-  display: block; 
+  display: block;
 }
 .action-title {
   font-size: 1.5rem;

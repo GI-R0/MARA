@@ -1,24 +1,20 @@
-/** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,jsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       colors: {
         padel: {
-          primary: '#00c853',
-          secondary: '#00a843',
-          dark: '#0a0a14',
-          accent: '#ffd700',
+          primary: "#00c853",
+          secondary: "#00a843",
+          dark: "#0a0a14",
+          accent: "#ffd700",
         },
-        background: '#f5f7fa',
+        background: "#f5f7fa",
       },
       fontFamily: {
-        sans: ['system-ui', 'sans-serif'],
+        sans: ["system-ui", "sans-serif"],
       },
     },
   },
   plugins: [],
-}
+};

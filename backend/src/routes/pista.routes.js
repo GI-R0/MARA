@@ -7,46 +7,54 @@ import {
   deletePista,
   getPistasByClub,
   getEstadisticasClub,
+  addRating,
+  getRatings,
+  updatePistaImage,
 } from "../controllers/pista.controller.js";
 import { protect, authorize } from "../middlewares/auth.js";
-import { pistaValidator, pistaUpdateValidator } from "../validators/pista.validator.js";
+import {
+  pistaValidator,
+  pistaUpdateValidator,
+  ratingValidator,
+} from "../validators/pista.validator.js";
 import { createPistaLimiter } from "../middlewares/rateLimiter.js";
 
 const router = Router();
 
-// GET - Rutas específicas primero (antes de :id)
 router.get("/", getPistas);
 router.get(
   "/estadisticas",
   protect,
   authorize("club", "admin"),
-  getEstadisticasClub
+  getEstadisticasClub,
 );
 router.get("/club/:clubId", protect, getPistasByClub);
 
-// GET - Rutas genéricas después (por parámetro :id)
 router.get("/:id", getPistaById);
 
-// POST - Crear pista con validación y rate limiter
+router.get("/:id/ratings", getRatings);
+
 router.post(
   "/",
   protect,
   authorize("club", "admin"),
   createPistaLimiter,
   pistaValidator,
-  createPista
+  createPista,
 );
 
-// PUT - Actualizar pista con validación
+router.post("/:id/ratings", protect, ratingValidator, addRating);
+
 router.put(
   "/:id",
   protect,
   authorize("club", "admin"),
   pistaUpdateValidator,
-  updatePista
+  updatePista,
 );
 
-// DELETE - Eliminar pista
+router.post("/:id/imagen", protect, authorize("admin"), updatePistaImage);
+
 router.delete("/:id", protect, authorize("club", "admin"), deletePista);
 
 export default router;

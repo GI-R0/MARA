@@ -175,7 +175,8 @@ export default function Register() {
         </div>
 
         <p className="copyright">
-          © {new Date().getFullYear()} SportifyClub • Reserva tu pista en segundos
+          © {new Date().getFullYear()} SportifyClub • Reserva tu pista en
+          segundos
         </p>
       </div>
     </div>

@@ -30,21 +30,30 @@
   --font-md: 1rem;
   --font-lg: 1.125rem;
   --font-xl: 1.5rem;
-  --form-max-width: 32rem; /* ancho máximo común para formularios */
+  --form-max-width: 32rem;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
     sans-serif;
-  background: linear-gradient(135deg, var(--background-color) 0%, var(--barca-dark) 50%, var(--background-color) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background-color) 0%,
+    var(--barca-dark) 50%,
+    var(--background-color) 100%
+  );
   color: var(--font-color);
   line-height: 1.6;
   position: relative;
   overflow-x: hidden;
 }
 
-/* global placeholder color for form inputs */
 input::placeholder,
 textarea::placeholder {
   color: var(--gray-600);
@@ -58,7 +67,8 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: repeating-linear-gradient(
+  background:
+    repeating-linear-gradient(
       45deg,
       transparent,
       transparent 50px,
@@ -174,14 +184,22 @@ body::after {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--barca-gold) 0%, var(--barca-gold) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--barca-gold) 0%,
+    var(--barca-gold) 100%
+  );
   color: var(--barca-dark);
   font-weight: 700;
   box-shadow: 0 4px 15px rgba(237, 187, 0, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--barca-gold) 0%, var(--barca-gold) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--barca-gold) 0%,
+    var(--barca-gold) 100%
+  );
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(237, 187, 0, 0.4);
 }
@@ -235,7 +253,9 @@ body::after {
   background: linear-gradient(145deg, #1e2139 0%, #2a2e45 100%);
   border-radius: var(--radius);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   display: block;
   text-decoration: none;
   color: var(--font-color);
@@ -383,7 +403,9 @@ select {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
   font-size: var(--font-md);
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
   box-sizing: border-box;
   background-color: #1e2139;
   color: var(--font-color);

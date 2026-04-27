@@ -127,7 +127,8 @@ export default function Login() {
         </div>
 
         <p className="copyright">
-          © {new Date().getFullYear()} SportifyClub • Todos los derechos reservados
+          © {new Date().getFullYear()} SportifyClub • Todos los derechos
+          reservados
         </p>
       </div>
     </div>

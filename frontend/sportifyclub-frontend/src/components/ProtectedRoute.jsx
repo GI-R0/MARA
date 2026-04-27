@@ -19,13 +19,21 @@ export default function ProtectedRoute({ children, requireRole }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requireRole && user.role !== requireRole) {
-    return (
-      <div className="access-denied-container-centered">
-        <h3>Acceso denegado</h3>
-        <p>No tienes permisos para ver esta página.</p>
-      </div>
-    );
+  if (requireRole) {
+    const rolesPermitidos = Array.isArray(requireRole)
+      ? requireRole
+      : [requireRole];
+    if (!rolesPermitidos.includes(user.role)) {
+      return (
+        <div className="access-denied-container-centered">
+          <h3>Acceso denegado</h3>
+          <p>No tienes permisos para ver esta página.</p>
+          <p className="sub-text">
+            Rol requerido: {rolesPermitidos.join(" o ")}
+          </p>
+        </div>
+      );
+    }
   }
 
   return children;

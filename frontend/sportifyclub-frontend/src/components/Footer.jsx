@@ -55,7 +55,10 @@ export default function Footer() {
           </div>
 
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} SportifyClub. Todos los derechos reservados.</p> // dynamic year automatically reflects current year
+            <p>
+              &copy; {new Date().getFullYear()} SportifyClub. Todos los derechos
+              reservados.
+            </p>
           </div>
         </div>
       </div>

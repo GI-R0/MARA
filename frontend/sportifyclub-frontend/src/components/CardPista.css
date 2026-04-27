@@ -3,7 +3,9 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
 }
 .card-pista:hover {
   transform: translateY(-8px);
@@ -96,7 +98,11 @@
 
 .card-button {
   margin-top: 0.6rem;
-  background: linear-gradient(90deg, var(--padel-primary), var(--padel-secondary));
+  background: linear-gradient(
+    90deg,
+    var(--padel-primary),
+    var(--padel-secondary)
+  );
   color: white;
   border: none;
   padding: 0.7rem 0.9rem;

@@ -28,14 +28,12 @@ export default function Home() {
 
   return (
     <>
-      
       <section className="hero-section">
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">SportifyClub</h1>
           <p className="hero-subtitle">Reserva pistas deportivas en minutos</p>
 
-          
           <div className="stats-container">
             <div className="stat-item">
               <div className="stat-number">+120</div>
@@ -57,7 +55,6 @@ export default function Home() {
         </div>
       </section>
 
-      
       <section className="features-section">
         <div className="container">
           <div className="features-header">
@@ -80,7 +77,6 @@ export default function Home() {
         </div>
       </section>
 
-      
       <section className="cta-section">
         <div className="container">
           <h2 className="cta-title">¿Listo para jugar?</h2>
