@@ -105,8 +105,7 @@ sportifyclub/
 │   │   ├── routes/       # Definición de rutas
 │   │   ├── middlewares/  # Middlewares personalizados
 │   │   ├── validators/   # Validaciones de entrada
-│   │   ├── tools/        # Scripts de utilidad
-│   │   └── seed/         # Datos iniciales
+│   │   └── tools/        # Scripts y Seeders (generateData.js, seed.js)
 │   └── data/             # Archivos CSV de datos
 ├── frontend/         # 🌐 Interfaz React
 │   └── sportifyclub-frontend/

@@ -76,9 +76,10 @@
 }
 
 .footer-text {
-  color: #f8fafc;
+  color: #ffffff;
   line-height: 1.6;
   max-width: 300px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 .footer-heading {
@@ -101,10 +102,11 @@
 
 .footer-links li,
 .footer-links a {
-  color: #f8fafc;
+  color: #ffffff;
   transition:
     color 0.3s,
     transform 0.3s;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 .footer-links a {
@@ -124,9 +126,10 @@
 }
 
 .footer-bottom p {
-  color: #f8fafc;
+  color: #ffffff;
   font-size: 0.875rem;
   margin: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 @media (max-width: 640px) {

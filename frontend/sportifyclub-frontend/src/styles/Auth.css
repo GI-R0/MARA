@@ -7,9 +7,17 @@
     var(--gray-200)
   );
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xl) var(--spacing-md);
+}
+.auth-wrapper {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .login-card {
   width: 100%;

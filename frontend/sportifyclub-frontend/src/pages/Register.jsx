@@ -62,7 +62,7 @@ export default function Register() {
 
   return (
     <div className="login-container">
-      <div className="w-full max-w-md">
+      <div className="auth-wrapper">
         <div className="login-card">
           <div className="login-header">
             <h1 className="login-title">SportifyClub</h1>
