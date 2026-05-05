@@ -1,0 +1,21 @@
+nombre,deporte,precioHora,ubicacion,clubEmail,horariosDisponibles,iluminacion,superficie
+Pista Central,Pádel,28,Madrid,ana@sportify.com,"[""08:00"",""09:00"",""10:00"",""11:00"",""17:00"",""18:00"",""19:00"",""20:00"",""21:00""]",true,Cemento
+Pista 2,Pádel,25,Madrid,ana@sportify.com,"[""09:00"",""10:00"",""11:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Tenis 1,Tenis,32,Madrid,pedro@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00"",""19:00""]",true,Arcilla
+Pista Tenis 2,Tenis,30,Madrid,pedro@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00""]",true,Arcilla
+Pista Norte,Pádel,26,Barcelona,diego@sportify.com,"[""09:00"",""10:00"",""11:00"",""17:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Sur,Pádel,24,Barcelona,diego@sportify.com,"[""08:00"",""09:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Club Valencia,Pádel,27,Valencia,javier@sportify.com,"[""09:00"",""10:00"",""11:00"",""12:00"",""17:00"",""18:00"",""19:00""]",true,Cemento
+Pista Este,Pádel,23,Sevilla,miguel@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Bilbao,Baloncesto,20,Bilbao,iker@sportify.com,"[""17:00"",""18:00"",""19:00"",""20:00""]",true,Madera
+Pista Málaga,Fútbol,35,Málaga,raul@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00""]",true,Césped
+Pista Granada,Tenis,28,Granada,alvaro@sportify.com,"[""09:00"",""10:00"",""18:00"",""19:00""]",false,Arcilla
+Pista Alicante,Pádel,25,Alicante,sergio@sportify.com,"[""08:00"",""09:00"",""10:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Murcia,Pádel,22,Murcia,ruben@sportify.com,"[""09:00"",""10:00"",""11:00"",""17:00"",""18:00""]",true,Cemento
+Pista Zaragoza,Tenis,30,Zaragoza,marcos@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00""]",true,Arcilla
+Pista Valladolid,Pádel,24,Valladolid,ana@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00""]",true,Cemento
+Pista Palma,Pádel,29,Palma,pedro@sportify.com,"[""09:00"",""10:00"",""11:00"",""17:00"",""18:00"",""19:00""]",true,Cemento
+Pista Las Palmas,Fútbol,38,Las Palmas,diego@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00""]",true,Césped
+Pista Vigo,Pádel,23,Vigo,javier@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Gijón,Tenis,27,Gijón,miguel@sportify.com,"[""09:00"",""10:00"",""18:00"",""19:00""]",false,Arcilla
+Pista A Coruña,Pádel,25,A Coruña,iker@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00"",""19:00""]",true,Cemento
