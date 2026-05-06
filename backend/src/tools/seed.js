@@ -41,50 +41,60 @@ async function seedDatabase() {
     const reservasCSV = await readCSV(path.join(dataDir, "reservas.csv"));
 
     console.log("Insertando Usuarios...");
-    const userMap = {}; // Diccionario para mapear UUID falso a ObjectId real
+    const userMap = {}; // Diccionario para mapear email a ObjectId real
     for (const u of usuariosCSV) {
       const newUser = new User({
-        name: `${u.nombre} ${u.apellido}`,
+        name: u.name,
         email: u.email,
         password: u.password,
-        role: u.rol,
+        role: u.role,
       });
       // save() ejecutará el middleware de mongoose para encriptar la password
       await newUser.save();
-      userMap[u.id] = newUser._id;
+      userMap[u.email] = newUser._id;
     }
 
     console.log("Insertando Pistas...");
-    const pistaMap = {}; // Diccionario para mapear UUID falso a ObjectId real
+    const pistaMap = {}; // Diccionario para mapear nombre a ObjectId real
+    const pistaPriceMap = {};
     const adminOrClubId = Object.values(userMap)[0]; // fallback
     for (const p of pistasCSV) {
+      let horarios = [];
+      try {
+        horarios = JSON.parse(p.horariosDisponibles);
+      } catch (e) {
+        horarios = ["09:00", "10:00", "11:00", "12:00", "16:00", "17:00", "18:00"]; // Valor por defecto
+      }
+
       const newPista = new Pista({
         nombre: p.nombre,
         deporte: p.deporte,
         precioHora: Number(p.precioHora),
         ubicacion: p.ubicacion,
-        club: userMap[p.clubId] || adminOrClubId,
+        club: userMap[p.clubEmail] || adminOrClubId,
         imagen: p.imagen || undefined,
         iluminacion: p.iluminacion === "true",
         superficie: p.superficie,
-        horariosDisponibles: ["09:00", "10:00", "11:00", "12:00", "16:00", "17:00", "18:00"], // Valor por defecto
+        horariosDisponibles: horarios,
       });
       await newPista.save();
-      pistaMap[p.id] = newPista._id;
+      pistaMap[p.nombre] = newPista._id;
+      pistaPriceMap[p.nombre] = Number(p.precioHora);
     }
 
     console.log("Insertando Reservas...");
     const reservasList = [];
     for (const r of reservasCSV) {
-      if (userMap[r.usuarioId] && pistaMap[r.pistaId]) {
+      if (userMap[r.userEmail] && pistaMap[r.pistaNombre]) {
+        const precioHora = pistaPriceMap[r.pistaNombre] || 10;
         reservasList.push({
-          usuario: userMap[r.usuarioId],
-          pista: pistaMap[r.pistaId],
+          usuario: userMap[r.userEmail],
+          pista: pistaMap[r.pistaNombre],
           fecha: new Date(r.fecha),
-          hora: r.horaInicio,
+          hora: r.hora,
           duracion: Number(r.duracion),
-          total: Number(r.precioTotal),
-          estado: r.estado,
+          total: Number(r.duracion) * precioHora,
+          estado: "confirmada", // default status if missing
         });
       }
     }
