@@ -1,0 +1,149 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            CORREO DE NOTIFICACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+DESTINATARIO: balabuchj+thepower@gmail.com
+
+ASUNTO: ✅ SportifyClub – Proyecto entregado | Credenciales y variables de entorno
+
+───────────────────────────────────────────────────────────────────────────────
+
+Hola,
+
+Con gusto le informo que el proyecto **SportifyClub** ha sido preparado y está 
+completamente listo para su evaluación y ejecución.
+
+───────────────────────────────────────────────────────────────────────────────
+📦 INFORMACIÓN DEL PROYECTO
+───────────────────────────────────────────────────────────────────────────────
+
+Repositorio:  https://github.com/GI-R0/SPORTS
+Rama:         master
+Estado:       ✅ Completado y documentado
+
+───────────────────────────────────────────────────────────────────────────────
+🔑 CREDENCIALES DE ADMINISTRADOR
+───────────────────────────────────────────────────────────────────────────────
+
+Email:       admin@sportify.com
+Contraseña:  admin123
+Rol:         admin
+
+Nota: Este usuario se crea automáticamente al ejecutar el seed de datos.
+      Úsalo para acceder con permisos de administrador en el sistema.
+
+───────────────────────────────────────────────────────────────────────────────
+⚙️  VARIABLES DE ENTORNO – BACKEND (backend/.env)
+───────────────────────────────────────────────────────────────────────────────
+
+MONGODB_URI=mongodb+srv://girogiro:8H66HjuKKPSUCjx@cluster0.riv4yji.mongodb.net/sportifyclub?retryWrites=true&w=majority
+JWT_SECRET=supersecretkey123!@#2025
+PORT=4000
+NODE_ENV=development
+
+───────────────────────────────────────────────────────────────────────────────
+⚙️  VARIABLES DE ENTORNO – FRONTEND (frontend/sportifyclub-frontend/.env)
+───────────────────────────────────────────────────────────────────────────────
+
+VITE_API_URL=http://localhost:4000/api
+
+───────────────────────────────────────────────────────────────────────────────
+🚀 PASOS PARA EJECUTAR
+───────────────────────────────────────────────────────────────────────────────
+
+1. Clonar o descargar el repositorio:
+   git clone https://github.com/GI-R0/SPORTS.git
+   cd SPORTS
+
+2. Instalar dependencias del BACKEND:
+   cd backend
+   npm install
+
+3. Instalar dependencias del FRONTEND:
+   cd ..
+   cd frontend/sportifyclub-frontend
+   npm install
+
+4. Asegurarse de que MongoDB esté accesible (ya configurada en .env)
+
+5. OPCIONAL - Cargar datos de prueba:
+   cd ../../backend
+   npm run seed
+
+   Esto creará automáticamente:
+   ✓ 31 usuarios (1 admin + 5 clubs + 25 usuarios regulares)
+   ✓ 30 pistas deportivas
+   ✓ 100 reservas de ejemplo
+
+6. Iniciar el BACKEND (terminal 1):
+   npm run dev
+   → El servidor escuchará en http://localhost:4000
+
+7. Iniciar el FRONTEND (terminal 2):
+   cd frontend/sportifyclub-frontend
+   npm run dev
+   → La aplicación se abrirá en http://localhost:5173
+
+8. Acceder con las credenciales admin:
+   → Email: admin@sportify.com
+   → Contraseña: admin123
+
+───────────────────────────────────────────────────────────────────────────────
+📚 DOCUMENTACIÓN DISPONIBLE
+───────────────────────────────────────────────────────────────────────────────
+
+Raíz:
+  • README.md – Descripción general, tecnologías, estructuras.
+
+Backend:
+  • backend/README.md – Arquitectura, flujo de datos, roles.
+  • backend/MODELOS_BASE_DATOS.md – Esquemas de MongoDB (User, Pista, Reserva).
+  • backend/DIAGRAMA_RELACIONES.md – Diagrama ER de entidades.
+  • backend/seed/README.md – Guía de seeding desde CSV.
+
+Frontend:
+  • frontend/README.md – Estructura, hooks personalizados, decisiones técnicas.
+
+───────────────────────────────────────────────────────────────────────────────
+✅ CHECKLIST DE ENTREGA
+───────────────────────────────────────────────────────────────────────────────
+
+[✓] Variables de entorno (.env) configuradas
+[✓] Credenciales de admin generadas
+[✓] Documentación completa (modelos, relaciones, seeding)
+[✓] README separados para backend y frontend
+[✓] Input de entrega actualizado en README principal
+[✓] Favicon personalizado
+[✓] Contraste mejorado en UI/UX
+[✓] Año actualizado a 2025
+[✓] Coherencia visual verificada
+
+───────────────────────────────────────────────────────────────────────────────
+💡 NOTAS ADICIONALES
+───────────────────────────────────────────────────────────────────────────────
+
+• Las contraseñas se guardan encriptadas con bcrypt.
+• Los tokens JWT expiran según las reglas del backend.
+• El frontend usa Axios con interceptores para incluir el token automáticamente.
+• El CSS usa variables personalizadas en colores Barça (azul, rojo, oro).
+• El sistema es completamente responsive (mobile-first).
+• Validaciones completas en formularios y backend.
+
+───────────────────────────────────────────────────────────────────────────────
+📞 CONTACTO / SOPORTE
+───────────────────────────────────────────────────────────────────────────────
+
+En caso de cualquier duda o inconveniente durante la ejecución, no dude en 
+contactarme. El proyecto está completamente funcional y listo para evaluación.
+
+───────────────────────────────────────────────────────────────────────────────
+
+Quedo a su disposición para cualquier aclaración.
+
+Saludos cordiales,
+
+═══════════════════════════════════════════════════════════════════════════════
+Desenvolvedor: [GI-R0]
+Proyecto: SportifyClub – Plataforma de reservas de pistas deportivas
+Fecha: 3 de marzo de 2026
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,156 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    🚀 INSTRUCCIONES RÁPIDAS DE INICIO
+═══════════════════════════════════════════════════════════════════════════════
+
+SportifyClub – Plataforma web para reservas de pistas deportivas
+
+═══════════════════════════════════════════════════════════════════════════════
+⚡ INICIO RÁPIDO (5 MINUTOS)
+═══════════════════════════════════════════════════════════════════════════════
+
+## Paso 1: Clonar el repositorio
+
+cd [ruta donde quieras clonar]
+git clone https://github.com/GI-R0/SPORTS.git
+cd SPORTS
+
+## Paso 2: Instalar dependencias
+
+### Backend
+cd backend
+npm install
+
+### Frontend
+cd ../frontend/sportifyclub-frontend
+npm install
+
+## Paso 3: Cargar datos de prueba (RECOMENDADO)
+
+cd ../../backend
+npm run seed
+
+⏳ Espera a que termine (creará 31 usuarios, 30 pistas y 100 reservas)
+
+## Paso 4: Abrir 2 terminales
+
+### Terminal 1 (Backend)
+cd ./backend
+npm run dev
+
+✅ Deberías ver: "Server running on http://localhost:4000"
+
+### Terminal 2 (Frontend)
+cd ./frontend/sportifyclub-frontend
+npm run dev
+
+✅ La aplicación se abrirá en http://localhost:5173
+
+## Paso 5: Acceder como administrador
+
+Email:      admin@sportify.com
+Contraseña: admin123
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 CASOS DE USO RÁPIDOS
+═══════════════════════════════════════════════════════════════════════════════
+
+### Como Usuario Normal (role: user)
+1. Registrarse / Iniciar sesión
+2. Ver todas las pistas en la sección "Pistas"
+3. Buscar por nombre o filtrar por deporte
+4. Haz clic en una pista para ver detalles
+5. Haz una reserva en el horario disponible
+6. Ve a "Mis Reservas" para ver tus bookings
+7. Cancela una reserva si lo necesitas
+
+### Como Club (role: club)
+1. Inicia sesión con un email de club:
+   - general.littel@yahoo.com (contraseña: 123456)
+   - O cualquier otro de la lista
+2. Ve a "Gestión de Pistas"
+3. Crea, edita o elimina tus pistas
+4. Ve el panel de estadísticas
+
+### Como Administrador (role: admin)
+1. Inicia sesión con:
+   Email: admin@sportify.com
+   Contraseña: admin123
+2. Accede a "Admin Panel"
+3. Gestiona todos los usuarios y pistas del sistema
+4. Visualiza estadísticas globales
+
+═══════════════════════════════════════════════════════════════════════════════
+📋 CHECKLIST: TODO DEBE ESTAR LISTO
+═══════════════════════════════════════════════════════════════════════════════
+
+□ Variables de entorno (.env) en ambas capetas
+  ├─ backend/.env → MONGODB_URI, JWT_SECRET, etc.
+  └─ frontend/sportifyclub-frontend/.env → VITE_API_URL
+
+□ Credenciales admin:
+  ├─ Email: admin@sportify.com
+  └─ Password: admin123
+
+□ Documentación:
+  ├─ README.md (raíz)
+  ├─ backend/README.md
+  ├─ backend/MODELOS_BASE_DATOS.md
+  ├─ backend/DIAGRAMA_RELACIONES.md
+  ├─ backend/seed/README.md
+  ├─ frontend/README.md
+  ├─ CHECKLIST_ENTREGA.txt (este proyecto)
+  ├─ CORREO_ENTREGA.txt
+  └─ QUICK_START.txt (este archivo)
+
+═══════════════════════════════════════════════════════════════════════════════
+🔧 SOLUCIÓN DE PROBLEMAS COMUNES
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─ "EADDRINUSE: address already in use :::4000"
+│  → Puerto 4000 ocupado. Cambia PORT en backend/.env o mata el proceso.
+│  
+├─ "Cannot connect to MongoDB"
+│  → Verifica MONGODB_URI en backend/.env
+│  → Asegúrate de que MongoDB Atlas esté accesible
+│  
+├─ "Frontend no conecta con backend"
+│  → Revisa que VITE_API_URL sea correcto en frontend/.env
+│  → Asegúrate de que backend esté corriendo (npm run dev)
+│  
+└─ "Seed fallido"
+   → Asegúrate de que MongoDB esté accesible
+   → Verifica archivos CSV en backend/data/
+
+═══════════════════════════════════════════════════════════════════════════════
+🏗️ ESTRUCTURA BÁSICA A CONOCER
+═══════════════════════════════════════════════════════════════════════════════
+
+BACKEND (backend/src/):
+  app.js              → Configuración de Express
+  controllers/        → Lógica: auth, pistas, reservas
+  models/             → Esquemas MongoDB: User, Pista, Reserva
+  routes/             → Endpoints API
+  middlewares/        → JWT, roles
+  seed/seed.js        → Script de datos de prueba
+
+FRONTEND (frontend/src/):
+  pages/              → Páginas: Home, Pistas, Login, Register, etc.
+  components/         → Componentes reutilizables
+  hooks/              → Custom hooks: useAuth, useFetch, etc.
+  context/            → AuthContext, ReservaContext
+  styles/             → Estilos CSS
+  api/axiosConfig.js  → Configuración HTTP
+
+═══════════════════════════════════════════════════════════════════════════════
+📞 CONTACTO
+═══════════════════════════════════════════════════════════════════════════════
+
+Si tienes dudas o problemas:
+→ Abre un issue en https://github.com/GI-R0/SPORTS/issues
+→ Consulta la documentación en README.md
+
+═══════════════════════════════════════════════════════════════════════════════
+
+¡Listo! Ya puedes empezar a explorar SportifyClub 🎾
+
+═══════════════════════════════════════════════════════════════════════════════
