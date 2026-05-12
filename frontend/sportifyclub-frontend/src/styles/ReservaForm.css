@@ -1,0 +1,94 @@
+.reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.reserva-success {
+  background-color: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+.reserva-error {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+.reserva-field {
+  display: flex;
+  flex-direction: column;
+}
+.reserva-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+.reserva-input,
+.reserva-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.reserva-input:focus,
+.reserva-select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+.reserva-summary {
+  background-color: #eef2ff;
+  border: 2px solid #c7d2fe;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.summary-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+}
+.summary-total {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #4f46e5;
+}
+.summary-detail {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 0.5rem;
+}
+.btn-reservar {
+  width: 100%;
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+}
+.btn-reservar:hover {
+  background-color: #4338ca;
+}
+.btn-reservar:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}

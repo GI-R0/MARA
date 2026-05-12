@@ -1,0 +1,26 @@
+name,email,password,role
+Ana Martínez,ana@sportify.com,123456,club
+Luis García,luis@sportify.com,123456,user
+Carlos Ruiz,carlos@sportify.com,123456,admin
+María López,maria@sportify.com,123456,user
+Pedro Sánchez,pedro@sportify.com,123456,club
+Laura Fernández,laura@sportify.com,123456,user
+Diego Morales,diego@sportify.com,123456,club
+Sofía Pérez,sofia@sportify.com,123456,user
+Javier Romero,javier@sportify.com,123456,club
+Elena Castro,elena@sportify.com,123456,user
+Miguel Ángel,miguel@sportify.com,123456,club
+Carmen Díaz,carmen@sportify.com,123456,user
+Raúl Herrera,raul@sportify.com,123456,club
+Patricia Navarro,patricia@sportify.com,123456,user
+Iker Jiménez,iker@sportify.com,123456,club
+Lucía Ortiz,lucia@sportify.com,123456,user
+Álvaro Vega,alvaro@sportify.com,123456,club
+Natalia Ramos,natalia@sportify.com,123456,user
+Sergio Campos,sergio@sportify.com,123456,club
+Clara Silva,clara@sportify.com,123456,user
+Marcos Torres,marcos@sportify.com,123456,club
+Valeria Cano,valeria@sportify.com,123456,user
+Rubén Molina,ruben@sportify.com,123456,club
+Irene Flores,irene@sportify.com,123456,user
+admin,admin@sportify.com,admin123,admin

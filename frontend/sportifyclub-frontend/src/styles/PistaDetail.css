@@ -1,0 +1,114 @@
+.pista-detail-container {
+  padding: 2rem 1rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+.pista-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.pista-image {
+  width: 100%;
+  height: 24rem;
+  object-fit: cover;
+}
+.pista-content {
+  padding: 2rem;
+}
+@media (min-width: 768px) {
+  .pista-content {
+    padding: 3rem;
+  }
+}
+.pista-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+.pista-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+@media (min-width: 768px) {
+  .pista-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.stat-box {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+}
+.stat-icon {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.stat-value.location {
+  color: #4f46e5;
+  font-size: 1.5rem;
+}
+.stat-value.price {
+  color: #16a34a;
+  font-size: 2.25rem;
+}
+.stat-value.status {
+  color: #2563eb;
+  font-size: 1.5rem;
+}
+.reservation-section {
+  margin-top: 3rem;
+}
+.reservation-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.loading-state {
+  padding: 5rem 0;
+  text-align: center;
+}
+.error-state {
+  padding: 5rem 0;
+  text-align: center;
+}
+.error-box {
+  background-color: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+.error-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #991b1b;
+  margin-bottom: 1rem;
+}
+.error-desc {
+  color: #374151;
+  margin-bottom: 1.5rem;
+}
+.btn-back {
+  display: inline-block;
+  background-color: #4f46e5;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.btn-back:hover {
+  background-color: #4338ca;
+}
