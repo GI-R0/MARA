@@ -50,17 +50,22 @@ export const createReserva = asyncHandler(async (req, res) => {
         .json({ msg: "Hora no disponible para esta pista" });
     }
 
-    const conflicto = await Reserva.findOne({
+    const reservasDia = await Reserva.find({
       pista: pistaId,
+      fecha: fechaDate,
       estado: { $ne: "cancelada" },
-      $or: [
-        { startTime: { $lt: endTime }, endTime: { $gt: startTime } },
-        { startTime: { $gte: startTime, $lt: endTime } },
-        { endTime: { $gt: startTime, $lte: endTime } },
-      ],
     }).session(session);
 
-    if (conflicto) {
+    const newStartHour = parseInt(hora.split(":")[0], 10);
+    const newEndHour = newStartHour + duracion;
+
+    const tieneConflicto = reservasDia.some((r) => {
+      const rStartHour = parseInt(r.hora.split(":")[0], 10);
+      const rEndHour = rStartHour + r.duracion;
+      return newStartHour < rEndHour && newEndHour > rStartHour;
+    });
+
+    if (tieneConflicto) {
       await session.abortTransaction();
       return res
         .status(400)
@@ -78,6 +83,7 @@ export const createReserva = asyncHandler(async (req, res) => {
           hora,
           duracion,
           total,
+          estado: "confirmada",
         },
       ],
       { session },

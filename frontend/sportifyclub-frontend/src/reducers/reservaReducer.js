@@ -51,6 +51,7 @@ export const reservaReducer = (state, action) => {
       const newReservas = [...state.reservas, action.payload];
       return {
         ...state,
+        loading: false,
         reservas: newReservas,
         filteredReservas: applyFiltersAndSort(
           newReservas,
@@ -67,6 +68,7 @@ export const reservaReducer = (state, action) => {
       );
       return {
         ...state,
+        loading: false,
         reservas: updatedReservas,
         filteredReservas: applyFiltersAndSort(
           updatedReservas,
@@ -83,6 +85,7 @@ export const reservaReducer = (state, action) => {
       );
       return {
         ...state,
+        loading: false,
         reservas: remainingReservas,
         filteredReservas: applyFiltersAndSort(
           remainingReservas,
@@ -113,6 +116,7 @@ export const reservaReducer = (state, action) => {
       };
       return {
         ...state,
+        loading: false,
         filters: newFilters,
         filteredReservas: applyFiltersAndSort(
           state.reservas,
@@ -130,6 +134,7 @@ export const reservaReducer = (state, action) => {
       };
       return {
         ...state,
+        loading: false,
         filters: dateFilters,
         filteredReservas: applyFiltersAndSort(
           state.reservas,
@@ -143,6 +148,7 @@ export const reservaReducer = (state, action) => {
     case reservaActions.SORT_RESERVAS:
       return {
         ...state,
+        loading: false,
         sortBy: action.payload.sortBy,
         sortOrder: action.payload.sortOrder,
         filteredReservas: applyFiltersAndSort(
@@ -156,6 +162,7 @@ export const reservaReducer = (state, action) => {
     case reservaActions.RESET_FILTERS:
       return {
         ...state,
+        loading: false,
         filters: initialReservaState.filters,
         sortBy: initialReservaState.sortBy,
         sortOrder: initialReservaState.sortOrder,

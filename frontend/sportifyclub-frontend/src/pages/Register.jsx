@@ -29,8 +29,8 @@ export default function Register() {
       setError("Las contraseñas no coinciden");
       return;
     }
-    if (formData.password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
+    if (formData.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres, mayúscula, minúscula, número y carácter especial");
       return;
     }
     if (!formData.nombre || !formData.email) {
@@ -53,7 +53,13 @@ export default function Register() {
         },
       });
     } catch (err) {
-      const mensaje = err.response?.data?.msg || "Error al crear la cuenta";
+      const errors = err.response?.data?.errors;
+      let mensaje = err.response?.data?.msg || "Error al crear la cuenta";
+      
+      if (errors && Array.isArray(errors) && errors.length > 0) {
+        mensaje = errors[0].msg;
+      }
+      
       setError(mensaje);
     } finally {
       setLoading(false);
@@ -115,9 +121,9 @@ export default function Register() {
                   value={formData.password}
                   onChange={handleChange}
                   className="form-input"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Mín. 8 caracteres, mayúscula, número y carácter especial"
                   required
-                  minLength="6"
+                  minLength="8"
                   disabled={loading}
                 />
               </div>
