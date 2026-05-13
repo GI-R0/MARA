@@ -11,5 +11,8 @@
       "src": "/(.*)",
       "dest": "src/app.js"
     }
-  ]
+  ],
+  "env": {
+    "FRONTEND_URL": "https://mara-hta9.vercel.app"
+  }
 }
