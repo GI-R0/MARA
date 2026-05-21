@@ -50,16 +50,19 @@ export const register = async (req, res) => {
     const { accessToken, refreshToken } = await generateTokens(user);
 
     const userResponse = user.toJSON();
-    res.cookie("token", accessToken, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax",
+      path: "/",
+    };
+
+    res.cookie("token", accessToken, {
+      ...cookieOptions,
       maxAge: 15 * 60 * 1000, // 15 minutos
     });
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
     });
     res.status(201).json({
@@ -94,16 +97,19 @@ export const login = async (req, res) => {
     const { accessToken, refreshToken } = await generateTokens(user);
 
     const userResponse = user.toJSON();
-    res.cookie("token", accessToken, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax",
+      path: "/",
+    };
+
+    res.cookie("token", accessToken, {
+      ...cookieOptions,
       maxAge: 15 * 60 * 1000, // 15 minutos
     });
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
     });
     res.json({ user: userResponse });
@@ -157,16 +163,19 @@ export const refreshToken = async (req, res) => {
     await RefreshToken.deleteOne({ _id: storedToken._id });
 
     // Setear nuevas cookies
-    res.cookie("token", accessToken, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
+      sameSite: "lax",
+      path: "/",
+    };
+
+    res.cookie("token", accessToken, {
+      ...cookieOptions,
+      maxAge: 15 * 60 * 60 * 1000,
     });
     res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -187,8 +196,8 @@ export const logout = async (req, res) => {
     }
 
     // Limpiar cookies
-    res.clearCookie("token");
-    res.clearCookie("refreshToken");
+    res.clearCookie("token", { path: "/" });
+    res.clearCookie("refreshToken", { path: "/" });
 
     res.json({ msg: "Logout exitoso" });
   } catch (err) {

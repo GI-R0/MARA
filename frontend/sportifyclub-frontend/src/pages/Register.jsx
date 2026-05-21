@@ -28,16 +28,30 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
+    if (!formData.nombre || !formData.email || !formData.password) {
+      setError("Completa todos los campos");
+      return;
+    }
+
     if (formData.password !== formData.confirmarPassword) {
       setError("Las contraseñas no coinciden");
       return;
     }
-    if (formData.password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
+
+    if (formData.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres");
       return;
     }
-    if (!formData.nombre || !formData.email) {
-      setError("Completa todos los campos");
+
+    const hasUpper = /[A-Z]/.test(formData.password);
+    const hasLower = /[a-z]/.test(formData.password);
+    const hasNumber = /[0-9]/.test(formData.password);
+    const hasSpecial = /[@$!%*?&]/.test(formData.password);
+
+    if (!hasUpper || !hasLower || !hasNumber || !hasSpecial) {
+      setError(
+        "La contraseña debe incluir mayúscula, minúscula, número y carácter especial",
+      );
       return;
     }
 
@@ -56,7 +70,15 @@ export default function Register() {
         },
       });
     } catch (err) {
-      const mensaje = err.response?.data?.msg || "Error al crear la cuenta";
+      const responseData = err.response?.data;
+      let mensaje = "Error al crear la cuenta";
+      if (responseData?.errors && Array.isArray(responseData.errors)) {
+        mensaje = responseData.errors
+          .map((error) => error.msg || error.message || error)
+          .join(". ");
+      } else if (responseData?.msg) {
+        mensaje = responseData.msg;
+      }
       setError(mensaje);
     } finally {
       setLoading(false);
