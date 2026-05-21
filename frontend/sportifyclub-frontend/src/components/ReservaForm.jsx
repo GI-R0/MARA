@@ -60,18 +60,7 @@ export default function ReservaForm({
     return durNum >= 1 && durNum <= 3;
   };
 
-  const validateHourFormat = (hourString) => {
-    return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(hourString);
-  };
 
-  const isHourAvailable = (selectedHour) => {
-    return availableTimes.includes(selectedHour);
-  };
-
-  const isValidDuration = (dur) => {
-    const durNum = Number(dur);
-    return durNum >= 1 && durNum <= 3;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

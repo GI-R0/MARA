@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axiosConfig";
+import { Eye, EyeOff } from "lucide-react";
 import "../styles/Auth.css";
 
 export default function Register() {
@@ -10,6 +11,8 @@ export default function Register() {
     password: "",
     confirmarPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -109,31 +112,73 @@ export default function Register() {
 
               <div className="form-group">
                 <label className="form-label">Contraseña</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="form-input"
-                  placeholder="Mínimo 6 caracteres"
-                  required
-                  minLength="6"
-                  disabled={loading}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="form-input"
+                    placeholder="Mínimo 6 caracteres"
+                    required
+                    minLength="6"
+                    disabled={loading}
+                    style={{ paddingRight: "40px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      color: "var(--gray-600)",
+                      cursor: "pointer",
+                      padding: "4px"
+                    }}
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
 
               <div className="form-group">
                 <label className="form-label">Confirmar contraseña</label>
-                <input
-                  type="password"
-                  name="confirmarPassword"
-                  value={formData.confirmarPassword}
-                  onChange={handleChange}
-                  className="form-input"
-                  placeholder="Repite tu contraseña"
-                  required
-                  disabled={loading}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmarPassword"
+                    value={formData.confirmarPassword}
+                    onChange={handleChange}
+                    className="form-input"
+                    placeholder="Repite tu contraseña"
+                    required
+                    disabled={loading}
+                    style={{ paddingRight: "40px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      color: "var(--gray-600)",
+                      cursor: "pointer",
+                      padding: "4px"
+                    }}
+                    aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  >
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
 
               <button type="submit" disabled={loading} className="btn-submit">
