@@ -198,7 +198,7 @@ export const updatePista = async (req, res) => {
 
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
 
-    if (pista.club.toString() !== req.user._id.toString()) {
+    if (req.user.role !== "admin" && pista.club.toString() !== req.user._id.toString()) {
       return res
         .status(403)
         .json({ msg: "No tienes permiso para actualizar esta pista" });
@@ -223,7 +223,7 @@ export const deletePista = async (req, res) => {
     const pista = await Pista.findById(req.params.id);
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
 
-    if (pista.club.toString() !== req.user._id.toString()) {
+    if (req.user.role !== "admin" && pista.club.toString() !== req.user._id.toString()) {
       return res
         .status(403)
         .json({ msg: "No tienes permiso para eliminar esta pista" });

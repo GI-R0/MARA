@@ -43,12 +43,22 @@ export const createReserva = async (req, res) => {
     const startTime = new Date(`${fechaStr}T${hora}:00`);
     const endTime = addHours(startTime, duracion);
 
-    // Verificar que la hora esté en horariosDisponibles (al menos la inicial)
-    if (!pista.horariosDisponibles?.includes(hora)) {
+    // Verificar que todos los intervalos de la reserva estén disponibles
+    const requestedHours = Array.from({ length: duracion }, (_, index) => {
+      const hour = startTime.getHours() + index;
+      return `${String(hour).padStart(2, "0")}:00`;
+    });
+
+    const unavailableHours = requestedHours.filter(
+      (h) => !pista.horariosDisponibles?.includes(h),
+    );
+
+    if (unavailableHours.length) {
       await session.abortTransaction();
-      return res
-        .status(400)
-        .json({ msg: "Hora no disponible para esta pista" });
+      return res.status(400).json({
+        msg: "La reserva no se puede crear porque algunos horarios no están disponibles",
+        horariosNoDisponibles: unavailableHours,
+      });
     }
 
     // Verificar conflictos: si hay alguna reserva que se solape

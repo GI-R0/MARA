@@ -96,7 +96,7 @@ pistaSchema.methods.calcularRatingPromedio = function () {
     this.ratingPromedio = 0;
   } else {
     const suma = this.ratings.reduce((acc, r) => acc + r.puntuacion, 0);
-    this.ratingPromedio = (suma / this.ratings.length).toFixed(1);
+    this.ratingPromedio = Number((suma / this.ratings.length).toFixed(1));
   }
   return this.ratingPromedio;
 };

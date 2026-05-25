@@ -8,6 +8,14 @@ export const errorHandler = (err, req, res, next) => {
   console.error("[ERROR]", err.message);
   console.error(err.stack);
 
+  if (err.array && typeof err.array === "function") {
+    const errors = err.array();
+    return res.status(400).json({
+      msg: "Error de validación",
+      errors: errors.map((e) => ({ field: e.param, message: e.msg })),
+    });
+  }
+
   // Errores de validación de Mongoose
   if (err.name === "ValidationError") {
     const errors = Object.values(err.errors).map((e) => e.message);
@@ -16,8 +24,8 @@ export const errorHandler = (err, req, res, next) => {
 
   // Errores de duplicado (índice único)
   if (err.code === 11000) {
-    const field = Object.keys(err.keyValue)[0];
-    return res.status(409).json({ msg: `El ${field} ya existe` });
+    const field = Object.keys(err.keyValue || err.keyPattern || {})[0];
+    return res.status(409).json({ msg: `El ${field || "campo"} ya existe` });
   }
 
   // Errores de JWT
