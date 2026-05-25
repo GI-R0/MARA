@@ -14,9 +14,16 @@ API.interceptors.response.use(
   (res) => res,
   (error) => {
     if (error.response?.status === 401) {
-      // Token HttpOnly expirado, redirigir a login
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
+      // No redirigir automáticamente cuando la solicitud es para comprobar sesión.
+      const requestUrl = error.config?.url;
+      if (
+        requestUrl !== "/auth/login" &&
+        requestUrl !== "/auth/refresh" &&
+        requestUrl !== "/auth/me"
+      ) {
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
+        }
       }
     } else if (error.response?.status === 403) {
       console.warn("Acceso denegado (403):", error.response.data.msg);

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8d77b" />
+      <stop offset="100%" stop-color="#c3d17b" />
+    </linearGradient>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4fa84b" />
+      <stop offset="100%" stop-color="#2f6e27" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#sky)" />
+  <rect y="220" width="600" height="180" fill="url(#grass)" />
+  <g opacity="0.35">
+    <rect x="80" y="40" width="440" height="220" rx="20" fill="#ffffff" />
+    <rect x="100" y="60" width="400" height="180" fill="#d5e3f1" />
+  </g>
+  <g transform="translate(260 120) scale(1.2)">
+    <circle cx="80" cy="120" r="78" fill="#ffffff" stroke="#222" stroke-width="10" />
+    <polygon points="80,40 115,80 80,120 45,80" fill="#222" />
+    <polygon points="80,40 125,54 115,80 80,120 45,80 35,54" fill="#fff" stroke="#222" stroke-width="4" />
+    <polygon points="80,120 60,160 85,180 105,160" fill="#222" />
+    <polygon points="80,40 105,60 135,62 135,98 105,112 80,120 55,112 25,98 25,62 55,60" fill="#fff" stroke="#222" stroke-width="4" />
+    <path d="M80 40 L105 60 L135 62 L135 98 L105 112 L80 120 L55 112 L25 98 L25 62 L55 60 Z" fill="none" stroke="#222" stroke-width="4" />
+    <polygon points="80,40 105,60 80,84 55,60" fill="#222" />
+    <polygon points="55,60 80,84 55,108 30,84" fill="#222" />
+    <polygon points="80,84 105,108 80,132 55,108" fill="#222" />
+  </g>
+  <g opacity="0.2">
+    <ellipse cx="300" cy="330" rx="250" ry="40" fill="#000" />
+  </g>
+</svg>

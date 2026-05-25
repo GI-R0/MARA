@@ -40,7 +40,8 @@ const pistaSchema = new mongoose.Schema(
     },
     imagen: {
       type: String,
-      default: "https://via.placeholder.com/600x300?text=Pista+Sin+Imagen",
+      default:
+        "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
     },
     iluminacion: {
       type: Boolean,

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 export default function CardPista({ pista }) {
   const defaultImages = {
     pádel:
-      "https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=800&q=80",
+      "https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80&crop=entropy",
     tenis:
       "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
     "fútbol 5":
-      "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&q=80",
+      "https://images.unsplash.com/photo-1503596476-1b2f4b900358?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80&crop=entropy",
     fútbol:
       "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80",
     baloncesto:
@@ -18,8 +18,13 @@ export default function CardPista({ pista }) {
       "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
   };
 
+  const isPlaceholderImage = (url) =>
+    typeof url === "string" && url.includes("via.placeholder.com");
+
+  const fallbackPath = "/fallback-ball.svg";
+
   const getImageUrl = () => {
-    if (pista.imagen) return pista.imagen;
+    if (pista.imagen && !isPlaceholderImage(pista.imagen)) return pista.imagen;
     const deporte = (pista.deporte || "").toLowerCase();
     return defaultImages[deporte] || defaultImages.default;
   };
@@ -36,6 +41,10 @@ export default function CardPista({ pista }) {
           alt={pista.nombre}
           className="card-image"
           loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = fallbackPath;
+          }}
         />
         <div className="card-overlay"></div>
 
