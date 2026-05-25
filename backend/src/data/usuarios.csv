@@ -1,26 +1,51 @@
 name,email,password,role
-Ana Martínez,ana@sportify.com,123456,club
-Luis García,luis@sportify.com,123456,user
-Carlos Ruiz,carlos@sportify.com,123456,admin
-María López,maria@sportify.com,123456,user
-Pedro Sánchez,pedro@sportify.com,123456,club
-Laura Fernández,laura@sportify.com,123456,user
-Diego Morales,diego@sportify.com,123456,club
-Sofía Pérez,sofia@sportify.com,123456,user
-Javier Romero,javier@sportify.com,123456,club
-Elena Castro,elena@sportify.com,123456,user
-Miguel Ángel,miguel@sportify.com,123456,club
-Carmen Díaz,carmen@sportify.com,123456,user
-Raúl Herrera,raul@sportify.com,123456,club
-Patricia Navarro,patricia@sportify.com,123456,user
-Iker Jiménez,iker@sportify.com,123456,club
-Lucía Ortiz,lucia@sportify.com,123456,user
-Álvaro Vega,alvaro@sportify.com,123456,club
-Natalia Ramos,natalia@sportify.com,123456,user
-Sergio Campos,sergio@sportify.com,123456,club
-Clara Silva,clara@sportify.com,123456,user
-Marcos Torres,marcos@sportify.com,123456,club
-Valeria Cano,valeria@sportify.com,123456,user
-Rubén Molina,ruben@sportify.com,123456,club
-Irene Flores,irene@sportify.com,123456,user
-admin,admin@sportify.com,admin123,admin
+Admin Sportify,admin@sportify.com,admin123,admin
+Ernestine Boyer-Swift,Isadore7@gmail.com,password123,user
+Leo Boyer DDS,Walker96@gmail.com,password123,club
+Thaddeus Sanford,Enoch.Morissette@yahoo.com,password123,user
+Olive Harris,Leda_Jones6@hotmail.com,password123,club
+Trevion Miller,Vincent.King31@yahoo.com,password123,club
+Bernhard Kuphal MD,Timmy_Schmidt4@yahoo.com,password123,club
+Mr. Ramiro Dickens,Alexis.Sporer@yahoo.com,password123,club
+Andrew Romaguera,Roxane17@yahoo.com,password123,user
+Celine Gislason,Clayton_OReilly67@gmail.com,password123,club
+Alvina Emard,Harriet48@gmail.com,password123,user
+Randy Johns,Michele.Torp@gmail.com,password123,admin
+Jeannie Farrell,Amy66@gmail.com,password123,user
+Brianne Smith,Stella74@yahoo.com,password123,user
+Ernest Dicki,Avery.Mosciski95@hotmail.com,password123,user
+Carla O'Conner,Velma_Lang@hotmail.com,password123,user
+Mr. Jared McDermott,Cesar99@yahoo.com,password123,club
+Keara Lemke,Augustus97@gmail.com,password123,user
+Gilda Runolfsdottir,Rylan.Nikolaus5@gmail.com,password123,club
+Nat Hahn,Maryam14@hotmail.com,password123,user
+Queenie Batz,Ardith82@gmail.com,password123,admin
+Lionel Senger III,Darby.Wintheiser32@hotmail.com,password123,admin
+Ms. Tabitha Cole,Candice.Cartwright36@hotmail.com,password123,club
+Gia Armstrong,Keaton18@yahoo.com,password123,admin
+Zachary Kreiger,General_Abbott18@hotmail.com,password123,admin
+Rosalie Willms-Wehner,Matt.Muller@gmail.com,password123,admin
+Brianne Mraz,Rebeca89@hotmail.com,password123,club
+Dr. Russell Rath,Chasity0@yahoo.com,password123,user
+Angelina Okuneva DVM,Sonny_Howell@yahoo.com,password123,user
+Rosemarie Mills,Amiya_Baumbach@gmail.com,password123,admin
+Jevon Schmidt Jr.,Linda.Orn@yahoo.com,password123,user
+Concepcion Bayer,Ruby.Hackett@gmail.com,password123,club
+Roy McGlynn,Nathaniel11@gmail.com,password123,user
+Teresa Jenkins,Madaline_Donnelly@hotmail.com,password123,club
+Mr. Bill Schroeder,Marty17@hotmail.com,password123,club
+Roberta Feeney,Dewey33@gmail.com,password123,user
+Hubert Nicolas,Rosalind3@hotmail.com,password123,user
+Marco Jacobs,Debbie_Marvin@hotmail.com,password123,club
+Nikita Windler,Phoebe.Balistreri@hotmail.com,password123,user
+Nicolette Bechtelar,Katie44@yahoo.com,password123,club
+Dave Rolfson,Bessie_Spinka@yahoo.com,password123,admin
+Darla Kuphal,Darnell_Roob@hotmail.com,password123,club
+Matthew Collier,Hugo.Jones50@yahoo.com,password123,admin
+Rusty Marks,Jeanette_Hoppe@yahoo.com,password123,admin
+Efren Haag,Cornell_Windler31@yahoo.com,password123,user
+Dr. Louis Koch,Allan_Howell8@yahoo.com,password123,user
+Nannie Crona,Owen51@hotmail.com,password123,club
+Candace Boyer,Alexa.Kling83@yahoo.com,password123,admin
+Tremayne Ledner,Prudence_Klein@gmail.com,password123,admin
+Tommy Halvorson,Chaya.Blick54@hotmail.com,password123,admin

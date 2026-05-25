@@ -7,138 +7,81 @@ function generateUsers(numUsers = 50) {
   const roles = ["user", "club", "admin"];
 
   users.push({
-    id: faker.string.uuid(),
-    nombre: "Admin",
-    apellido: "Sportify",
+    name: "Admin Sportify",
     email: "admin@sportify.com",
     password: "admin123",
-
-    rol: "admin",
-    telefono: "123456789",
-    fechaRegistro: new Date(),
+    role: "admin",
   });
+  
   for (let i = 1; i < numUsers; i++) {
     users.push({
-      id: faker.string.uuid(),
-      nombre: faker.person.firstName(),
-      apellido: faker.person.lastName(),
+      name: faker.person.fullName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
-      rol: faker.helpers.arrayElement(roles),
-      telefono: faker.phone.number(),
-      fechaRegistro: faker.date.past(),
+      password: "password123",
+      role: faker.helpers.arrayElement(roles),
     });
   }
   return users;
 }
 
-function generatePistas(numPistas = 50, clubIds) {
+function generatePistas(numPistas = 50, clubs) {
   const pistas = [];
   const deportes = ["Pádel", "Tenis", "Fútbol 5", "Baloncesto", "Voleibol"];
-  const superficies = [
-    "Moqueta",
-    "Tierra batida",
-    "Cemento",
-    "Césped",
-    "Sintética",
-  ];
+  const superficies = ["Moqueta", "Tierra batida", "Cemento", "Césped", "Madera"];
+  
   for (let i = 0; i < numPistas; i++) {
     pistas.push({
-      id: faker.string.uuid(),
-      nombre: `Pista ${i + 1}`,
+      nombre: `Pista ${faker.word.adjective()} ${i + 1}`,
       deporte: faker.helpers.arrayElement(deportes),
       precioHora: faker.number.int({ min: 10, max: 50 }),
       ubicacion: faker.location.city(),
-      clubId: faker.helpers.arrayElement(clubIds),
+      clubEmail: faker.helpers.arrayElement(clubs).email,
       imagen: "",
-      iluminacion: faker.datatype.boolean(),
+      iluminacion: faker.datatype.boolean().toString(),
       superficie: faker.helpers.arrayElement(superficies),
+      horariosDisponibles: JSON.stringify(["09:00", "10:00", "11:00", "12:00", "16:00", "17:00", "18:00"])
     });
   }
   return pistas;
 }
 
-function generateReservas(numReservas = 50, userIds, pistaIds) {
+function generateReservas(numReservas = 50, usersList, pistasList) {
   const reservas = [];
   for (let i = 0; i < numReservas; i++) {
-    const fecha = faker.date.future();
     reservas.push({
-      id: faker.string.uuid(),
-      usuarioId: faker.helpers.arrayElement(userIds),
-      pistaId: faker.helpers.arrayElement(pistaIds),
-      fecha: fecha.toISOString().split("T")[0],
-      horaInicio: faker.helpers.arrayElement([
-        "09:00",
-        "10:00",
-        "11:00",
-        "12:00",
-        "13:00",
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-      ]),
+      userEmail: faker.helpers.arrayElement(usersList).email,
+      pistaNombre: faker.helpers.arrayElement(pistasList).nombre,
+      fecha: faker.date.future().toISOString().split("T")[0],
+      hora: faker.helpers.arrayElement(["09:00", "10:00", "11:00", "12:00", "16:00", "17:00", "18:00"]),
       duracion: faker.helpers.arrayElement([1, 2]),
-      precioTotal: faker.number.int({ min: 10, max: 100 }),
-      estado: faker.helpers.arrayElement([
-        "pendiente",
-        "confirmada",
-        "cancelada",
-      ]),
     });
   }
   return reservas;
 }
 
 const users = generateUsers(50);
-const clubIds = users.filter((u) => u.rol === "club").map((u) => u.id);
-const pistas = generatePistas(50, clubIds);
-const userIds = users.map((u) => u.id);
-
-const pistaIds = pistas.map((p) => p.id);
-
-const reservas = generateReservas(50, userIds, pistaIds);
+const clubs = users.filter((u) => u.role === "club");
+if (clubs.length === 0) clubs.push(users[0]); // fallback
+const pistas = generatePistas(50, clubs);
+const reservas = generateReservas(50, users, pistas);
 
 function writeCSV(filename, data, headers) {
   const csv = [headers.join(",")];
   data.forEach((item) => {
-    const row = headers.map((h) => item[h] || "");
+    const row = headers.map((h) => {
+      let val = item[h] || "";
+      if (typeof val === "string" && val.includes(",")) return `"${val}"`;
+      return val;
+    });
     csv.push(row.join(","));
   });
-  fs.writeFileSync(path.join("data", filename), csv.join("\n"));
+  const dir = path.join(process.cwd(), "src", "data");
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, filename), csv.join("\n"));
 }
 
-writeCSV("usuarios.csv", users, [
-  "id",
-  "nombre",
-  "apellido",
-  "email",
-  "password",
-  "rol",
-  "telefono",
-  "fechaRegistro",
-]);
-writeCSV("pistas.csv", pistas, [
-  "id",
-  "nombre",
-  "deporte",
-  "precioHora",
-  "ubicacion",
-  "clubId",
-  "imagen",
-  "iluminacion",
-  "superficie",
-]);
-writeCSV("reservas.csv", reservas, [
-  "id",
-  "usuarioId",
-  "pistaId",
-  "fecha",
-  "horaInicio",
-  "duracion",
-  "precioTotal",
-  "estado",
-]);
+writeCSV("usuarios.csv", users, ["name", "email", "password", "role"]);
+writeCSV("pistas.csv", pistas, ["nombre", "deporte", "precioHora", "ubicacion", "clubEmail", "imagen", "iluminacion", "superficie", "horariosDisponibles"]);
+writeCSV("reservas.csv", reservas, ["userEmail", "pistaNombre", "fecha", "hora", "duracion"]);
 
-console.log("Datos generados y guardados en CSV.");
+console.log("Datos generados y guardados en CSV compatibles con seed.js.");

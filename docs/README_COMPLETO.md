@@ -92,12 +92,13 @@ SportifyClub es una **plataforma web completa** para la reserva de instalaciones
 ### 🔄 Flujo de Datos Típico
 
 ```
-1. Usuario abre app → AuthContext verifica localStorage
-2. Navega a /pistas → GET /api/pistas
-3. Selecciona pista → GET /api/pistas/:id
-4. Hace reserva → POST /api/reservas (con JWT)
-5. Backend valida token → crea Reserva + actualiza Pista
-6. Frontend muestra confirmación → redirige a /mis-reservas
+1. Usuario se registra (/auth/register) o inicia sesión (/auth/login)
+2. Usuario abre app → AuthContext verifica localStorage
+3. Navega a /pistas → GET /api/pistas
+4. Selecciona pista → GET /api/pistas/:id
+5. Hace reserva → POST /api/reservas (con JWT)
+6. Backend valida token → crea Reserva + actualiza Pista
+7. Frontend muestra confirmación → redirige a /mis-reservas
 ```
 
 ---
@@ -218,9 +219,9 @@ npm run seed
 ```
 
 Esto crea:
-- **30 usuarios** (5 clubs, 25 players)
-- **30 pistas** deportivas
-- **100 reservas** de ejemplo
+- **50 usuarios** (jugadores, clubs y admins)
+- **50 pistas** deportivas
+- **50 reservas** de ejemplo
 
 ### Paso 6: Ejecutar la Aplicación
 
@@ -339,9 +340,9 @@ SportifyClub utiliza **MongoDB** con **3 colecciones principales** relacionadas.
 ### 🔗 Relaciones
 
 ```
-User (club) ───1:N───→ Pista
-                      │
-                      └──1:N───→ Reserva ←───N:1─── User (jugador)
+User ───1:N───→ Pista (como club)
+  │
+  └───1:N───→ Reserva (como jugador)
 ```
 
 **Índices Optimizados:**
@@ -357,32 +358,35 @@ User (club) ───1:N───→ Pista
 Base URL: `http://localhost:4000/api`
 
 ### Autenticación
-```
-POST   /auth/register          → Crear cuenta
-POST   /auth/login             → Login
-GET    /auth/me               → Datos usuario actual (requiere JWT)
-```
+
+| Método | Endpoint | Descripción | Permisos |
+|--------|----------|-------------|----------|
+| POST | `/auth/register` | Crear cuenta | Público |
+| POST | `/auth/login` | Login | Público |
+| GET | `/auth/me` | Datos usuario actual | Requiere JWT |
 
 ### Pistas
-```
-GET    /pistas                 → Todas las pistas
-GET    /pistas/:id             → Detalles de pista
-GET    /pistas/estadisticas    → Dashboard club (club/admin)
-GET    /pistas/club/:clubId    → Pistas de un club
-POST   /pistas                 → Crear pista (club/admin)
-PUT    /pistas/:id             → Editar pista (club/admin)
-DELETE /pistas/:id             → Eliminar pista (club/admin)
-```
+
+| Método | Endpoint | Descripción | Permisos |
+|--------|----------|-------------|----------|
+| GET | `/pistas` | Todas las pistas | Público |
+| GET | `/pistas/:id` | Detalles de pista | Público |
+| GET | `/pistas/estadisticas` | Dashboard club | Club/Admin |
+| GET | `/pistas/club/:clubId` | Pistas de un club | Público |
+| POST | `/pistas` | Crear pista | Club/Admin |
+| PUT | `/pistas/:id` | Editar pista | Club/Admin |
+| DELETE | `/pistas/:id` | Eliminar pista | Club/Admin |
 
 ### Reservas
-```
-GET    /reservas               → Todas las reservas (admin)
-GET    /reservas/mis-reservas  → Mis reservas (autenticado)
-GET    /reservas/:id           → Detalles reserva
-POST   /reservas               → Crear reserva (autenticado)
-PUT    /reservas/:id           → Actualizar reserva (owner/admin)
-DELETE /reservas/:id           → Cancelar reserva (owner/admin)
-```
+
+| Método | Endpoint | Descripción | Permisos |
+|--------|----------|-------------|----------|
+| GET | `/reservas` | Todas las reservas | Admin |
+| GET | `/reservas/mis-reservas` | Mis reservas | Autenticado |
+| GET | `/reservas/:id` | Detalles reserva | Autenticado |
+| POST | `/reservas` | Crear reserva | Autenticado |
+| PUT | `/reservas/:id` | Actualizar reserva | Owner/Admin |
+| DELETE | `/reservas/:id` | Cancelar reserva | Owner/Admin |
 
 ### Headers Requeridos
 ```javascript
@@ -563,6 +567,7 @@ sportifyclub/
 ├── backend/                       # 🖥️ API REST
 │   ├── 📄 package.json
 │   ├── 📄 README.md
+│   ├── 📄 vercel.json             # Deploy a Vercel
 │   ├── src/
 │   │   ├── 📄 app.js              # Config Express + rutas
 │   │   ├── config/
@@ -583,54 +588,33 @@ sportifyclub/
 │   │   │   ├── 📄 auth.routes.js
 │   │   │   ├── 📄 pista.routes.js
 │   │   │   └── 📄 reserva.routes.js
-│   │   ├── seed/                  # 🌱 Datos iniciales
-│   │   │   ├── 📄 seed.js
-│   │   │   └── 📄 README.md
-│   │   └── tools/                 # 🔧 Utilidades
-│   └── data/                      # 📊 CSV para seeding
-│       ├── 📄 usuarios.csv
-│       ├── 📄 pistas.csv
-│       └── 📄 reservas.csv
+│   │   ├── data/                  # 📊 CSV para seeding generados
+│   │   ├── tools/                 # 🔧 Utilidades (generateData.js)
+│   │   └── validators/            # Validadores de entrada
+│   └── seed/                      # 🌱 Datos iniciales
+│       └── 📄 seed.js
 │
 └── frontend/                      # 🌐 Interfaz React
-    ├── 📄 README.md
-    ├── 📄 package.json
-    ├── 📄 vite.config.js
-    ├── 📄 index.html
-    ├── public/
-    │   └── images/
-    ├── src/
-    │   ├── 📄 main.jsx         # Entrada React
-    │   ├── 📄 App.jsx          # Rutas SPA
-    │   ├── api/
-    │   │   └── 📄 axiosConfig.js # Cliente HTTP
-    │   ├── components/         # 🧩 UI reutilizable
-    │   │   ├── 📄 CardPista.jsx
-    │   │   ├── 📄 ReservaForm.jsx
-    │   │   ├── 📄 Navbar.jsx
-    │   │   └── 📄 Footer.jsx
-    │   ├── context/            # 📦 Estado global
-    │   │   ├── 📄 AuthContext.jsx
-    │   │   └── 📄 ReservaContext.jsx
-    │   ├── hooks/              # 🎣 Lógica reutilizable
-    │   │   ├── 📄 useAuth.js
-    │   │   ├── 📄 useFetch.js
-    │   │   └── 📄 useFormValidation.js
-    │   ├── pages/              # 📱 Vistas principales
-    │   │   ├── 📄 Home.jsx
-    │   │   ├── 📄 Pistas.jsx
-    │   │   ├── 📄 Login.jsx
-    │   │   ├── 📄 Register.jsx
-    │   │   ├── 📄 MisReservas.jsx
-    │   │   └── 📄 GestionPistas.jsx
-    │   ├── reducers/           # 🔄 Estado complejo
-    │   │   └── 📄 reservaReducer.js
-    │   └── styles/             # 🎨 CSS modular
-    │       ├── 📄 styles.css    # Variables globales
-    │       ├── 📄 Pistas.css
-    │       └── 📄 ReservaForm.css
-    └── scripts/                # 🔧 Utilidades frontend
-        └── 📄 fetchPistas.js
+    ├── sportifyclub-frontend/
+        ├── 📄 README.md
+        ├── 📄 package.json
+        ├── 📄 vite.config.js
+        ├── 📄 index.html
+        ├── public/
+        ├── src/
+        │   ├── 📄 main.jsx         # Entrada React
+        │   ├── 📄 App.jsx          # Rutas SPA
+        │   ├── api/
+        │   │   └── 📄 axiosConfig.js # Cliente HTTP
+        │   ├── components/         # 🧩 UI reutilizable
+        │   ├── context/            # 📦 Estado global
+        │   │   ├── 📄 AuthContext.jsx
+        │   │   └── 📄 ReservaContext.jsx
+        │   ├── hooks/              # 🎣 Lógica reutilizable
+        │   ├── pages/              # 📱 Vistas principales
+        │   ├── reducers/           # 🔄 Estado complejo
+        │   │   └── 📄 reservaReducer.js
+        │   └── styles/             # 🎨 CSS modular
 ```
 
 ---

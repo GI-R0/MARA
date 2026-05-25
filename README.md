@@ -66,7 +66,7 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/GI-R0/SPORTS.git
+   git clone https://github.com/GI-R0/mara.git
    cd sportifyclub
    ```
 
@@ -88,11 +88,16 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
    npm run dev
    ```
 
-### Acceso
+### Acceso Local
 
 - **Frontend**: http://localhost:5173
 - **Backend**: http://localhost:4000
 - **Admin**: admin@sportify.com / admin123
+
+### Acceso Desplegado (Producción)
+
+- **Frontend**: https://mara-hta9.vercel.app
+- **Backend**: https://sportifyclub-backend.vercel.app/api
 
 ## 📁 Estructura del Proyecto
 
@@ -105,8 +110,9 @@ sportifyclub/
 │   │   ├── routes/       # Definición de rutas
 │   │   ├── middlewares/  # Middlewares personalizados
 │   │   ├── validators/   # Validaciones de entrada
-│   │   └── tools/        # Scripts y Seeders (generateData.js, seed.js)
-│   └── data/             # Archivos CSV de datos
+│   │   ├── data/         # Archivos CSV generados
+│   │   └── tools/        # Scripts y Seeders (generateData.js)
+│   └── seed/             # Datos iniciales (seed.js)
 ├── frontend/         # 🌐 Interfaz React
 │   └── sportifyclub-frontend/
 │       ├── src/
@@ -114,6 +120,7 @@ sportifyclub/
 │       │   ├── pages/       # Páginas principales
 │       │   ├── hooks/       # Hooks personalizados
 │       │   ├── context/     # Contextos React
+│       │   ├── reducers/    # Reducers (reservaReducer)
 │       │   ├── api/         # Configuración Axios
 │       │   └── styles/      # Estilos CSS
 │       └── public/          # Assets estáticos
@@ -174,11 +181,9 @@ Esto crea 150+ registros distribuidos en 3 colecciones relacionadas:
 ### Relaciones
 
 ```
-Usuario (Club) ────┐
-                   ├── Pista
-Usuario (Jugador) ─┘
-                   │
-                   └── Reserva
+Usuario ────1:N───→ Pista
+   │
+   └────────1:N───→ Reserva
 ```
 
 ## 🔐 Seguridad
@@ -235,7 +240,7 @@ VITE_API_URL=https://tu-backend-deployed.com
 
 ## 📧 Contacto
 
-Para soporte o preguntas: [Tu email]
+Para soporte o preguntas: GGIMENEZLIMA@gmail.com
 
 ## 📄 Licencia
 
