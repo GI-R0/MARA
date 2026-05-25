@@ -40,7 +40,8 @@ const pistaSchema = new mongoose.Schema(
     },
     imagen: {
       type: String,
-      default: "https://via.placeholder.com/600x300?text=Pista+Sin+Imagen",
+      default:
+        "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
     },
     iluminacion: {
       type: Boolean,
@@ -96,7 +97,7 @@ pistaSchema.methods.calcularRatingPromedio = function () {
     this.ratingPromedio = 0;
   } else {
     const suma = this.ratings.reduce((acc, r) => acc + r.puntuacion, 0);
-    this.ratingPromedio = (suma / this.ratings.length).toFixed(1);
+    this.ratingPromedio = Number((suma / this.ratings.length).toFixed(1));
   }
   return this.ratingPromedio;
 };

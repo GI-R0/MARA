@@ -18,8 +18,11 @@ export default function CardPista({ pista }) {
       "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
   };
 
+  const isPlaceholderImage = (url) =>
+    typeof url === "string" && url.includes("via.placeholder.com");
+
   const getImageUrl = () => {
-    if (pista.imagen) return pista.imagen;
+    if (pista.imagen && !isPlaceholderImage(pista.imagen)) return pista.imagen;
     const deporte = (pista.deporte || "").toLowerCase();
     return defaultImages[deporte] || defaultImages.default;
   };

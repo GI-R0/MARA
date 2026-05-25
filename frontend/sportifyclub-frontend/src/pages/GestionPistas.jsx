@@ -45,7 +45,7 @@ export default function GestionPistas() {
       }
 
       const res = await API.get(url);
-      setPistas(res.data);
+      setPistas(res.data.pistas || res.data);
       setError(null);
     } catch (err) {
       console.error("Error fetching pistas:", err);
