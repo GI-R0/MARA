@@ -12,8 +12,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Perfil from "./pages/Perfil";
 import MisReservas from "./pages/MisReservas";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import ClubPanel from "./pages/ClubPanel";
 import AdminPanel from "./pages/AdminPanel";
+import AdminUsers from "./pages/AdminUsers";
+import AdminReservas from "./pages/AdminReservas";
 import GestionPistas from "./pages/GestionPistas";
 
 export default function App() {
@@ -35,6 +39,8 @@ export default function App() {
                 <Route path="/pistas/:id" element={<PistaDetail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
                 <Route
                   path="/perfil"
@@ -75,6 +81,22 @@ export default function App() {
                   element={
                     <ProtectedRoute requireRole="admin">
                       <AdminPanel />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <ProtectedRoute requireRole="admin">
+                      <AdminUsers />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/reservas"
+                  element={
+                    <ProtectedRoute requireRole="admin">
+                      <AdminReservas />
                     </ProtectedRoute>
                   }
                 />

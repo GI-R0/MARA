@@ -248,11 +248,11 @@ Después del seeding, puedes usar:
 
 **Club de Ejemplo:**
 - Email: `club1@sportify.com`
-- Password: `club123`
+- Password: `club1234`
 
 **Usuario de Ejemplo:**
 - Email: `user1@sportify.com`
-- Password: `user123`
+- Password: `user1234`
 
 ---
 

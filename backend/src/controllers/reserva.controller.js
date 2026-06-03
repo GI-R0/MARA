@@ -3,6 +3,7 @@ import Pista from "../models/Pista.js";
 import { validationResult } from "express-validator";
 import mongoose from "mongoose";
 import { parse, addHours } from "date-fns";
+import { sendMail } from "../config/mailer.js";
 
 export const createReserva = async (req, res) => {
   const errors = validationResult(req);
@@ -100,6 +101,29 @@ export const createReserva = async (req, res) => {
     const populated = await Reserva.findById(reserva[0]._id)
       .populate("pista", "nombre ubicacion precioHora")
       .populate("usuario", "name email");
+
+    try {
+      await sendMail({
+        to: populated.usuario.email,
+        subject: "Reserva confirmada en SportifyClub",
+        html: `<p>Hola ${populated.usuario.name},</p>
+          <p>Tu reserva ha sido registrada correctamente.</p>
+          <ul>
+            <li><strong>Pista:</strong> ${populated.pista.nombre}</li>
+            <li><strong>Fecha:</strong> ${fechaStr}</li>
+            <li><strong>Hora:</strong> ${hora}</li>
+            <li><strong>Duración:</strong> ${duracion} hora(s)</li>
+            <li><strong>Total:</strong> ${populated.total}€</li>
+          </ul>
+          <p>Gracias por reservar con SportifyClub.</p>`,
+        text: `Hola ${populated.usuario.name},\n\nTu reserva ha sido registrada correctamente.\nPista: ${populated.pista.nombre}\nFecha: ${fechaStr}\nHora: ${hora}\nDuración: ${duracion} hora(s)\nTotal: ${populated.total}€\n\nGracias por reservar con SportifyClub.`,
+      });
+    } catch (emailError) {
+      console.error(
+        "[WARN] No se pudo enviar correo de reserva:",
+        emailError.message,
+      );
+    }
 
     res.status(201).json(populated);
   } catch (err) {

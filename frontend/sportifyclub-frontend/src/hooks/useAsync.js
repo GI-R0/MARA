@@ -60,6 +60,7 @@ export const useAsync = (asyncFunction, dependencies = [], options = {}) => {
     if (immediate) {
       execute();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 
   useEffect(() => {

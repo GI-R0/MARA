@@ -220,8 +220,8 @@ Después de ejecutar `npm run seed`:
 | Email          | Contraseña | Rol   |
 | -------------- | ---------- | ----- |
 | admin@sportify.com | admin123 | admin |
-| ana@sportify.com   | 123456   | club  |
-| luis@sportify.com  | 123456   | user  |
+| ana@sportify.com   | 12345678 | club  |
+| luis@sportify.com  | 12345678 | user  |
 
 ---
 

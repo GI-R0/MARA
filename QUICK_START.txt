@@ -65,7 +65,7 @@ Contraseña: admin123
 
 ### Como Club (role: club)
 1. Inicia sesión con un email de club:
-   - general.littel@yahoo.com (contraseña: 123456)
+   - general.littel@yahoo.com (contraseña: 12345678)
    - O cualquier otro de la lista
 2. Ve a "Gestión de Pistas"
 3. Crea, edita o elimina tus pistas

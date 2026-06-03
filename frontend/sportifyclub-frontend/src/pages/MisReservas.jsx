@@ -12,6 +12,7 @@ export default function MisReservas() {
     loading,
     error,
     fetchReservas,
+    updateReserva,
     deleteReserva,
     filterByStatus,
     sortReservas,
@@ -45,6 +46,15 @@ export default function MisReservas() {
       } else {
         alert(result.error || "Error al cancelar la reserva");
       }
+    }
+  };
+
+  const handleConfirmReserva = async (id) => {
+    const result = await updateReserva(id, { estado: "confirmada" });
+    if (result.success) {
+      alert("Reserva confirmada correctamente");
+    } else {
+      alert(result.error || "Error al confirmar la reserva");
     }
   };
 
@@ -189,14 +199,20 @@ export default function MisReservas() {
                   >
                     Ver pista
                   </Link>
-                  {reserva.estado === "confirmada" && (
+                  {reserva.estado === "pendiente" && (
                     <button
-                      onClick={() => handleCancelReserva(reserva._id)}
-                      className="btn-cancel"
+                      onClick={() => handleConfirmReserva(reserva._id)}
+                      className="btn-confirm"
                     >
-                      Cancelar
+                      Confirmar
                     </button>
                   )}
+                  <button
+                    onClick={() => handleCancelReserva(reserva._id)}
+                    className="btn-cancel"
+                  >
+                    Cancelar
+                  </button>
                 </div>
               </div>
             ))}

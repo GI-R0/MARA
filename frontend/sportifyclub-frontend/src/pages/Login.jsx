@@ -140,6 +140,11 @@ export default function Login() {
 
             <div className="login-footer">
               <p className="footer-text">
+                <Link to="/forgot-password" className="footer-link">
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </p>
+              <p className="footer-text">
                 ¿Primera vez aquí?{" "}
                 <Link to="/register" className="footer-link">
                   Crea tu cuenta gratis

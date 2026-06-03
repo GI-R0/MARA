@@ -15,7 +15,10 @@ export const ReservaProvider = ({ children }) => {
     dispatch({ type: reservaActions.SET_LOADING, payload: true });
     try {
       const res = await API.get("/reservas/mis-reservas");
-      dispatch({ type: reservaActions.SET_RESERVAS, payload: res.data });
+      dispatch({
+        type: reservaActions.SET_RESERVAS,
+        payload: res.data.reservas || [],
+      });
     } catch (error) {
       dispatch({
         type: reservaActions.SET_ERROR,

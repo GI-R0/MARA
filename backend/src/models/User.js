@@ -22,6 +22,14 @@ const userSchema = new mongoose.Schema(
       minlength: [6, "Mínimo 6 caracteres"],
       select: false,
     },
+    passwordResetToken: {
+      type: String,
+      select: false,
+    },
+    passwordResetExpires: {
+      type: Date,
+      select: false,
+    },
     role: {
       type: String,
       enum: ["user", "club", "admin"],

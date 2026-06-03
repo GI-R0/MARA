@@ -46,3 +46,28 @@ export const loginValidator = [
     .isLength({ min: 1, max: 128 })
     .withMessage("Contraseña inválida"),
 ];
+
+export const forgotPasswordValidator = [
+  body("email")
+    .trim()
+    .isEmail()
+    .withMessage("El email es inválido")
+    .normalizeEmail(),
+];
+
+export const resetPasswordValidator = [
+  body("token").notEmpty().withMessage("El token es obligatorio"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("La contraseña debe tener al menos 8 caracteres")
+    .matches(/[A-Z]/)
+    .withMessage("La contraseña debe incluir al menos una mayúscula")
+    .matches(/[a-z]/)
+    .withMessage("La contraseña debe incluir al menos una minúscula")
+    .matches(/[0-9]/)
+    .withMessage("La contraseña debe incluir al menos un número")
+    .matches(/[@$!%*?&]/)
+    .withMessage("La contraseña debe incluir un carácter especial (@$!%*?&)")
+    .isLength({ max: 128 })
+    .withMessage("La contraseña no puede exceder 128 caracteres"),
+];
