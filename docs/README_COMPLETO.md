@@ -92,12 +92,13 @@ SportifyClub es una **plataforma web completa** para la reserva de instalaciones
 ### 🔄 Flujo de Datos Típico
 
 ```
-1. Usuario abre app → AuthContext verifica localStorage
-2. Navega a /pistas → GET /api/pistas
-3. Selecciona pista → GET /api/pistas/:id
-4. Hace reserva → POST /api/reservas (con JWT)
-5. Backend valida token → crea Reserva + actualiza Pista
-6. Frontend muestra confirmación → redirige a /mis-reservas
+1. Usuario se registra o inicia sesión → POST /api/auth/register o /login
+2. Backend devuelve token JWT → AuthContext lo guarda en localStorage
+3. Navega a /pistas → GET /api/pistas
+4. Selecciona pista → GET /api/pistas/:id
+5. Hace reserva → POST /api/reservas (enviando JWT en cabecera)
+6. Backend valida token → crea Reserva + actualiza Pista
+7. Frontend muestra confirmación → redirige a /mis-reservas
 ```
 
 ---
@@ -509,17 +510,18 @@ createReservaLimiter
 ### Flujo de Reserva (Usuario)
 
 ```
-1. Usuario navega a /pistas
-2. Ve catálogo con filtros (deporte, búsqueda)
-3. Clica en CardPista → va a /pistas/:id
-4. Ve detalles + ReservaForm
-5. Selecciona fecha, hora, duración
-6. Frontend valida:
+1. Usuario se registra o hace login y obtiene su token JWT
+2. Usuario navega a /pistas
+3. Ve catálogo con filtros (deporte, búsqueda)
+4. Clica en CardPista → va a /pistas/:id
+5. Ve detalles + ReservaForm
+6. Selecciona fecha, hora, duración
+7. Frontend valida:
    - Fecha no pasada
    - Hora en horariosDisponibles
    - Duración 1-3 horas
-7. Envía POST /reservas
-8. Backend:
+8. Envía POST /reservas (incluyendo JWT)
+9. Backend:
    - Valida JWT
    - Verifica pista existe
    - Verifica horario disponible
@@ -527,8 +529,8 @@ createReservaLimiter
      a. Inserta Reserva
      b. Remueve hora de horariosDisponibles
    - Si error: rollback completo
-9. Retorna reserva creada
-10. Frontend muestra éxito → redirige a /mis-reservas
+10. Retorna reserva creada
+11. Frontend muestra éxito → redirige a /mis-reservas
 ```
 
 ### Flujo de Gestión (Club)
