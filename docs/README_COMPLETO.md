@@ -553,84 +553,94 @@ createReservaLimiter
 ## 📁 Estructura del Proyecto
 
 ```
-sportifyclub/
-├── 📄 README.md                    # Este archivo
+SPORTS/
+├── 📄 README.md                    # Documentación principal
 ├── 📄 QUICK_START.txt             # Inicio rápido
 ├── 📄 CHECKLIST_ENTREGA.txt       # Checklist de entrega
 ├── 📄 CORREO_ENTREGA.txt          # Instrucciones de entrega
-├── 📄 RESUMEN_ENTREGA.txt         # Resumen del proyecto
+├── 📄 INSTRUCCIONES_EJECUCION.md  # Instrucciones paso a paso
 │
 ├── backend/                       # 🖥️ API REST
 │   ├── 📄 package.json
 │   ├── 📄 README.md
-│   ├── src/
-│   │   ├── 📄 app.js              # Config Express + rutas
-│   │   ├── config/
-│   │   │   ├── 📄 db.js           # Conexión MongoDB
-│   │   │   └── 📄 cloudinary.js   # Config Cloudinary
-│   │   ├── controllers/           # 🎮 Lógica de negocio
-│   │   │   ├── 📄 auth.controller.js
-│   │   │   ├── 📄 pista.controller.js
-│   │   │   └── 📄 reserva.controller.js
-│   │   ├── middlewares/           # 🛡️ Seguridad
-│   │   │   ├── 📄 auth.js         # JWT + roles
-│   │   │   └── 📄 rateLimiter.js  # Rate limiting
-│   │   ├── models/                # 📊 Schemas MongoDB
-│   │   │   ├── 📄 User.js
-│   │   │   ├── 📄 Pista.js
-│   │   │   └── 📄 Reserva.js
-│   │   ├── routes/                # 🛣️ Endpoints API
-│   │   │   ├── 📄 auth.routes.js
-│   │   │   ├── 📄 pista.routes.js
-│   │   │   └── 📄 reserva.routes.js
-│   │   ├── seed/                  # 🌱 Datos iniciales
-│   │   │   ├── 📄 seed.js
-│   │   │   └── 📄 README.md
-│   │   └── tools/                 # 🔧 Utilidades
-│   └── data/                      # 📊 CSV para seeding
-│       ├── 📄 usuarios.csv
-│       ├── 📄 pistas.csv
-│       └── 📄 reservas.csv
+│   └── src/
+│       ├── 📄 app.js              # Config Express + rutas
+│       ├── config/
+│       │   ├── 📄 db.js           # Conexión MongoDB
+│       │   ├── 📄 cloudinary.js   # Config Cloudinary
+│       │   └── 📄 mailer.js       # Config Nodemailer
+│       ├── controllers/           # 🎮 Lógica de negocio
+│       │   ├── 📄 auth.controller.js
+│       │   ├── 📄 pista.controller.js
+│       │   └── 📄 reserva.controller.js
+│       ├── middlewares/           # 🛡️ Seguridad
+│       │   ├── 📄 auth.js         # JWT + roles
+│       │   └── 📄 rateLimiter.js  # Rate limiting
+│       ├── models/                # 📊 Schemas MongoDB
+│       │   ├── 📄 User.js
+│       │   ├── 📄 Pista.js
+│       │   └── 📄 Reserva.js
+│       ├── routes/                # 🛣️ Endpoints API
+│       │   ├── 📄 auth.routes.js
+│       │   ├── 📄 pista.routes.js
+│       │   └── 📄 reserva.routes.js
+│       ├── validators/            # ✅ Validaciones de inputs
+│       │   ├── 📄 auth.validator.js
+│       │   ├── 📄 pista.validator.js
+│       │   └── 📄 reserva.validator.js
+│       ├── tools/                 # 🔧 Scripts de utilidad
+│       │   ├── 📄 seed.js         # Script principal de base de datos
+│       │   ├── 📄 generateData.js # Generación de CSV
+│       │   └── 📄 createTestReserva.mjs
+│       └── data/                  # 📊 Archivos CSV generados
+│           ├── 📄 usuarios.csv
+│           ├── 📄 pistas.csv
+│           └── 📄 reservas.csv
 │
 └── frontend/                      # 🌐 Interfaz React
-    ├── 📄 README.md
-    ├── 📄 package.json
-    ├── 📄 vite.config.js
-    ├── 📄 index.html
-    ├── public/
-    │   └── images/
-    ├── src/
-    │   ├── 📄 main.jsx         # Entrada React
-    │   ├── 📄 App.jsx          # Rutas SPA
-    │   ├── api/
-    │   │   └── 📄 axiosConfig.js # Cliente HTTP
-    │   ├── components/         # 🧩 UI reutilizable
-    │   │   ├── 📄 CardPista.jsx
-    │   │   ├── 📄 ReservaForm.jsx
-    │   │   ├── 📄 Navbar.jsx
-    │   │   └── 📄 Footer.jsx
-    │   ├── context/            # 📦 Estado global
-    │   │   ├── 📄 AuthContext.jsx
-    │   │   └── 📄 ReservaContext.jsx
-    │   ├── hooks/              # 🎣 Lógica reutilizable
-    │   │   ├── 📄 useAuth.js
-    │   │   ├── 📄 useFetch.js
-    │   │   └── 📄 useFormValidation.js
-    │   ├── pages/              # 📱 Vistas principales
-    │   │   ├── 📄 Home.jsx
-    │   │   ├── 📄 Pistas.jsx
-    │   │   ├── 📄 Login.jsx
-    │   │   ├── 📄 Register.jsx
-    │   │   ├── 📄 MisReservas.jsx
-    │   │   └── 📄 GestionPistas.jsx
-    │   ├── reducers/           # 🔄 Estado complejo
-    │   │   └── 📄 reservaReducer.js
-    │   └── styles/             # 🎨 CSS modular
-    │       ├── 📄 styles.css    # Variables globales
-    │       ├── 📄 Pistas.css
-    │       └── 📄 ReservaForm.css
-    └── scripts/                # 🔧 Utilidades frontend
-        └── 📄 fetchPistas.js
+    └── sportifyclub-frontend/
+        ├── 📄 README.md
+        ├── 📄 package.json
+        ├── 📄 vite.config.js
+        ├── 📄 index.html
+        ├── public/
+        │   └── 📄 favicon.svg
+        ├── scripts/               # 🔧 Utilidades frontend
+        │   └── 📄 fetchPistas.js
+        └── src/
+            ├── 📄 main.jsx         # Entrada React
+            ├── 📄 App.jsx          # Rutas SPA
+            ├── api/
+            │   └── 📄 axiosConfig.js # Cliente HTTP
+            ├── components/         # 🧩 UI reutilizable
+            │   ├── 📄 CardPista.jsx
+            │   ├── 📄 ReservaForm.jsx
+            │   ├── 📄 Navbar.jsx
+            │   └── 📄 Footer.jsx
+            ├── context/            # 📦 Estado global
+            │   ├── 📄 AuthContext.jsx
+            │   └── 📄 ReservaContext.jsx
+            ├── hooks/              # 🎣 Lógica reutilizable
+            │   ├── 📄 useAuth.js
+            │   ├── 📄 useFetch.js
+            │   └── 📄 useFormValidation.js
+            ├── pages/              # 📱 Vistas principales
+            │   ├── 📄 Home.jsx
+            │   ├── 📄 Pistas.jsx
+            │   ├── 📄 Login.jsx
+            │   ├── 📄 Register.jsx
+            │   ├── 📄 MisReservas.jsx
+            │   ├── 📄 GestionPistas.jsx
+            │   ├── 📄 AdminReservas.jsx
+            │   ├── 📄 AdminUsers.jsx
+            │   ├── 📄 ForgotPassword.jsx
+            │   └── 📄 ResetPassword.jsx
+            ├── reducers/           # 🔄 Estado complejo
+            │   └── 📄 reservaReducer.js
+            └── styles/             # 🎨 CSS modular
+                ├── 📄 styles.css    # Variables globales
+                ├── 📄 Pistas.css
+                └── 📄 ReservaForm.css
 ```
 
 ---

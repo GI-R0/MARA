@@ -102,31 +102,34 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 ## 📁 Estructura del Proyecto
 
 ```
-sportifyclub/
+SPORTS/
 ├── backend/          # 🖥️ API REST (Node.js + Express)
 │   ├── src/
+│   │   ├── config/       # Conexión DB, Cloudinary, Mailer
 │   │   ├── controllers/  # Lógica de negocio
 │   │   ├── models/       # Modelos MongoDB
 │   │   ├── routes/       # Definición de rutas
 │   │   ├── middlewares/  # Middlewares personalizados
 │   │   ├── validators/   # Validaciones de entrada
-│   │   ├── data/         # Archivos CSV generados
-│   │   └── tools/        # Scripts de utilidad
-│   └── seed/             # Datos iniciales (seed.js)
+│   │   ├── data/         # Archivos CSV para seeding
+│   │   └── tools/        # Scripts de utilidad y seed.js
 ├── frontend/         # 🌐 Interfaz React
 │   └── sportifyclub-frontend/
-│       ├── src/
-│       │   ├── components/  # Componentes reutilizables
-│       │   ├── pages/       # Páginas principales
-│       │   ├── hooks/       # Hooks personalizados
-│       │   ├── context/     # Contextos React
-│       │   ├── reducers/    # Reducers (reservaReducer)
-│       │   ├── api/         # Configuración Axios
-│       │   └── styles/      # Estilos CSS
-│       └── public/          # Assets estáticos
+│       ├── public/          # Assets estáticos
+│       ├── scripts/         # Scripts de utilidades
+│       └── src/
+│           ├── api/         # Configuración Axios
+│           ├── components/  # Componentes reutilizables
+│           ├── context/     # Contextos React
+│           ├── hooks/       # Hooks personalizados
+│           ├── pages/       # Páginas principales
+│           ├── reducers/    # Reducers (reservaReducer)
+│           └── styles/      # Estilos CSS
 ├── docs/             # 📚 Documentación completa
 ├── QUICK_START.txt   # Inicio rápido
-└── CHECKLIST_ENTREGA.txt  # Checklist de entrega
+├── CHECKLIST_ENTREGA.txt  # Checklist de entrega
+├── CORREO_ENTREGA.txt     # Instrucciones de entrega
+└── INSTRUCCIONES_EJECUCION.md # Instrucciones paso a paso
 ```
 
 ## 🛠️ Tecnologías
