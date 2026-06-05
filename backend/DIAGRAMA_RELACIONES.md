@@ -2,8 +2,8 @@
 
 ## Relaciones
 
-- User (club) --1:N-- Pista
-- User (user) --1:N-- Reserva
+- User --1:N-- Pista (como club)
+- User --1:N-- Reserva (como jugador)
 - Pista --1:N-- Reserva
 
 ## Queries Ejemplo

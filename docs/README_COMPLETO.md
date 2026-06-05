@@ -340,9 +340,9 @@ SportifyClub utiliza **MongoDB** con **3 colecciones principales** relacionadas.
 ### 🔗 Relaciones
 
 ```
-User (club) ───1:N───→ Pista
-                      │
-                      └──1:N───→ Reserva ←───N:1─── User (jugador)
+       ┌───1:N───→ Pista ───1:N───┐
+User ──┤                          ↓
+       └──────────1:N─────────→ Reserva
 ```
 
 **Índices Optimizados:**
