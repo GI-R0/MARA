@@ -240,7 +240,7 @@ VITE_API_URL=https://tu-backend-deployed.com
 
 ## 📧 Contacto
 
-Para soporte o preguntas: GGIMENEZLIMA@gmail.com
+Para soporte o preguntas: ggimenezlima@gmail.com
 
 ## 📄 Licencia
 

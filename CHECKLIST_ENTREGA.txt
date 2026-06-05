@@ -264,7 +264,7 @@ MongoDB Atlas:
 En caso de cualquier problema durante la ejecución:
 
 GitHub Issues: https://github.com/GI-R0/SPORTS/issues
-Email: [tu email de contacto]
+Email: ggimenezlima@gmail.com
 Disponibilidad: Siempre abierto a preguntas y mejoras
 
 ═══════════════════════════════════════════════════════════════════════════════
