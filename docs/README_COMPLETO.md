@@ -244,15 +244,15 @@ Después del seeding, puedes usar:
 
 **Admin:**
 - Email: `admin@sportify.com`
-- Password: `admin123`
+- Password: `Admin123!`
 
 **Club de Ejemplo:**
 - Email: `club1@sportify.com`
-- Password: `club1234`
+- Password: `Club1234!`
 
 **Usuario de Ejemplo:**
 - Email: `user1@sportify.com`
-- Password: `user1234`
+- Password: `User1234!`
 
 ---
 

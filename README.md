@@ -92,7 +92,7 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 
 - **Frontend**: http://localhost:5173
 - **Backend**: http://localhost:4000
-- **Admin**: admin@sportify.com / admin123
+- **Admin**: admin@sportify.com / Admin123!
 
 ### Acceso Desplegado (Producción)
 

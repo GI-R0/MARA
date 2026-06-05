@@ -60,7 +60,7 @@ async function seedDatabase() {
   const admin = await User.create({
     name: "Admin Sportify",
     email: "admin@sportify.com",
-    password: "admin123",
+    password: "Admin123!",
     role: "admin",
   });
 
@@ -69,7 +69,7 @@ async function seedDatabase() {
     clubs.push({
       name: `Club ${i}`,
       email: `club${i}@sportify.com`,
-      password: `club1234`,
+      password: `Club1234!`,
       role: "club",
     });
   }
@@ -79,7 +79,7 @@ async function seedDatabase() {
     users.push({
       name,
       email: `${name.toLowerCase()}${i}@sportify.com`,
-      password: "user1234",
+      password: "User1234!",
       role: "user",
     });
   }

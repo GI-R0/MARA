@@ -11,7 +11,7 @@ function generateUsers(numUsers = 50) {
     nombre: "Admin",
     apellido: "Sportify",
     email: "admin@sportify.com",
-    password: "admin123",
+    password: "Admin123!",
 
     rol: "admin",
     telefono: "123456789",
@@ -23,7 +23,7 @@ function generateUsers(numUsers = 50) {
       nombre: faker.person.firstName(),
       apellido: faker.person.lastName(),
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: "Password123!",
       rol: faker.helpers.arrayElement(roles),
       telefono: faker.phone.number(),
       fechaRegistro: faker.date.past(),

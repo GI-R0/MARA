@@ -48,7 +48,7 @@ npm run dev
 ## Paso 5: Acceder como administrador
 
 Email:      admin@sportify.com
-Contraseña: admin123
+Contraseña: Admin123!
 
 ═══════════════════════════════════════════════════════════════════════════════
 🎯 CASOS DE USO RÁPIDOS
@@ -65,7 +65,7 @@ Contraseña: admin123
 
 ### Como Club (role: club)
 1. Inicia sesión con un email de club:
-   - general.littel@yahoo.com (contraseña: 12345678)
+   - club1@sportify.com (contraseña: Club1234!)
    - O cualquier otro de la lista
 2. Ve a "Gestión de Pistas"
 3. Crea, edita o elimina tus pistas
@@ -74,7 +74,7 @@ Contraseña: admin123
 ### Como Administrador (role: admin)
 1. Inicia sesión con:
    Email: admin@sportify.com
-   Contraseña: admin123
+   Contraseña: Admin123!
 2. Accede a "Admin Panel"
 3. Gestiona todos los usuarios y pistas del sistema
 4. Visualiza estadísticas globales
@@ -89,7 +89,7 @@ Contraseña: admin123
 
 □ Credenciales admin:
   ├─ Email: admin@sportify.com
-  └─ Password: admin123
+  └─ Password: Admin123!
 
 □ Documentación:
   ├─ README.md (raíz)

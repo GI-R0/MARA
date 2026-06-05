@@ -32,7 +32,7 @@ Fecha de entrega: 5 de junio de 2026
    Usuario admin creado en datos de seeding:
    ├─ Nombre: Admin Master
    ├─ Email: admin@sportify.com
-   ├─ Contraseña: admin123
+   ├─ Contraseña: Admin123!
    ├─ Rol: admin
    └─ Ubicación: backend/data/usuarios.csv (línea 2)
 
@@ -127,7 +127,7 @@ Fecha de entrega: 5 de junio de 2026
 
 7. ACCEDER CON CREDENCIALES ADMIN
    Email: admin@sportify.com
-   Contraseña: admin123
+   Contraseña: Admin123!
 
 ═══════════════════════════════════════════════════════════════════════════════
 📊 ESTRUCTURA DEL PROYECTO
