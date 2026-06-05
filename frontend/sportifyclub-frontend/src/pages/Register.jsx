@@ -141,9 +141,9 @@ export default function Register() {
                     value={formData.password}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="Mínimo 6 caracteres"
+                    placeholder="Mínimo 8 caracteres"
                     required
-                    minLength="6"
+                    minLength="8"
                     disabled={loading}
                     style={{ paddingRight: "40px" }}
                   />

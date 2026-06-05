@@ -4,7 +4,7 @@ export default function CardPista({ pista }) {
   const defaultImages = {
     pádel: "/fallback-ball.svg",
     tenis: "/fallback-ball.svg",
-    "fútbol 5": "/futbol-ball.svg",
+    "fútbol 5": "/futsal-court.png",
     fútbol: "/futbol-user.jpg",
     baloncesto: "/fallback-ball.svg",
     voleibol: "/fallback-ball.svg",
@@ -24,10 +24,7 @@ export default function CardPista({ pista }) {
     const deporte = (pista.deporte || "").toLowerCase();
 
     if (pista.imagen && !isPlaceholderImage(pista.imagen)) {
-      if (!isRemoteImage(pista.imagen)) {
-        return pista.imagen;
-      }
-      return defaultImages[deporte] || defaultImages.default;
+      return pista.imagen;
     }
 
     return defaultImages[deporte] || defaultImages.default;

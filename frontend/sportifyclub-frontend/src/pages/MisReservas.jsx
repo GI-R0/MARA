@@ -169,9 +169,44 @@ export default function MisReservas() {
           <div className="reservas-grid">
             {reservas.map((reserva) => (
               <div key={reserva._id} className="reserva-card">
-                <div className="reserva-info">
-                  <h3>{reserva.pista?.nombre || "Pista"}</h3>
-                  <p className="reserva-id">Reserva #{reserva._id.slice(-6)}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <img 
+                    src={(() => {
+                      const defaultImages = {
+                        pádel: "/fallback-ball.svg",
+                        tenis: "/fallback-ball.svg",
+                        "fútbol 5": "/futsal-court.png",
+                        fútbol: "/futbol-user.jpg",
+                        baloncesto: "/fallback-ball.svg",
+                        voleibol: "/fallback-ball.svg",
+                        default: "/fallback-ball.svg",
+                      };
+                      const deporte = (reserva.pista?.deporte || "").toLowerCase();
+                      const imagen = reserva.pista?.imagen;
+                      
+                      const isPlaceholderImage = (url) =>
+                        typeof url === "string" &&
+                        (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
+                    
+                      const isRemoteImage = (url) =>
+                        typeof url === "string" && /^https?:\/\//.test(url);
+
+                      if (imagen && !isPlaceholderImage(imagen)) {
+                        return imagen;
+                      }
+                      return defaultImages[deporte] || defaultImages.default;
+                    })()}
+                    alt={reserva.pista?.nombre || "Pista"} 
+                    style={{ width: '80px', height: '80px', borderRadius: '12px', objectFit: 'cover', flexShrink: 0 }}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "/fallback-ball.svg";
+                    }}
+                  />
+                  <div className="reserva-info">
+                    <h3>{reserva.pista?.nombre || "Pista"}</h3>
+                    <p className="reserva-id">Reserva #{reserva._id.slice(-6)}</p>
+                  </div>
                 </div>
 
                 <div className="reserva-time">

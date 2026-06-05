@@ -54,10 +54,28 @@ export default function PistaDetail() {
     <div className="pista-detail-container">
       <div className="pista-card">
         <img
-          src={
-            pista.imagen ||
-            "https://via.placeholder.com/1200x600/4F46E5/ffffff?text=Pista+de+Padel"
-          }
+          src={(() => {
+            const defaultImages = {
+              pádel: "/fallback-ball.svg",
+              tenis: "/fallback-ball.svg",
+              "fútbol 5": "/futsal-court.png",
+              fútbol: "/futbol-user.jpg",
+              baloncesto: "/fallback-ball.svg",
+              voleibol: "/fallback-ball.svg",
+              default: "/fallback-ball.svg",
+            };
+            const deporte = (pista.deporte || "").toLowerCase();
+            const imagen = pista.imagen;
+            
+            const isPlaceholderImage = (url) =>
+              typeof url === "string" &&
+              (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
+          
+            if (imagen && !isPlaceholderImage(imagen)) {
+              return imagen;
+            }
+            return defaultImages[deporte] || defaultImages.default;
+          })()}
           alt={pista.nombre}
           className="pista-image"
         />

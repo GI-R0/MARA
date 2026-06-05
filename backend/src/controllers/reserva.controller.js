@@ -143,7 +143,7 @@ export const getReservas = async (req, res) => {
 
     const [reservas, total] = await Promise.all([
       Reserva.find()
-        .populate({ path: "pista", select: "nombre ubicacion precioHora" })
+        .populate({ path: "pista", select: "nombre ubicacion precioHora imagen deporte" })
         .populate({ path: "usuario", select: "name email" })
         .skip(skip)
         .limit(limit)
@@ -169,7 +169,7 @@ export const getReservas = async (req, res) => {
 export const getReservaById = async (req, res) => {
   try {
     const reserva = await Reserva.findById(req.params.id)
-      .populate({ path: "pista", select: "nombre ubicacion precioHora" })
+      .populate({ path: "pista", select: "nombre ubicacion precioHora imagen deporte" })
       .populate({ path: "usuario", select: "name email" });
     if (!reserva) return res.status(404).json({ msg: "Reserva no encontrada" });
 
@@ -192,7 +192,7 @@ export const getMisReservas = async (req, res) => {
 
     const [reservas, total] = await Promise.all([
       Reserva.find({ usuario: req.user._id })
-        .populate({ path: "pista", select: "nombre ubicacion precioHora" })
+        .populate({ path: "pista", select: "nombre ubicacion precioHora imagen deporte" })
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 })
@@ -234,7 +234,7 @@ export const updateReserva = async (req, res) => {
 
     await reserva.save();
     const populated = await reserva.populate([
-      { path: "pista", select: "nombre ubicacion precioHora" },
+      { path: "pista", select: "nombre ubicacion precioHora imagen deporte" },
       { path: "usuario", select: "name email" },
     ]);
     res.json(populated);
