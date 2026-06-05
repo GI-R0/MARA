@@ -66,7 +66,7 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/GI-R0/mara.git
+   git clone https://github.com/GI-R0/SPORTS.git
    cd sportifyclub
    ```
 
@@ -96,8 +96,8 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 
 ### Acceso Desplegado (Producción)
 
-- **Frontend**: https://mara-hta9.vercel.app
-- **Backend**: https://sportifyclub-backend.vercel.app/api
+- **Frontend**: https://mara-frontend-production.up.railway.app
+- **Backend**: https://tu-backend-production.up.railway.app/api
 
 ## 📁 Estructura del Proyecto
 

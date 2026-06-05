@@ -145,5 +145,5 @@ Saludos cordiales,
 ═══════════════════════════════════════════════════════════════════════════════
 Desenvolvedor: [GI-R0]
 Proyecto: SportifyClub – Plataforma de reservas de pistas deportivas
-Fecha: 3 de marzo de 2026
+Fecha: 5 de junio de 2026
 ═══════════════════════════════════════════════════════════════════════════════

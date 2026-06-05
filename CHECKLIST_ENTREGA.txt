@@ -6,7 +6,7 @@ Proyecto: SportifyClub – Plataforma web para reservas de pistas deportivas
 Desenvolvedor: GI-R0
 Repositorio: https://github.com/GI-R0/SPORTS
 Rama: master
-Fecha de entrega: 3 de marzo de 2026
+Fecha de entrega: 5 de junio de 2026
 
 ═══════════════════════════════════════════════════════════════════════════════
 📋 ELEMENTOS PREPARADOS
@@ -193,7 +193,10 @@ FRONTEND:
 ✓ Gestión de reservas (crear, ver, cancelar)
 ✓ Paneles según rol (user, club, admin)
 ✓ Estilos CSS cohesivos con variables
-✓ Favicon personalizado
+[✓] Favicon personalizado
+[✓] Contraste mejorado en UI/UX
+[✓] Año actualizado a 2026
+[✓] Coherencia visual verificada
 
 BACKEND:
 ✓ API REST con Express
@@ -268,7 +271,7 @@ Disponibilidad: Siempre abierto a preguntas y mejoras
 
 ✅ PROYECTO COMPLETAMENTE LISTO PARA EVALUACIÓN
 
-Última actualización: 3 de marzo de 2026
+Última actualización: 5 de junio de 2026
 Estado: ✅ ENTREGA FINALIZADA
 
 ═══════════════════════════════════════════════════════════════════════════════
