@@ -218,7 +218,7 @@ npm run seed
 ```
 
 Esto crea:
-- **30 usuarios** (5 clubs, 25 players)
+- **31 usuarios** (1 admin, 5 clubs, 25 players)
 - **30 pistas** deportivas
 - **100 reservas** de ejemplo
 

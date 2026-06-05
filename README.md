@@ -172,11 +172,11 @@ cd backend
 node src/tools/generateData.js
 ```
 
-Esto crea 150+ registros distribuidos en 3 colecciones relacionadas:
+Esto crea 161 registros distribuidos en 3 colecciones relacionadas:
 
-- **Usuarios** (50): Jugadores, clubs y admins
-- **Pistas** (50): Instalaciones deportivas con características
-- **Reservas** (50): Reservas que conectan usuarios con pistas
+- **Usuarios** (31): 1 Admin, 5 clubs y 25 jugadores
+- **Pistas** (30): Instalaciones deportivas con características
+- **Reservas** (100): Reservas que conectan usuarios con pistas
 
 ### Relaciones
 
