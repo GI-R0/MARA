@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "La contraseña es obligatoria"],
-      minlength: [6, "Mínimo 6 caracteres"],
+      minlength: [8, "Mínimo 8 caracteres"],
       select: false,
     },
     passwordResetToken: {

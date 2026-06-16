@@ -44,6 +44,14 @@ export const createReserva = async (req, res) => {
     const startTime = new Date(`${fechaStr}T${hora}:00`);
     const endTime = addHours(startTime, duracion);
 
+    const now = new Date();
+    if (startTime < now) {
+      await session.abortTransaction();
+      return res
+        .status(400)
+        .json({ msg: "No se pueden crear reservas en horarios pasados" });
+    }
+
     // Verificar que todos los intervalos de la reserva estén disponibles
     const requestedHours = Array.from({ length: duracion }, (_, index) => {
       const hour = startTime.getHours() + index;

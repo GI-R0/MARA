@@ -47,7 +47,7 @@ const generateTokens = async (user) => {
   const refreshToken = jwt.sign(
     { id: user._id },
     process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
-    { expiresIn: "7d" },
+    { expiresIn: "7d", jwtid: crypto.randomBytes(8).toString("hex") },
   );
 
   // Guardar refresh token en DB

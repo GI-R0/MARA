@@ -70,6 +70,17 @@ export const getPistaById = async (req, res) => {
       horariosDisponibles = pista.horariosDisponibles.filter(
         (h) => !ocupados.has(h),
       );
+
+      const today = new Date();
+      const todayStr = today.toISOString().split("T")[0];
+      const fechaStr = fecha.toISOString().split("T")[0];
+      if (fechaStr === todayStr) {
+        const now = new Date();
+        horariosDisponibles = horariosDisponibles.filter((h) => {
+          const slotTime = new Date(`${fechaStr}T${h}:00`);
+          return slotTime > now;
+        });
+      }
     }
 
     res.json({ ...pista, horariosDisponibles });
