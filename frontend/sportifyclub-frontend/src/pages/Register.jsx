@@ -4,6 +4,18 @@ import API from "../api/axiosConfig";
 import { Eye, EyeOff } from "lucide-react";
 import "../styles/Auth.css";
 
+const PASSWORD_RULES = [
+  { id: "length", label: "Mínimo 8 caracteres", test: (p) => p.length >= 8 },
+  { id: "upper", label: "Al menos una mayúscula (A-Z)", test: (p) => /[A-Z]/.test(p) },
+  { id: "lower", label: "Al menos una minúscula (a-z)", test: (p) => /[a-z]/.test(p) },
+  { id: "number", label: "Al menos un número (0-9)", test: (p) => /[0-9]/.test(p) },
+  { id: "special", label: "Un carácter especial (@$!%*?&)", test: (p) => /[@$!%*?&]/.test(p) },
+];
+
+function validatePassword(password) {
+  return PASSWORD_RULES.every((rule) => rule.test(password));
+}
+
 export default function Register() {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -13,11 +25,13 @@ export default function Register() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setError("");
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -140,8 +154,10 @@ export default function Register() {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
+                    onFocus={() => setPasswordFocused(true)}
+                    onBlur={() => setPasswordFocused(false)}
                     className="form-input"
-                    placeholder="Mínimo 8 caracteres"
+                    placeholder="Crea una contraseña segura"
                     required
                     minLength="8"
                     disabled={loading}
@@ -166,6 +182,28 @@ export default function Register() {
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+
+                {(passwordFocused || formData.password.length > 0) && (
+                  <div className="password-requirements">
+                    <p className="requirements-title">Tu contraseña debe tener:</p>
+                    <ul className="requirements-list">
+                      {PASSWORD_RULES.map((rule) => {
+                        const passed = rule.test(formData.password);
+                        return (
+                          <li
+                            key={rule.id}
+                            className={`requirement-item ${passed ? "passed" : "pending"}`}
+                          >
+                            <span className="requirement-icon">
+                              {passed ? "✓" : "○"}
+                            </span>
+                            {rule.label}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
               </div>
 
               <div className="form-group">

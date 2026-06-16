@@ -149,3 +149,66 @@
   font-size: 0.875rem;
   margin-top: var(--spacing-xl);
 }
+
+/* --- Bloque de requisitos de contraseña --- */
+.password-requirements {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.requirements-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 6px 0;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.requirement-item {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.requirement-item.pending {
+  color: #999;
+}
+
+.requirement-item.passed {
+  color: #22a55b;
+}
+
+.requirement-icon {
+  font-size: 13px;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* --- Aviso coincidencia de contraseñas --- */
+.password-match-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.password-match-hint.match-ok {
+  color: #22a55b;
+}
+
+.password-match-hint.match-fail {
+  color: #e53e3e;
+}
