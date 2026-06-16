@@ -147,6 +147,26 @@
   color: #3730a3;
   text-decoration: underline;
 }
+.password-helper {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--gray-600);
+  font-size: 0.9rem;
+}
+.password-helper li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.password-helper li.valid {
+  color: #15803d;
+}
+.password-helper li.invalid {
+  color: #b91c1c;
+}
 .copyright {
   text-align: center;
   color: var(--gray-600);
