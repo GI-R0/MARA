@@ -32,8 +32,9 @@
   margin: 0;
 }
 .login-subtitle {
-  color: var(--gray-200);
+  color: #e8e8e8;
   margin-top: var(--spacing-xs);
+  font-weight: 500;
 }
 .login-body {
   padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl);
@@ -42,7 +43,7 @@
   font-size: 1.875rem;
   font-weight: bold;
   text-align: center;
-  color: var(--gray-800);
+  color: #111827;
   margin-bottom: var(--spacing-xl);
 }
 .login-error {
@@ -58,6 +59,8 @@
 }
 .error-text {
   font-size: 0.875rem;
+  font-weight: 600;
+  color: #991b1b;
 }
 .login-form {
   display: flex;
@@ -72,7 +75,7 @@
   display: block;
   font-size: var(--font-sm);
   font-weight: 600;
-  color: var(--gray-800);
+  color: #1f2937;
   margin-bottom: var(--spacing-xs);
 }
 .form-input {
@@ -131,7 +134,8 @@
   text-align: center;
 }
 .footer-text {
-  color: #4b5563;
+  color: #2d3748;
+  font-weight: 500;
 }
 .footer-link {
   font-weight: bold;
@@ -161,8 +165,8 @@
 
 .requirements-title {
   font-size: 12px;
-  font-weight: 600;
-  color: #555;
+  font-weight: 700;
+  color: #1a202c;
   margin: 0 0 6px 0;
 }
 
@@ -181,10 +185,11 @@
   align-items: center;
   gap: 6px;
   transition: color 0.2s ease;
+  font-weight: 500;
 }
 
 .requirement-item.pending {
-  color: #999;
+  color: #555;
 }
 
 .requirement-item.passed {
