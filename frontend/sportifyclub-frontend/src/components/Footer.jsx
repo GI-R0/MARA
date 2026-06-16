@@ -49,7 +49,7 @@ export default function Footer() {
               <ul className="footer-links">
                 <li>info@sportifyclub.com</li>
                 <li>+34 900 123 456</li>
-                <li>Madrid, España</li>
+                <li>Murcia, España</li>
               </ul>
             </div>
           </div>

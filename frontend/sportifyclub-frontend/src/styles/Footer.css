@@ -14,7 +14,7 @@
 .footer-overlay {
   position: absolute;
   inset: 0;
-  background-image: url("/footer-sports.png");
+  /* background-image: url("/footer-sports.png"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -76,10 +76,9 @@
 }
 
 .footer-text {
-  color: #ffffff;
+  color: #f8fafc;
   line-height: 1.6;
   max-width: 300px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 .footer-heading {
@@ -102,11 +101,10 @@
 
 .footer-links li,
 .footer-links a {
-  color: #ffffff;
+  color: #f8fafc;
   transition:
     color 0.3s,
     transform 0.3s;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 .footer-links a {
@@ -126,10 +124,9 @@
 }
 
 .footer-bottom p {
-  color: #ffffff;
+  color: #f8fafc;
   font-size: 0.875rem;
   margin: 0;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 @media (max-width: 640px) {

@@ -1,74 +1,85 @@
 import axios from "axios";
-import toast from "react-hot-toast";
 
+const baseURL = import.meta.env.VITE_API_URL || "/api";
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL,
   withCredentials: true,
-});
-
-API.interceptors.request.use((req) => {
-  return req;
 });
 
 let isRefreshing = false;
 let failedQueue = [];
 
-const processQueue = (error, token = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
-  });
+const processQueue = (error) => {
+  failedQueue.forEach(({ reject }) => reject(error));
   failedQueue = [];
 };
+
+const refreshAuthToken = async () => {
+  return axios.post(
+    `${baseURL}/auth/refresh`,
+    {},
+    { withCredentials: true },
+  );
+};
+
+API.interceptors.request.use((req) => {
+  // El token de acceso se envía automáticamente en cookies HttpOnly
+  return req;
+});
 
 API.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
+    const status = error.response?.status;
+    const requestUrl = originalRequest?.url || "";
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      if (originalRequest.url === "/auth/login" || originalRequest.url === "/auth/refresh") {
+    const isAuthRequest = requestUrl.startsWith("/auth/");
+
+    if (status === 401 && originalRequest && !originalRequest._retry) {
+      if (isAuthRequest) {
         return Promise.reject(error);
       }
 
       if (isRefreshing) {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
-          .then(() => {
-            return API(originalRequest);
-          })
-          .catch((err) => {
-            return Promise.reject(err);
-          });
+          .then(() => API(originalRequest))
+          .catch((err) => Promise.reject(err));
       }
 
       originalRequest._retry = true;
       isRefreshing = true;
 
-      try {
-        await API.post("/auth/refresh");
-        processQueue(null);
-        return API(originalRequest);
-      } catch (refreshError) {
-        processQueue(refreshError, null);
-        if (window.location.pathname !== "/login") {
-          toast.error("Tu sesión ha expirado");
-          window.location.href = "/login";
-        }
-        return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
-      }
-    } else if (error.response?.status === 403) {
-      toast.error(error.response.data.msg || "Acceso denegado");
-    } else if (error.response?.status >= 500) {
-      toast.error("Error del servidor. Por favor, intenta más tarde.");
+      return new Promise((resolve, reject) => {
+        refreshAuthToken()
+          .then(() => {
+            failedQueue.forEach(({ resolve: queuedResolve }) => queuedResolve());
+            failedQueue = [];
+            resolve(API(originalRequest));
+          })
+          .catch((refreshError) => {
+            processQueue(refreshError);
+            if (window.location.pathname !== "/login") {
+              window.location.href = "/login";
+            }
+            reject(refreshError);
+          })
+          .finally(() => {
+            isRefreshing = false;
+          });
+      });
     }
-    
+
+    if (status === 401 && !isAuthRequest) {
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    } else if (status === 403) {
+      console.warn("Acceso denegado (403):", error.response.data.msg);
+    }
+
     return Promise.reject(error);
   },
 );

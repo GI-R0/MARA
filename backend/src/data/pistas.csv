@@ -1,51 +1,21 @@
-nombre,deporte,precioHora,ubicacion,clubEmail,imagen,iluminacion,superficie,horariosDisponibles
-Pista wealthy 1,Voleibol,21,Port Ruthe,Owen51@hotmail.com,,false,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista practical 2,Voleibol,16,New Drew,Walker96@gmail.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista alienated 3,Pádel,49,Claytonview,Darnell_Roob@hotmail.com,,false,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista edible 4,Voleibol,21,Dennisland,Madaline_Donnelly@hotmail.com,,true,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista well-groomed 5,Tenis,25,West Callieworth,Vincent.King31@yahoo.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista everlasting 6,Baloncesto,35,North Omar,Candice.Cartwright36@hotmail.com,,true,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista unselfish 7,Pádel,30,Wintheiserland,Marty17@hotmail.com,,false,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista whimsical 8,Voleibol,44,Port Cecil,Vincent.King31@yahoo.com,,false,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista aggressive 9,Fútbol 5,19,New Corneliusfield,Rebeca89@hotmail.com,,true,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista personal 10,Voleibol,10,South Domingo,Alexis.Sporer@yahoo.com,,false,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista extra-large 11,Voleibol,35,Bryan,Ruby.Hackett@gmail.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista jittery 12,Pádel,14,East Domingo,Madaline_Donnelly@hotmail.com,,false,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista judicious 13,Pádel,24,Santosmouth,Madaline_Donnelly@hotmail.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista blank 14,Pádel,21,Eldridgeberg,Alexis.Sporer@yahoo.com,,true,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista mealy 15,Pádel,26,Richmond,Alexis.Sporer@yahoo.com,,false,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista profitable 16,Fútbol 5,19,Boynton Beach,Darnell_Roob@hotmail.com,,false,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista dirty 17,Baloncesto,29,Leesburg,Ruby.Hackett@gmail.com,,true,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista severe 18,Voleibol,42,South Constancestead,Debbie_Marvin@hotmail.com,,false,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista happy 19,Fútbol 5,17,Jefferson City,Ruby.Hackett@gmail.com,,false,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista alive 20,Baloncesto,43,Sarahfield,Debbie_Marvin@hotmail.com,,true,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista creamy 21,Fútbol 5,39,East Laurence,Rebeca89@hotmail.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista well-made 22,Baloncesto,10,Olaboro,Debbie_Marvin@hotmail.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista defensive 23,Baloncesto,30,New Gaylehaven,Katie44@yahoo.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista vague 24,Pádel,12,Jordonstad,Katie44@yahoo.com,,false,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista made-up 25,Pádel,37,Lindfort,Timmy_Schmidt4@yahoo.com,,true,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista tame 26,Pádel,50,Port Eveline,Debbie_Marvin@hotmail.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista peaceful 27,Fútbol 5,28,Heidenreichfurt,Rebeca89@hotmail.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista likely 28,Tenis,44,Schmittbury,Marty17@hotmail.com,,true,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista soggy 29,Baloncesto,42,Tillmantown,Katie44@yahoo.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista confused 30,Pádel,31,North Enriqueside,Owen51@hotmail.com,,true,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista golden 31,Pádel,18,Wizaworth,Katie44@yahoo.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista chubby 32,Fútbol 5,27,Nienowfurt,Walker96@gmail.com,,true,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista obedient 33,Voleibol,19,New Sammy,Clayton_OReilly67@gmail.com,,true,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista spherical 34,Pádel,25,New Curtistown,Walker96@gmail.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista cheap 35,Tenis,38,West Retha,Walker96@gmail.com,,false,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista lanky 36,Pádel,15,Connellyshire,Marty17@hotmail.com,,true,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista all 37,Pádel,48,Howefort,Leda_Jones6@hotmail.com,,false,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista staid 38,Fútbol 5,21,Port Rosemary,Clayton_OReilly67@gmail.com,,false,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista celebrated 39,Tenis,14,Kreigerstad,Debbie_Marvin@hotmail.com,,true,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista juicy 40,Baloncesto,31,Santa Clarita,Madaline_Donnelly@hotmail.com,,true,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista far-off 41,Pádel,35,New Jacquelynside,Alexis.Sporer@yahoo.com,,false,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista lazy 42,Fútbol 5,28,Lake Dollycester,Owen51@hotmail.com,,true,Moqueta,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista wobbly 43,Baloncesto,32,Urbanville,Rebeca89@hotmail.com,,false,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista broken 44,Pádel,31,Lueilwitzville,Marty17@hotmail.com,,true,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista massive 45,Fútbol 5,31,Port Garth,Cesar99@yahoo.com,,true,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista nimble 46,Fútbol 5,31,Wehnerboro,Marty17@hotmail.com,,true,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista unselfish 47,Baloncesto,32,New Eduardoberg,Timmy_Schmidt4@yahoo.com,,true,Césped,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista worse 48,Voleibol,37,Koeppborough,Katie44@yahoo.com,,false,Madera,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista lone 49,Pádel,23,Israelbury,Marty17@hotmail.com,,true,Tierra batida,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
-Pista imaginary 50,Tenis,46,Fort Elinor,Debbie_Marvin@hotmail.com,,false,Cemento,"["09:00","10:00","11:00","12:00","16:00","17:00","18:00"]"
+nombre,deporte,precioHora,ubicacion,clubEmail,horariosDisponibles,iluminacion,superficie
+Pista Central,Pádel,28,Madrid,ana@sportify.com,"[""08:00"",""09:00"",""10:00"",""11:00"",""17:00"",""18:00"",""19:00"",""20:00"",""21:00""]",true,Cemento
+Pista 2,Pádel,25,Madrid,ana@sportify.com,"[""09:00"",""10:00"",""11:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Tenis 1,Tenis,32,Madrid,pedro@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00"",""19:00""]",true,Arcilla
+Pista Tenis 2,Tenis,30,Madrid,pedro@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00""]",true,Arcilla
+Pista Norte,Pádel,26,Barcelona,diego@sportify.com,"[""09:00"",""10:00"",""11:00"",""17:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Sur,Pádel,24,Barcelona,diego@sportify.com,"[""08:00"",""09:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Club Valencia,Pádel,27,Valencia,javier@sportify.com,"[""09:00"",""10:00"",""11:00"",""12:00"",""17:00"",""18:00"",""19:00""]",true,Cemento
+Pista Este,Pádel,23,Sevilla,miguel@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Bilbao,Baloncesto,20,Bilbao,iker@sportify.com,"[""17:00"",""18:00"",""19:00"",""20:00""]",true,Madera
+Pista Málaga,Fútbol,35,Málaga,raul@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00""]",true,Césped
+Pista Granada,Tenis,28,Granada,alvaro@sportify.com,"[""09:00"",""10:00"",""18:00"",""19:00""]",false,Arcilla
+Pista Alicante,Pádel,25,Alicante,sergio@sportify.com,"[""08:00"",""09:00"",""10:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Murcia,Pádel,22,Murcia,ruben@sportify.com,"[""09:00"",""10:00"",""11:00"",""17:00"",""18:00""]",true,Cemento
+Pista Zaragoza,Tenis,30,Zaragoza,marcos@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00""]",true,Arcilla
+Pista Valladolid,Pádel,24,Valladolid,ana@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00""]",true,Cemento
+Pista Palma,Pádel,29,Palma,pedro@sportify.com,"[""09:00"",""10:00"",""11:00"",""17:00"",""18:00"",""19:00""]",true,Cemento
+Pista Las Palmas,Fútbol,38,Las Palmas,diego@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00""]",true,Césped
+Pista Vigo,Pádel,23,Vigo,javier@sportify.com,"[""10:00"",""11:00"",""18:00"",""19:00"",""20:00""]",true,Cemento
+Pista Gijón,Tenis,27,Gijón,miguel@sportify.com,"[""09:00"",""10:00"",""18:00"",""19:00""]",false,Arcilla
+Pista A Coruña,Pádel,25,A Coruña,iker@sportify.com,"[""08:00"",""09:00"",""17:00"",""18:00"",""19:00""]",true,Cemento

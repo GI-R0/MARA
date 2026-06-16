@@ -1,7 +1,20 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axiosConfig";
+import { Eye, EyeOff } from "lucide-react";
 import "../styles/Auth.css";
+
+const PASSWORD_RULES = [
+  { id: "length", label: "Mínimo 8 caracteres", test: (p) => p.length >= 8 },
+  { id: "upper", label: "Al menos una mayúscula (A-Z)", test: (p) => /[A-Z]/.test(p) },
+  { id: "lower", label: "Al menos una minúscula (a-z)", test: (p) => /[a-z]/.test(p) },
+  { id: "number", label: "Al menos un número (0-9)", test: (p) => /[0-9]/.test(p) },
+  { id: "special", label: "Un carácter especial (@$!%*?&)", test: (p) => /[@$!%*?&]/.test(p) },
+];
+
+function validatePassword(password) {
+  return PASSWORD_RULES.every((rule) => rule.test(password));
+}
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -10,13 +23,15 @@ export default function Register() {
     password: "",
     confirmarPassword: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setError("");
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -27,16 +42,30 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
+    if (!formData.nombre || !formData.email || !formData.password) {
+      setError("Completa todos los campos");
+      return;
+    }
+
     if (formData.password !== formData.confirmarPassword) {
       setError("Las contraseñas no coinciden");
       return;
     }
+
     if (formData.password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres, mayúscula, minúscula, número y carácter especial");
+      setError("La contraseña debe tener al menos 8 caracteres");
       return;
     }
-    if (!formData.nombre || !formData.email) {
-      setError("Completa todos los campos");
+
+    const hasUpper = /[A-Z]/.test(formData.password);
+    const hasLower = /[a-z]/.test(formData.password);
+    const hasNumber = /[0-9]/.test(formData.password);
+    const hasSpecial = /[@$!%*?&]/.test(formData.password);
+
+    if (!hasUpper || !hasLower || !hasNumber || !hasSpecial) {
+      setError(
+        "La contraseña debe incluir mayúscula, minúscula, número y carácter especial",
+      );
       return;
     }
 
@@ -55,13 +84,15 @@ export default function Register() {
         },
       });
     } catch (err) {
-      const errors = err.response?.data?.errors;
-      let mensaje = err.response?.data?.msg || "Error al crear la cuenta";
-      
-      if (errors && Array.isArray(errors) && errors.length > 0) {
-        mensaje = errors[0].msg;
+      const responseData = err.response?.data;
+      let mensaje = "Error al crear la cuenta";
+      if (responseData?.errors && Array.isArray(responseData.errors)) {
+        mensaje = responseData.errors
+          .map((error) => error.msg || error.message || error)
+          .join(". ");
+      } else if (responseData?.msg) {
+        mensaje = responseData.msg;
       }
-      
       setError(mensaje);
     } finally {
       setLoading(false);
@@ -70,7 +101,7 @@ export default function Register() {
 
   return (
     <div className="login-container">
-      <div className="auth-wrapper">
+      <div className="w-full max-w-md">
         <div className="login-card">
           <div className="login-header">
             <h1 className="login-title">SportifyClub</h1>
@@ -117,42 +148,67 @@ export default function Register() {
 
               <div className="form-group">
                 <label className="form-label">Contraseña</label>
-                <div className="password-wrapper">
+                <div style={{ position: "relative" }}>
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
+                    onFocus={() => setPasswordFocused(true)}
+                    onBlur={() => setPasswordFocused(false)}
                     className="form-input"
-                    placeholder="Mín. 8 caracteres, mayúscula, número y carácter especial"
+                    placeholder="Crea una contraseña segura"
                     required
                     minLength="8"
                     disabled={loading}
+                    style={{ paddingRight: "40px" }}
                   />
                   <button
                     type="button"
-                    className="password-toggle"
                     onClick={() => setShowPassword(!showPassword)}
-                    tabIndex="-1"
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      color: "var(--gray-600)",
+                      cursor: "pointer",
+                      padding: "4px"
+                    }}
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                   >
-                    {showPassword ? (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                        <line x1="1" y1="1" x2="23" y2="23"></line>
-                      </svg>
-                    ) : (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                      </svg>
-                    )}
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+
+                {(passwordFocused || formData.password.length > 0) && (
+                  <div className="password-requirements">
+                    <p className="requirements-title">Tu contraseña debe tener:</p>
+                    <ul className="requirements-list">
+                      {PASSWORD_RULES.map((rule) => {
+                        const passed = rule.test(formData.password);
+                        return (
+                          <li
+                            key={rule.id}
+                            className={`requirement-item ${passed ? "passed" : "pending"}`}
+                          >
+                            <span className="requirement-icon">
+                              {passed ? "✓" : "○"}
+                            </span>
+                            {rule.label}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
               </div>
 
               <div className="form-group">
                 <label className="form-label">Confirmar contraseña</label>
-                <div className="password-wrapper">
+                <div style={{ position: "relative" }}>
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     name="confirmarPassword"
@@ -162,24 +218,25 @@ export default function Register() {
                     placeholder="Repite tu contraseña"
                     required
                     disabled={loading}
+                    style={{ paddingRight: "40px" }}
                   />
                   <button
                     type="button"
-                    className="password-toggle"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    tabIndex="-1"
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      color: "var(--gray-600)",
+                      cursor: "pointer",
+                      padding: "4px"
+                    }}
+                    aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                   >
-                    {showConfirmPassword ? (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                        <line x1="1" y1="1" x2="23" y2="23"></line>
-                      </svg>
-                    ) : (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                      </svg>
-                    )}
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
               </div>

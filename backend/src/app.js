@@ -57,13 +57,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 const HOST = process.env.HOST || "0.0.0.0";
-
-// Solo iniciar el servidor si no estamos en Vercel
-if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
-  app.listen(PORT, HOST, () =>
-    logger.info(`Servidor corriendo en ${HOST}:${PORT}`)
-  );
-}
-
-export default app;
-
+app.listen(PORT, HOST, () =>
+  logger.info(`Servidor corriendo en ${HOST}:${PORT}`),
+);

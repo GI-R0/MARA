@@ -66,7 +66,7 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/GI-R0/mara.git
+   git clone https://github.com/GI-R0/SPORTS.git
    cd sportifyclub
    ```
 
@@ -92,41 +92,44 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 
 - **Frontend**: http://localhost:5173
 - **Backend**: http://localhost:4000
-- **Admin**: admin@sportify.com / admin123
+- **Admin**: admin@sportify.com / Admin123!
 
 ### Acceso Desplegado (Producción)
 
-- **Frontend**: https://mara-hta9.vercel.app
-- **Backend**: https://sportifyclub-backend.vercel.app/api
+- **Frontend**: https://mara-frontend-production.up.railway.app
+- **Backend**: https://tu-backend-production.up.railway.app/api
 
 ## 📁 Estructura del Proyecto
 
 ```
-sportifyclub/
+SPORTS/
 ├── backend/          # 🖥️ API REST (Node.js + Express)
 │   ├── src/
+│   │   ├── config/       # Conexión DB, Cloudinary, Mailer
 │   │   ├── controllers/  # Lógica de negocio
 │   │   ├── models/       # Modelos MongoDB
 │   │   ├── routes/       # Definición de rutas
 │   │   ├── middlewares/  # Middlewares personalizados
 │   │   ├── validators/   # Validaciones de entrada
-│   │   ├── data/         # Archivos CSV generados
-│   │   └── tools/        # Scripts y Seeders (generateData.js)
-│   └── seed/             # Datos iniciales (seed.js)
+│   │   ├── data/         # Archivos CSV para seeding
+│   │   └── tools/        # Scripts de utilidad y seed.js
 ├── frontend/         # 🌐 Interfaz React
 │   └── sportifyclub-frontend/
-│       ├── src/
-│       │   ├── components/  # Componentes reutilizables
-│       │   ├── pages/       # Páginas principales
-│       │   ├── hooks/       # Hooks personalizados
-│       │   ├── context/     # Contextos React
-│       │   ├── reducers/    # Reducers (reservaReducer)
-│       │   ├── api/         # Configuración Axios
-│       │   └── styles/      # Estilos CSS
-│       └── public/          # Assets estáticos
+│       ├── public/          # Assets estáticos
+│       ├── scripts/         # Scripts de utilidades
+│       └── src/
+│           ├── api/         # Configuración Axios
+│           ├── components/  # Componentes reutilizables
+│           ├── context/     # Contextos React
+│           ├── hooks/       # Hooks personalizados
+│           ├── pages/       # Páginas principales
+│           ├── reducers/    # Reducers (reservaReducer)
+│           └── styles/      # Estilos CSS
 ├── docs/             # 📚 Documentación completa
 ├── QUICK_START.txt   # Inicio rápido
-└── CHECKLIST_ENTREGA.txt  # Checklist de entrega
+├── CHECKLIST_ENTREGA.txt  # Checklist de entrega
+├── CORREO_ENTREGA.txt     # Instrucciones de entrega
+└── INSTRUCCIONES_EJECUCION.md # Instrucciones paso a paso
 ```
 
 ## 🛠️ Tecnologías
@@ -172,11 +175,11 @@ cd backend
 node src/tools/generateData.js
 ```
 
-Esto crea 150+ registros distribuidos en 3 colecciones relacionadas:
+Esto crea 161 registros distribuidos en 3 colecciones relacionadas:
 
-- **Usuarios** (50): Jugadores, clubs y admins
-- **Pistas** (50): Instalaciones deportivas con características
-- **Reservas** (50): Reservas que conectan usuarios con pistas
+- **Usuarios** (31): 1 Admin, 5 clubs y 25 jugadores
+- **Pistas** (30): Instalaciones deportivas con características
+- **Reservas** (100): Reservas que conectan usuarios con pistas
 
 ### Relaciones
 
@@ -240,7 +243,7 @@ VITE_API_URL=https://tu-backend-deployed.com
 
 ## 📧 Contacto
 
-Para soporte o preguntas: GGIMENEZLIMA@gmail.com
+Para soporte o preguntas: ggimenezlima@gmail.com
 
 ## 📄 Licencia
 

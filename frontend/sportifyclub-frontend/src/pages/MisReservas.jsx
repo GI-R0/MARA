@@ -2,7 +2,6 @@ import { useAuth } from "../hooks/useAuth";
 import { useReservas } from "../context/ReservaContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import "../styles/MisReservas.css";
 
 export default function MisReservas() {
@@ -13,6 +12,7 @@ export default function MisReservas() {
     loading,
     error,
     fetchReservas,
+    updateReserva,
     deleteReserva,
     filterByStatus,
     sortReservas,
@@ -42,10 +42,19 @@ export default function MisReservas() {
     if (window.confirm("¿Estás seguro de que quieres cancelar esta reserva?")) {
       const result = await deleteReserva(id);
       if (result.success) {
-        toast.success("Reserva cancelada exitosamente");
+        alert("Reserva cancelada exitosamente");
       } else {
-        toast.error(result.error || "Error al cancelar la reserva");
+        alert(result.error || "Error al cancelar la reserva");
       }
+    }
+  };
+
+  const handleConfirmReserva = async (id) => {
+    const result = await updateReserva(id, { estado: "confirmada" });
+    if (result.success) {
+      alert("Reserva confirmada correctamente");
+    } else {
+      alert(result.error || "Error al confirmar la reserva");
     }
   };
 
@@ -160,9 +169,44 @@ export default function MisReservas() {
           <div className="reservas-grid">
             {reservas.map((reserva) => (
               <div key={reserva._id} className="reserva-card">
-                <div className="reserva-info">
-                  <h3>{reserva.pista?.nombre || "Pista"}</h3>
-                  <p className="reserva-id">Reserva #{reserva._id.slice(-6)}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <img 
+                    src={(() => {
+                      const defaultImages = {
+                        pádel: "/fallback-ball.svg",
+                        tenis: "/fallback-ball.svg",
+                        "fútbol 5": "/futsal-court.png",
+                        fútbol: "/futbol-user.jpg",
+                        baloncesto: "/fallback-ball.svg",
+                        voleibol: "/fallback-ball.svg",
+                        default: "/fallback-ball.svg",
+                      };
+                      const deporte = (reserva.pista?.deporte || "").toLowerCase();
+                      const imagen = reserva.pista?.imagen;
+                      
+                      const isPlaceholderImage = (url) =>
+                        typeof url === "string" &&
+                        (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
+                    
+                      const isRemoteImage = (url) =>
+                        typeof url === "string" && /^https?:\/\//.test(url);
+
+                      if (imagen && !isPlaceholderImage(imagen)) {
+                        return imagen;
+                      }
+                      return defaultImages[deporte] || defaultImages.default;
+                    })()}
+                    alt={reserva.pista?.nombre || "Pista"} 
+                    style={{ width: '80px', height: '80px', borderRadius: '12px', objectFit: 'cover', flexShrink: 0 }}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "/fallback-ball.svg";
+                    }}
+                  />
+                  <div className="reserva-info">
+                    <h3>{reserva.pista?.nombre || "Pista"}</h3>
+                    <p className="reserva-id">Reserva #{reserva._id.slice(-6)}</p>
+                  </div>
                 </div>
 
                 <div className="reserva-time">
@@ -190,14 +234,20 @@ export default function MisReservas() {
                   >
                     Ver pista
                   </Link>
-                  {reserva.estado === "confirmada" && (
+                  {reserva.estado === "pendiente" && (
                     <button
-                      onClick={() => handleCancelReserva(reserva._id)}
-                      className="btn-cancel"
+                      onClick={() => handleConfirmReserva(reserva._id)}
+                      className="btn-confirm"
                     >
-                      Cancelar
+                      Confirmar
                     </button>
                   )}
+                  <button
+                    onClick={() => handleCancelReserva(reserva._id)}
+                    className="btn-cancel"
+                  >
+                    Cancelar
+                  </button>
                 </div>
               </div>
             ))}

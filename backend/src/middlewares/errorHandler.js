@@ -1,22 +1,12 @@
-import logger from "../config/logger.js";
-
+// Middleware para manejar errores en rutas async
 export const asyncHandler = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
 
+// Middleware de manejo de errores global
 export const errorHandler = (err, req, res, next) => {
-  logger.error("[ERROR]", {
-    timestamp: new Date().toISOString(),
-    method: req.method,
-    url: req.url,
-    status: err.status || 500,
-    message: err.message,
-    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
-  });
-
-  if (res.headersSent) {
-    return next(err);
-  }
+  console.error("[ERROR]", err.message);
+  console.error(err.stack);
 
   if (err.array && typeof err.array === "function") {
     const errors = err.array();
@@ -26,24 +16,19 @@ export const errorHandler = (err, req, res, next) => {
     });
   }
 
+  // Errores de validación de Mongoose
   if (err.name === "ValidationError") {
     const errors = Object.values(err.errors).map((e) => e.message);
     return res.status(400).json({ msg: "Error de validación", errors });
   }
 
-  if (err.name === "CastError") {
-    return res.status(400).json({ msg: "ID inválido" });
-  }
-
+  // Errores de duplicado (índice único)
   if (err.code === 11000) {
-    const field = err.keyValue ? Object.keys(err.keyValue)[0] : (err.keyPattern ? Object.keys(err.keyPattern)[0] : "campo");
-    return res.status(409).json({ msg: `El ${field} ya existe o está registrado` });
+    const field = Object.keys(err.keyValue || err.keyPattern || {})[0];
+    return res.status(409).json({ msg: `El ${field || "campo"} ya existe` });
   }
 
-  if (err.name === "MongooseError") {
-    return res.status(400).json({ msg: "Error en la base de datos" });
-  }
-
+  // Errores de JWT
   if (err.name === "JsonWebTokenError") {
     return res.status(401).json({ msg: "Token inválido" });
   }
@@ -52,8 +37,9 @@ export const errorHandler = (err, req, res, next) => {
     return res.status(401).json({ msg: "Token expirado" });
   }
 
+  // Error por defecto
   res.status(err.status || 500).json({
-    msg: process.env.NODE_ENV === "production" ? "Error interno del servidor" : err.message,
+    msg: err.message || "Error interno del servidor",
     ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 };

@@ -2,28 +2,31 @@ import { Link } from "react-router-dom";
 
 export default function CardPista({ pista }) {
   const defaultImages = {
-    pádel:
-      "https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=800&q=80",
-    tenis:
-      "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
-    "fútbol 5":
-      "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800&q=80",
-    fútbol:
-      "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80",
-    baloncesto:
-      "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80",
-    voleibol:
-      "https://images.unsplash.com/photo-1592656094267-764a45160876?w=800&q=80",
-    default:
-      "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80",
+    pádel: "/fallback-ball.svg",
+    tenis: "/fallback-ball.svg",
+    "fútbol 5": "/futsal-court.png",
+    fútbol: "/futbol-user.jpg",
+    baloncesto: "/fallback-ball.svg",
+    voleibol: "/fallback-ball.svg",
+    default: "/fallback-ball.svg",
   };
 
   const isPlaceholderImage = (url) =>
-    typeof url === "string" && url.includes("via.placeholder.com");
+    typeof url === "string" &&
+    (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
+
+  const isRemoteImage = (url) =>
+    typeof url === "string" && /^https?:\/\//.test(url);
+
+  const fallbackPath = "/fallback-ball.svg";
 
   const getImageUrl = () => {
-    if (pista.imagen && !isPlaceholderImage(pista.imagen)) return pista.imagen;
     const deporte = (pista.deporte || "").toLowerCase();
+
+    if (pista.imagen && !isPlaceholderImage(pista.imagen)) {
+      return pista.imagen;
+    }
+
     return defaultImages[deporte] || defaultImages.default;
   };
 
@@ -39,6 +42,10 @@ export default function CardPista({ pista }) {
           alt={pista.nombre}
           className="card-image"
           loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = fallbackPath;
+          }}
         />
         <div className="card-overlay"></div>
 

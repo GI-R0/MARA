@@ -7,17 +7,9 @@
     var(--gray-200)
   );
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xl) var(--spacing-md);
-}
-.auth-wrapper {
-  width: 100%;
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 .login-card {
   width: 100%;
@@ -99,27 +91,6 @@
   outline: none;
   border-color: var(--barca-light-blue);
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
-}
-.password-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.password-toggle {
-  position: absolute;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: var(--gray-600);
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s;
-}
-.password-toggle:hover {
-  color: var(--barca-blue);
 }
 .btn-submit {
   width: 100%;
@@ -222,7 +193,7 @@
 }
 
 .requirement-item.passed {
-  color: #22a55b; /* verde */
+  color: #22a55b;
 }
 
 .requirement-icon {

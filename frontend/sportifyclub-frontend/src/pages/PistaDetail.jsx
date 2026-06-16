@@ -4,8 +4,6 @@ import API from "../api/axiosConfig";
 import ReservaForm from "../components/ReservaForm";
 import "../styles/PistaDetail.css";
 
-const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80";
-
 export default function PistaDetail() {
   const { id } = useParams();
   const [pista, setPista] = useState(null);
@@ -56,9 +54,28 @@ export default function PistaDetail() {
     <div className="pista-detail-container">
       <div className="pista-card">
         <img
-          src={
-            pista.imagen || DEFAULT_IMAGE
-          }
+          src={(() => {
+            const defaultImages = {
+              pádel: "/fallback-ball.svg",
+              tenis: "/fallback-ball.svg",
+              "fútbol 5": "/futsal-court.png",
+              fútbol: "/futbol-user.jpg",
+              baloncesto: "/fallback-ball.svg",
+              voleibol: "/fallback-ball.svg",
+              default: "/fallback-ball.svg",
+            };
+            const deporte = (pista.deporte || "").toLowerCase();
+            const imagen = pista.imagen;
+            
+            const isPlaceholderImage = (url) =>
+              typeof url === "string" &&
+              (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
+          
+            if (imagen && !isPlaceholderImage(imagen)) {
+              return imagen;
+            }
+            return defaultImages[deporte] || defaultImages.default;
+          })()}
           alt={pista.nombre}
           className="pista-image"
         />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import API from "../api/axiosConfig";
 import { useAuth } from "../hooks/useAuth";
-import toast from "react-hot-toast";
 import {
   Plus,
   Edit,
@@ -13,8 +12,6 @@ import {
   Activity,
 } from "lucide-react";
 import "../styles/GestionPistas.css";
-
-const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80";
 
 export default function GestionPistas() {
   const { user } = useAuth();
@@ -45,7 +42,7 @@ export default function GestionPistas() {
       }
 
       const res = await API.get(url);
-      setPistas(res.data.pistas || res.data);
+      setPistas(res.data);
       setError(null);
     } catch (err) {
       console.error("Error fetching pistas:", err);
@@ -115,10 +112,9 @@ export default function GestionPistas() {
 
       closeModal();
       fetchPistas();
-      toast.success(editingPista ? "Pista actualizada" : "Pista creada exitosamente");
     } catch (err) {
       console.error("Error saving pista:", err);
-      toast.error("Error al guardar la pista");
+      alert("Error al guardar la pista");
     }
   };
 
@@ -127,11 +123,10 @@ export default function GestionPistas() {
       return;
     try {
       await API.delete(`/pistas/${id}`);
-      toast.success("Pista eliminada");
       fetchPistas();
     } catch (err) {
       console.error("Error deleting pista:", err);
-      toast.error("Error al eliminar la pista");
+      alert("Error al eliminar la pista");
     }
   };
 
@@ -169,7 +164,8 @@ export default function GestionPistas() {
               <div className="pista-manage-image-container">
                 <img
                   src={
-                    pista.imagen || DEFAULT_IMAGE
+                    pista.imagen ||
+                    "https://via.placeholder.com/600x300?text=Pista"
                   }
                   alt={pista.nombre}
                   className="pista-manage-image"
@@ -316,7 +312,7 @@ export default function GestionPistas() {
                       value={formData.imagen}
                       onChange={handleInputChange}
                       className="form-input"
-                      placeholder="Ej: https://misitio.com/pista.jpg"
+                      placeholder="https://..."
                     />
                   </div>
 

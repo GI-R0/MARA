@@ -22,6 +22,24 @@ export default function ReservaForm({
 
   const today = new Date().toISOString().split("T")[0];
 
+  const displayedTimes = (() => {
+    if (!date) return availableTimes;
+
+    const selectedDate = new Date(date);
+    const now = new Date();
+    const isToday =
+      selectedDate.getFullYear() === now.getFullYear() &&
+      selectedDate.getMonth() === now.getMonth() &&
+      selectedDate.getDate() === now.getDate();
+
+    if (!isToday) return availableTimes;
+
+    return availableTimes.filter((h) => {
+      const slotTime = new Date(`${date}T${h}:00`);
+      return slotTime > now;
+    });
+  })();
+
   // Cargar horarios disponibles cuando cambie la fecha
   useEffect(() => {
     if (date && pistaId) {
@@ -42,10 +60,10 @@ export default function ReservaForm({
 
   // Resetear hora si no está disponible en los nuevos horarios
   useEffect(() => {
-    if (hour && !availableTimes.includes(hour)) {
+    if (hour && !displayedTimes.includes(hour)) {
       setHour("");
     }
-  }, [availableTimes, hour]);
+  }, [displayedTimes, hour]);
 
   const validateHourFormat = (hourString) => {
     return /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/.test(hourString);
@@ -148,7 +166,7 @@ export default function ReservaForm({
   };
 
   const total = precioHora > 0 ? (precioHora * duracion).toFixed(2) : 0;
-  const hasAvailableTimes = availableTimes && availableTimes.length > 0;
+  const hasAvailableTimes = displayedTimes && displayedTimes.length > 0;
 
   return (
     <form onSubmit={handleSubmit} className="reserva-form">
@@ -192,7 +210,7 @@ export default function ReservaForm({
             aria-label="Hora disponible"
           >
             <option value="">Selecciona una hora</option>
-            {availableTimes.map((h) => (
+            {displayedTimes.map((h) => (
               <option key={h} value={h}>
                 {h} hs
               </option>

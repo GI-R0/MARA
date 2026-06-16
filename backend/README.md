@@ -109,13 +109,6 @@ Ver [DIAGRAMA_RELACIONES.md](DIAGRAMA_RELACIONES.md)
 
 ## Seed
 
-Para cargar datos iniciales en la base de datos (usuarios, pistas y reservas) extraídos desde los archivos CSV, ejecuta:
-
-```bash
-npm run seed
-```
-
-El script se encargará de parsear los CSV de `src/data/` e insertar los registros en MongoDB, enlazando correctamente las relaciones mediante `ObjectIds`.
 ## Seguridad
 
 - Autenticación JWT
