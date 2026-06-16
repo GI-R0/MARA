@@ -40,8 +40,9 @@
   margin: 0;
 }
 .login-subtitle {
-  color: var(--gray-200);
+  color: #e8e8e8;
   margin-top: var(--spacing-xs);
+  font-weight: 500;
 }
 .login-body {
   padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl);
@@ -50,7 +51,7 @@
   font-size: 1.875rem;
   font-weight: bold;
   text-align: center;
-  color: var(--gray-800);
+  color: #111827;
   margin-bottom: var(--spacing-xl);
 }
 .login-error {
@@ -66,6 +67,8 @@
 }
 .error-text {
   font-size: 0.875rem;
+  font-weight: 600;
+  color: #991b1b;
 }
 .login-form {
   display: flex;
@@ -80,7 +83,7 @@
   display: block;
   font-size: var(--font-sm);
   font-weight: 600;
-  color: var(--gray-800);
+  color: #1f2937;
   margin-bottom: var(--spacing-xs);
 }
 .form-input {
@@ -160,7 +163,8 @@
   text-align: center;
 }
 .footer-text {
-  color: #4b5563;
+  color: #2d3748;
+  font-weight: 500;
 }
 .footer-link {
   font-weight: bold;
@@ -177,4 +181,68 @@
   color: var(--gray-600);
   font-size: 0.875rem;
   margin-top: var(--spacing-xl);
+}
+
+/* --- Bloque de requisitos de contraseña --- */
+.password-requirements {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.requirements-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 6px 0;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.requirement-item {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.requirement-item.pending {
+  color: #555;
+}
+
+.requirement-item.passed {
+  color: #22a55b; /* verde */
+}
+
+.requirement-icon {
+  font-size: 13px;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* --- Aviso coincidencia de contraseñas --- */
+.password-match-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.password-match-hint.match-ok {
+  color: #22a55b;
+}
+
+.password-match-hint.match-fail {
+  color: #e53e3e;
 }
