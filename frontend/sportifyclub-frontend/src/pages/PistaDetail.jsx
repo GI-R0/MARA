@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../api/axiosConfig";
 import ReservaForm from "../components/ReservaForm";
+import { getImageUrl } from "../utils/getImageUrl";
 import "../styles/PistaDetail.css";
 
 export default function PistaDetail() {
@@ -54,28 +55,7 @@ export default function PistaDetail() {
     <div className="pista-detail-container">
       <div className="pista-card">
         <img
-          src={(() => {
-            const defaultImages = {
-              pádel: "/fallback-ball.svg",
-              tenis: "/fallback-ball.svg",
-              "fútbol 5": "/futsal-court.png",
-              fútbol: "/futbol-user.jpg",
-              baloncesto: "/fallback-ball.svg",
-              voleibol: "/fallback-ball.svg",
-              default: "/fallback-ball.svg",
-            };
-            const deporte = (pista.deporte || "").toLowerCase();
-            const imagen = pista.imagen;
-            
-            const isPlaceholderImage = (url) =>
-              typeof url === "string" &&
-              (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
-          
-            if (imagen && !isPlaceholderImage(imagen)) {
-              return imagen;
-            }
-            return defaultImages[deporte] || defaultImages.default;
-          })()}
+          src={getImageUrl(pista)}
           alt={pista.nombre}
           className="pista-image"
         />

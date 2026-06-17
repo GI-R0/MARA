@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Trophy, Lightbulb, Sun, Layers, MapPin } from "lucide-react";
+import { getImageUrl, getFallbackPath } from "../utils/getImageUrl";
 
 export default function CardPista({ pista, loading = false }) {
   if (loading) {
@@ -24,35 +25,6 @@ export default function CardPista({ pista, loading = false }) {
       </div>
     );
   }
-  const defaultImages = {
-    pádel: "/fallback-ball.svg",
-    tenis: "/fallback-ball.svg",
-    "fútbol 5": "/futsal-court.png",
-    fútbol: "/futbol-user.jpg",
-    baloncesto: "/fallback-ball.svg",
-    voleibol: "/fallback-ball.svg",
-    default: "/fallback-ball.svg",
-  };
-
-  const isPlaceholderImage = (url) =>
-    typeof url === "string" &&
-    (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
-
-  const isRemoteImage = (url) =>
-    typeof url === "string" && /^https?:\/\//.test(url);
-
-  const fallbackPath = "/fallback-ball.svg";
-
-  const getImageUrl = () => {
-    const deporte = (pista.deporte || "").toLowerCase();
-
-    if (pista.imagen && !isPlaceholderImage(pista.imagen)) {
-      return pista.imagen;
-    }
-
-    return defaultImages[deporte] || defaultImages.default;
-  };
-
   const isAvailable =
     Array.isArray(pista.horariosDisponibles) &&
     pista.horariosDisponibles.length > 0;
@@ -61,13 +33,13 @@ export default function CardPista({ pista, loading = false }) {
     <Link to={`/pistas/${pista._id}`} className="card">
       <div className="card-image-container">
         <img
-          src={getImageUrl()}
+          src={getImageUrl(pista)}
           alt={pista.nombre}
           className="card-image"
           loading="lazy"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = fallbackPath;
+            e.currentTarget.src = getFallbackPath();
           }}
         />
         <div className="card-overlay"></div>
