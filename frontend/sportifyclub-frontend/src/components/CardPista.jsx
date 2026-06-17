@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { TennisBall, Lightbulb, Sun, Layers, MapPin } from "lucide-react";
+import { Trophy, Lightbulb, Sun, Layers, MapPin } from "lucide-react";
 
 export default function CardPista({ pista, loading = false }) {
   if (loading) {
@@ -84,7 +84,7 @@ export default function CardPista({ pista, loading = false }) {
 
         <div className="card-badge-top-left">
           <span className="badge-icon">
-            <TennisBall size={16} />
+            <Trophy size={16} />
           </span>
           {" "}
           {pista.deporte || "Pádel"}

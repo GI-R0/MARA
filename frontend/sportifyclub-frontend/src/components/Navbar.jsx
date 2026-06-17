@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { Menu, X, TennisBall, User } from "lucide-react";
+import { Menu, X, Trophy, User } from "lucide-react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className="container">
         <Link to="/" className="navbar-brand" onClick={closeMenu}>
           <span style={{display: 'inline-flex', alignItems: 'center', gap: 8}}>
-            <TennisBall size={20} />
+            <Trophy size={20} />
             SportifyClub
           </span>
         </Link>
@@ -39,7 +39,7 @@ export default function Navbar() {
               </Link>
               {user.role === "club" && (
                 <Link to="/club" className="navbar-link" onClick={closeMenu}>
-                  <TennisBall size={16} style={{marginRight:8}} /> Mi Club
+                  <Trophy size={16} style={{marginRight:8}} /> Mi Club
                 </Link>
               )}
               {user.role === "admin" && (
