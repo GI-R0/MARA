@@ -70,16 +70,22 @@ export const createReserva = async (req, res) => {
       });
     }
 
-    // Verificar conflictos: si hay alguna reserva que se solape
-    const conflicto = await Reserva.findOne({
+    // Verificar conflictos: buscar reservas en esa fecha y comparar intervalos en JS
+    // (startTime y endTime son virtuales de Mongoose, no existen en MongoDB)
+    const reservasExistentes = await Reserva.find({
       pista: pistaId,
       estado: { $ne: "cancelada" },
-      $or: [
-        { startTime: { $lt: endTime }, endTime: { $gt: startTime } },
-        { startTime: { $gte: startTime, $lt: endTime } },
-        { endTime: { $gt: startTime, $lte: endTime } },
-      ],
+      fecha: fechaDate,
     }).session(session);
+
+    const nuevaStart = new Date(`${fechaStr}T${hora}:00`);
+    const nuevaEnd = addHours(nuevaStart, duracion);
+
+    const conflicto = reservasExistentes.some((r) => {
+      const existStart = new Date(`${fechaStr}T${r.hora}:00`);
+      const existEnd = addHours(existStart, r.duracion);
+      return nuevaStart < existEnd && nuevaEnd > existStart;
+    });
 
     if (conflicto) {
       await session.abortTransaction();
