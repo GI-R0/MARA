@@ -79,8 +79,10 @@ export default function Pistas() {
         </div>
 
         {loading ? (
-          <div className="loading-container">
-            <div className="loading-spinner"></div>
+          <div className="pistas-grid">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <CardPista key={i} loading />
+            ))}
           </div>
         ) : error ? (
           <div className="error-container">{error}</div>

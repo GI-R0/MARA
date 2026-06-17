@@ -2,10 +2,10 @@
   position: relative;
   background: linear-gradient(135deg, var(--barca-blue), var(--barca-red));
   color: white;
-  padding: 6rem 1rem;
+  padding: 5rem 1rem;
   overflow: hidden;
   text-align: center;
-  min-height: 500px;
+  min-height: 460px;
   display: flex;
   align-items: center;
 }
@@ -69,14 +69,30 @@
 
 @media (min-width: 768px) {
   .hero-section {
-    padding: 8rem 1.5rem;
-    min-height: 600px;
+    padding: 8.5rem 1.5rem;
+    min-height: 620px;
   }
   .hero-title {
-    font-size: 4.5rem;
+    font-size: 4rem;
+    line-height: 1.02;
   }
   .hero-subtitle {
-    font-size: 1.875rem;
+    font-size: 2rem;
+    max-width: 900px;
+    margin: 0 auto 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 3.5rem 1rem;
+    min-height: 420px;
+  }
+  .hero-title {
+    font-size: 2rem;
+  }
+  .hero-subtitle {
+    font-size: 1.125rem;
   }
 }
 
@@ -153,8 +169,18 @@
     var(--barca-gold) 0%,
     var(--barca-gold) 100%
   );
-  transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 15px 40px rgba(237, 187, 0, 0.6);
+  transform: scale(1.06) translateY(-3px);
+  box-shadow: 0 20px 50px rgba(237, 187, 0, 0.65);
+}
+
+/* tech stats variant */
+.tech-stats .stat-number svg {
+  color: var(--barca-gold);
+}
+
+.tech-stats .stat-item {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .features-section {
