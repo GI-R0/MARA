@@ -80,7 +80,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-input"
-                    placeholder="••••••••"
+                    placeholder="Mínimo 8 caracteres, mayúscula, número y símbolo"
                     required
                     disabled={loading}
                     autoComplete="current-password"

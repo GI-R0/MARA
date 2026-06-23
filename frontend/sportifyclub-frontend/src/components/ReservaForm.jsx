@@ -34,9 +34,11 @@ export default function ReservaForm({
 
     if (!isToday) return availableTimes;
 
+    // Requerir mínimo 2 horas de anticipación
+    const minAnticipaciónTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
     return availableTimes.filter((h) => {
       const slotTime = new Date(`${date}T${h}:00`);
-      return slotTime > now;
+      return slotTime >= minAnticipaciónTime;
     });
   })();
 
@@ -77,8 +79,6 @@ export default function ReservaForm({
     const durNum = Number(dur);
     return durNum >= 1 && durNum <= 3;
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

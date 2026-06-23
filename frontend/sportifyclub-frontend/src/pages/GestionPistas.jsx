@@ -42,7 +42,9 @@ export default function GestionPistas() {
       }
 
       const res = await API.get(url);
-      setPistas(res.data);
+      // Manejar tanto respuestas con paginación como arrays directos
+      const pistasList = res.data.pistas || res.data;
+      setPistas(Array.isArray(pistasList) ? pistasList : []);
       setError(null);
     } catch (err) {
       console.error("Error fetching pistas:", err);

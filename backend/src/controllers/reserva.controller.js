@@ -52,6 +52,15 @@ export const createReserva = async (req, res) => {
         .json({ msg: "No se pueden crear reservas en horarios pasados" });
     }
 
+    // Validar anticipación mínima de 2 horas
+    const minAnticipationTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+    if (startTime < minAnticipationTime) {
+      await session.abortTransaction();
+      return res
+        .status(400)
+        .json({ msg: "Debes reservar con al menos 2 horas de anticipación" });
+    }
+
     // Verificar que todos los intervalos de la reserva estén disponibles
     const requestedHours = Array.from({ length: duracion }, (_, index) => {
       const hour = startTime.getHours() + index;
@@ -157,7 +166,10 @@ export const getReservas = async (req, res) => {
 
     const [reservas, total] = await Promise.all([
       Reserva.find()
-        .populate({ path: "pista", select: "nombre ubicacion precioHora imagen deporte" })
+        .populate({
+          path: "pista",
+          select: "nombre ubicacion precioHora imagen deporte",
+        })
         .populate({ path: "usuario", select: "name email" })
         .skip(skip)
         .limit(limit)
@@ -183,7 +195,10 @@ export const getReservas = async (req, res) => {
 export const getReservaById = async (req, res) => {
   try {
     const reserva = await Reserva.findById(req.params.id)
-      .populate({ path: "pista", select: "nombre ubicacion precioHora imagen deporte" })
+      .populate({
+        path: "pista",
+        select: "nombre ubicacion precioHora imagen deporte",
+      })
       .populate({ path: "usuario", select: "name email" });
     if (!reserva) return res.status(404).json({ msg: "Reserva no encontrada" });
 
@@ -206,7 +221,10 @@ export const getMisReservas = async (req, res) => {
 
     const [reservas, total] = await Promise.all([
       Reserva.find({ usuario: req.user._id })
-        .populate({ path: "pista", select: "nombre ubicacion precioHora imagen deporte" })
+        .populate({
+          path: "pista",
+          select: "nombre ubicacion precioHora imagen deporte",
+        })
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 })

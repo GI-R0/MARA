@@ -1,15 +1,31 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import API from "../api/axiosConfig";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/Auth.css";
 
 const PASSWORD_RULES = [
   { id: "length", label: "Mínimo 8 caracteres", test: (p) => p.length >= 8 },
-  { id: "upper", label: "Al menos una mayúscula (A-Z)", test: (p) => /[A-Z]/.test(p) },
-  { id: "lower", label: "Al menos una minúscula (a-z)", test: (p) => /[a-z]/.test(p) },
-  { id: "number", label: "Al menos un número (0-9)", test: (p) => /[0-9]/.test(p) },
-  { id: "special", label: "Un carácter especial (@$!%*?&)", test: (p) => /[@$!%*?&]/.test(p) },
+  {
+    id: "upper",
+    label: "Al menos una mayúscula (A-Z)",
+    test: (p) => /[A-Z]/.test(p),
+  },
+  {
+    id: "lower",
+    label: "Al menos una minúscula (a-z)",
+    test: (p) => /[a-z]/.test(p),
+  },
+  {
+    id: "number",
+    label: "Al menos un número (0-9)",
+    test: (p) => /[0-9]/.test(p),
+  },
+  {
+    id: "special",
+    label: "Un carácter especial (@$!%*?&)",
+    test: (p) => /[@$!%*?&]/.test(p),
+  },
 ];
 
 function validatePassword(password) {
@@ -36,6 +52,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { register: authRegister } = useAuth();
 
   const validatePassword = (value) => ({
     length: value.length >= 8,
@@ -88,15 +105,15 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await API.post("/auth/register", {
-        name: formData.nombre.trim(),
-        email: formData.email.toLowerCase().trim(),
-        password: formData.password,
-      });
+      await authRegister(
+        formData.nombre.trim(),
+        formData.email.toLowerCase().trim(),
+        formData.password,
+      );
 
-      navigate("/login", {
+      navigate("/", {
         state: {
-          message: "¡Cuenta creada con éxito! Ya puedes iniciar sesión.",
+          message: "¡Cuenta creada con éxito! Bienvenido a SportifyClub.",
         },
       });
     } catch (err) {
@@ -173,7 +190,7 @@ export default function Register() {
                     onFocus={() => setPasswordFocused(true)}
                     onBlur={() => setPasswordFocused(false)}
                     className="form-input"
-                    placeholder="Crea una contraseña segura"
+                    placeholder="Mínimo 8 caracteres: mayúscula, minúscula, número y símbolo (@$!%*?&)"
                     required
                     disabled={loading}
                     style={{ paddingRight: "40px" }}
@@ -190,9 +207,11 @@ export default function Register() {
                       border: "none",
                       color: "var(--gray-600)",
                       cursor: "pointer",
-                      padding: "4px"
+                      padding: "4px",
                     }}
-                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    aria-label={
+                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                    }
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -200,7 +219,9 @@ export default function Register() {
 
                 {(passwordFocused || formData.password.length > 0) && (
                   <div className="password-requirements">
-                    <p className="requirements-title">Tu contraseña debe tener:</p>
+                    <p className="requirements-title">
+                      Tu contraseña debe tener:
+                    </p>
                     <ul className="requirements-list">
                       {PASSWORD_RULES.map((rule) => {
                         const passed = rule.test(formData.password);
@@ -247,11 +268,19 @@ export default function Register() {
                       border: "none",
                       color: "var(--gray-600)",
                       cursor: "pointer",
-                      padding: "4px"
+                      padding: "4px",
                     }}
-                    aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    aria-label={
+                      showConfirmPassword
+                        ? "Ocultar contraseña"
+                        : "Mostrar contraseña"
+                    }
                   >
-                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    {showConfirmPassword ? (
+                      <EyeOff size={20} />
+                    ) : (
+                      <Eye size={20} />
+                    )}
                   </button>
                 </div>
               </div>

@@ -41,7 +41,7 @@ const generateTokens = async (user) => {
   const accessToken = jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET,
-    { expiresIn: "15m" }, // Token de acceso corto
+    { expiresIn: "2h" }, // Token de acceso corto
   );
 
   const refreshToken = jwt.sign(

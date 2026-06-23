@@ -50,7 +50,11 @@ export default function AdminUsers() {
       return;
     }
 
-    if (!window.confirm("¿Eliminar este usuario? Esta acción no se puede deshacer.")) {
+    if (
+      !window.confirm(
+        "¿Eliminar este usuario? Esta acción no se puede deshacer.",
+      )
+    ) {
       return;
     }
 
@@ -114,26 +118,36 @@ export default function AdminUsers() {
                         <select
                           value={user.role}
                           disabled={
-                            currentUser?._id === user._id || savingUserId === user._id
+                            currentUser?._id === user._id ||
+                            savingUserId === user._id
                           }
-                          onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                          onChange={(e) =>
+                            handleRoleChange(user._id, e.target.value)
+                          }
                         >
                           <option value="user">user</option>
                           <option value="club">club</option>
                           <option value="admin">admin</option>
                         </select>
                       </td>
-                      <td>{new Date(user.createdAt).toLocaleDateString("es-ES")}</td>
-                      <td>{new Date(user.updatedAt).toLocaleDateString("es-ES")}</td>
+                      <td>
+                        {new Date(user.createdAt).toLocaleDateString("es-ES")}
+                      </td>
+                      <td>
+                        {new Date(user.updatedAt).toLocaleDateString("es-ES")}
+                      </td>
                       <td>
                         <button
                           className="btn-delete small"
                           disabled={
-                            currentUser?._id === user._id || deletingUserId === user._id
+                            currentUser?._id === user._id ||
+                            deletingUserId === user._id
                           }
                           onClick={() => handleDeleteUser(user._id)}
                         >
-                          {deletingUserId === user._id ? "Eliminando..." : "Eliminar"}
+                          {deletingUserId === user._id
+                            ? "Eliminando..."
+                            : "Eliminar"}
                         </button>
                       </td>
                     </tr>

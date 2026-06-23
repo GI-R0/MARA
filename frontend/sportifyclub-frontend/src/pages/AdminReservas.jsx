@@ -40,9 +40,7 @@ export default function AdminReservas() {
     try {
       const res = await API.put(`/reservas/${reservaId}`, { estado });
       setReservas((prev) =>
-        prev.map((reserva) =>
-          reserva._id === reservaId ? res.data : reserva,
-        ),
+        prev.map((reserva) => (reserva._id === reservaId ? res.data : reserva)),
       );
     } catch (err) {
       console.error("Error updating reserva estado:", err);
@@ -53,14 +51,20 @@ export default function AdminReservas() {
   };
 
   const handleDeleteReserva = async (reservaId) => {
-    if (!window.confirm("¿Eliminar esta reserva? Esta acción no se puede deshacer.")) {
+    if (
+      !window.confirm(
+        "¿Eliminar esta reserva? Esta acción no se puede deshacer.",
+      )
+    ) {
       return;
     }
 
     setDeletingReservaId(reservaId);
     try {
       await API.delete(`/reservas/${reservaId}`);
-      setReservas((prev) => prev.filter((reserva) => reserva._id !== reservaId));
+      setReservas((prev) =>
+        prev.filter((reserva) => reserva._id !== reservaId),
+      );
     } catch (err) {
       console.error("Error deleting reserva:", err);
       setError("No se pudo eliminar la reserva.");
@@ -128,7 +132,10 @@ export default function AdminReservas() {
                             className="btn-confirm small"
                             disabled={savingReservaId === reserva._id}
                             onClick={() =>
-                              handleUpdateReservaEstado(reserva._id, "confirmada")
+                              handleUpdateReservaEstado(
+                                reserva._id,
+                                "confirmada",
+                              )
                             }
                           >
                             {savingReservaId === reserva._id
@@ -141,7 +148,10 @@ export default function AdminReservas() {
                             className="btn-cancel small"
                             disabled={savingReservaId === reserva._id}
                             onClick={() =>
-                              handleUpdateReservaEstado(reserva._id, "cancelada")
+                              handleUpdateReservaEstado(
+                                reserva._id,
+                                "cancelada",
+                              )
                             }
                           >
                             {savingReservaId === reserva._id

@@ -92,29 +92,14 @@ export const getPistaById = async (req, res) => {
 export const getPistasByClub = async (req, res) => {
   try {
     const clubId = req.params.clubId;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const skip = (page - 1) * limit;
 
-    const [pistas, total] = await Promise.all([
-      Pista.find({ club: clubId })
-        .populate("club", "name email")
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      Pista.countDocuments({ club: clubId }),
-    ]);
+    const pistas = await Pista.find({ club: clubId })
+      .populate("club", "name email")
+      .lean();
 
-    res.json({
-      pistas,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit),
-      },
-    });
+    res.json(pistas);
   } catch (err) {
+    console.error("[ERROR] Get pistas by club:", err.message);
     res.status(500).json({ msg: "Error al obtener pistas del club" });
   }
 };
@@ -209,7 +194,10 @@ export const updatePista = async (req, res) => {
 
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
 
-    if (req.user.role !== "admin" && pista.club.toString() !== req.user._id.toString()) {
+    if (
+      req.user.role !== "admin" &&
+      pista.club.toString() !== req.user._id.toString()
+    ) {
       return res
         .status(403)
         .json({ msg: "No tienes permiso para actualizar esta pista" });
@@ -234,7 +222,10 @@ export const deletePista = async (req, res) => {
     const pista = await Pista.findById(req.params.id);
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
 
-    if (req.user.role !== "admin" && pista.club.toString() !== req.user._id.toString()) {
+    if (
+      req.user.role !== "admin" &&
+      pista.club.toString() !== req.user._id.toString()
+    ) {
       return res
         .status(403)
         .json({ msg: "No tienes permiso para eliminar esta pista" });

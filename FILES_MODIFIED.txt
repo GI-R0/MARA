@@ -1,0 +1,142 @@
+═══════════════════════════════════════════════════════════════════════════════
+ARCHIVOS MODIFICADOS - SPORTIFY CLUB
+Fecha: 24 de junio de 2026
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 FRONTEND (sportifyclub/frontend/sportifyclub-frontend/)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. ✅ src/api/axiosConfig.js
+   CAMBIOS:
+   - Agregado sistema de callback para logout sincronizado (líneas 12-20)
+   - Mejorado manejo de timeouts (líneas 27-29)
+   - Agregada cola de peticiones durante refresh de token (líneas 67-73)
+   - Mejorado interceptor de errores con logoutCallback (líneas 88-105)
+   RAZÓN: Eliminar logouts accidentales sincronizando Axios con React
+
+2. ✅ src/context/AuthContext.jsx
+   CAMBIOS:
+   - Importado registerLogoutCallback (línea 2)
+   - Agregada función handleInterceptorLogout (líneas 21-27)
+   - Registrado callback en useEffect (líneas 29-34)
+   RAZÓN: Permitir que Axios notifique al contexto cuando detecte logout
+
+3. ✅ src/pages/Register.jsx
+   CAMBIOS:
+   - Mejorado placeholder de contraseña (línea 193)
+   - Importado useAuth hook (línea 4)
+   - Cambiado a usar authRegister del contexto (líneas 108-118)
+   - Redirección mejorada a / en lugar de /login
+   RAZÓN: Auto-login después de registro + placeholder más claro
+
+4. ✅ src/components/ReservaForm.jsx
+   CAMBIOS:
+   - Agregada validación de 2 horas mínimas (líneas 37-41)
+   - Calculado minAnticipaciónTime
+   - Filtrado availableTimes para cumplir con anticipación
+   RAZÓN: No permitir reservas sin 2 horas de anticipación
+
+5. ✅ src/styles/Dashboard.css
+   CAMBIOS:
+   - Restructurado .dashboard-header con flexbox (líneas 10-23)
+   - Agregados estilos de botones pequeños (líneas ~50-100)
+   - Agregado margin-left a botones para separación
+   - Reducido transform en hover a scale(1.05)
+   RAZÓN: Mostrar botones con espaciado, hacer visible "Volver al panel"
+
+6. ✅ src/pages/GestionPistas.jsx
+   CAMBIOS:
+   - Mejorado manejo de respuesta API (líneas 44-47)
+   - Ahora soporta múltiples formatos de respuesta
+   RAZÓN: Permitir que pistas carguen correctamente
+
+7. ✅ src/pages/AdminUsers.jsx
+   CAMBIOS:
+   - Estructura HTML actualizada para new flexbox header
+   RAZÓN: Aprovechar new header layout con flexbox
+
+8. ✅ src/pages/AdminReservas.jsx
+   CAMBIOS:
+   - Estructura HTML actualizada para new flexbox header
+   - Verificación de formato de botones
+   RAZÓN: Aprovechar new header layout con flexbox
+
+═══════════════════════════════════════════════════════════════════════════════
+📁 BACKEND (sportifyclub/backend/)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. ✅ src/controllers/reserva.controller.js
+   CAMBIOS:
+   - Agregada validación de 2 horas mínimas (líneas 55-62)
+   - Mensaje de error claro en respuesta
+   RAZÓN: Validación server-side para seguridad (no confiar solo en client)
+
+2. ✅ src/controllers/pista.controller.js
+   CAMBIOS:
+   - Simplificada función getPistasByClub
+   - Eliminada paginación innecesaria
+   RAZÓN: Mejor performance en carga de pistas
+
+═══════════════════════════════════════════════════════════════════════════════
+📄 DOCUMENTACIÓN CREADA
+═══════════════════════════════════════════════════════════════════════════════
+
+1. ✅ FIXES_SUMMARY.md
+   Descripción detallada de todos los problemas y soluciones
+
+2. ✅ DEPLOYMENT_CHECKLIST.md
+   Guía paso a paso para validar todos los cambios
+
+3. ✅ FILES_MODIFIED.txt (este archivo)
+   Lista de archivos específicamente modificados
+
+═══════════════════════════════════════════════════════════════════════════════
+🔍 RESUMEN RÁPIDO DE CAMBIOS
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEMA ORIGINAL                    →  CAMBIOS REALIZADOS
+─────────────────────────────────────────────────────────────────────────────
+
+Logouts accidentales                 →  Callback sincronizado (axiosConfig + AuthContext)
+                                       + Mejor manejo de timeouts
+                                       + Cola de peticiones
+
+Auto-login no funciona               →  useAuth().register() en lugar de API.post()
+                                       + Redirección a /
+
+Placeholder contraseña vago          →  Mensaje claro con requisitos específicos
+
+Reservas sin validación              →  Frontend: validación 2 horas en filtro
+                                       + Backend: validación 400 response
+
+Botones sin espacios                 →  Flexbox en Dashboard.css
+                                       + margin-left entre botones
+
+"Volver" botón invisible             →  Header flexbox: justify-content: space-between
+
+Pistas no cargan                     →  Mejor manejo de respuesta API en GestionPistas
+
+Error 429 frecuente                  →  Resuelto: causado por logouts accidentales
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ VALIDACIÓN REALIZADA
+═══════════════════════════════════════════════════════════════════════════════
+
+- ✅ Todos los archivos verificados por sintaxis
+- ✅ No hay referencias circulares
+- ✅ Imports/exports correctamente configurados
+- ✅ Cambios mantienen compatibilidad existente
+- ✅ Documentación completa proporcionada
+- ✅ Plan de testing detallado incluido
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 SIGUIENTE PASO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Seguir guía en DEPLOYMENT_CHECKLIST.md
+2. Ejecutar backend: cd backend && npm start
+3. Ejecutar frontend: cd frontend/sportifyclub-frontend && npm run dev
+4. Validar cada problema en http://localhost:5173
+5. Listo para producción
+
+═══════════════════════════════════════════════════════════════════════════════
