@@ -98,15 +98,12 @@
 }
 .actions-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-@media (min-width: 768px) {
-  .actions-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
 }
 .btn-action {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +111,7 @@
   color: white;
   font-weight: bold;
   font-size: 1.125rem;
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
   border-radius: 0.75rem;
   text-decoration: none;
   transition: all 0.3s;
@@ -122,9 +119,11 @@
   border: none;
   cursor: pointer;
   width: 100%;
+  box-sizing: border-box;
 }
 .btn-action:hover {
-  transform: scale(1.05);
+  background-color: var(--color-hover);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .btn-admin {
   background: linear-gradient(to right, #dc2626, #db2777);

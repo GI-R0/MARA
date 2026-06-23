@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       const res = await API.get("/auth/me");
       setUser(res.data);
     } catch {
-      setUser(null);
+      setUser((prev) => prev ? prev : null);
     } finally {
       setLoading(false);
     }
@@ -37,8 +37,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await API.post("/auth/logout");
-    } catch (error) {
-      // ignore logout failures
+    } catch {
     }
     setUser(null);
   };

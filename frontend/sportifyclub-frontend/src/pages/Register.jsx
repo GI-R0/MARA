@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import API from "../api/axiosConfig";
+import { AuthContext } from "../context/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
 import "../styles/Auth.css";
 
@@ -12,10 +12,6 @@ const PASSWORD_RULES = [
   { id: "special", label: "Un carácter especial (@$!%*?&)", test: (p) => /[@$!%*?&]/.test(p) },
 ];
 
-function validatePassword(password) {
-  return PASSWORD_RULES.every((rule) => rule.test(password));
-}
-
 export default function Register() {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -26,24 +22,10 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
-  const [passwordValidations, setPasswordValidations] = useState({
-    length: false,
-    uppercase: false,
-    lowercase: false,
-    number: false,
-    special: false,
-  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const validatePassword = (value) => ({
-    length: value.length >= 8,
-    uppercase: /[A-Z]/.test(value),
-    lowercase: /[a-z]/.test(value),
-    number: /[0-9]/.test(value),
-    special: /[@$!%*?&]/.test(value),
-  });
+  const { register, loadUser } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,10 +34,6 @@ export default function Register() {
       ...formData,
       [name]: value,
     });
-
-    if (name === "password") {
-      setPasswordValidations(validatePassword(value));
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -72,33 +50,18 @@ export default function Register() {
       return;
     }
 
-    const validations = validatePassword(formData.password);
-    setPasswordValidations(validations);
-
-    if (Object.values(validations).includes(false)) {
+    const allValid = PASSWORD_RULES.every((rule) => rule.test(formData.password));
+    if (!allValid) {
       setError("La contraseña no cumple los requisitos mínimos");
-      return;
-    }
-
-    if (!formData.nombre || !formData.email) {
-      setError("Completa todos los campos");
       return;
     }
 
     setLoading(true);
 
     try {
-      await API.post("/auth/register", {
-        name: formData.nombre.trim(),
-        email: formData.email.toLowerCase().trim(),
-        password: formData.password,
-      });
-
-      navigate("/login", {
-        state: {
-          message: "¡Cuenta creada con éxito! Ya puedes iniciar sesión.",
-        },
-      });
+      await register(formData.nombre.trim(), formData.email.toLowerCase().trim(), formData.password);
+      try { await loadUser(); } catch {}
+      navigate("/");
     } catch (err) {
       const responseData = err.response?.data;
       let mensaje = "Error al crear la cuenta";
