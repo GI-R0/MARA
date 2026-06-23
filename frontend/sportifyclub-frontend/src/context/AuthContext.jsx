@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       const res = await API.get("/auth/me");
       setUser(res.data);
     } catch {
-      setUser(null);
+      setUser((prev) => (prev ? prev : null));
     } finally {
       setLoading(false);
     }

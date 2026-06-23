@@ -54,14 +54,6 @@ export default function Register() {
   const navigate = useNavigate();
   const { register: authRegister } = useAuth();
 
-  const validatePassword = (value) => ({
-    length: value.length >= 8,
-    uppercase: /[A-Z]/.test(value),
-    lowercase: /[a-z]/.test(value),
-    number: /[0-9]/.test(value),
-    special: /[@$!%*?&]/.test(value),
-  });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setError("");
@@ -69,9 +61,14 @@ export default function Register() {
       ...formData,
       [name]: value,
     });
-
     if (name === "password") {
-      setPasswordValidations(validatePassword(value));
+      setPasswordValidations({
+        length: value.length >= 8,
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+        special: /[@$!%*?&]/.test(value),
+      });
     }
   };
 
@@ -89,16 +86,8 @@ export default function Register() {
       return;
     }
 
-    const validations = validatePassword(formData.password);
-    setPasswordValidations(validations);
-
-    if (Object.values(validations).includes(false)) {
+    if (!validatePassword(formData.password)) {
       setError("La contraseña no cumple los requisitos mínimos");
-      return;
-    }
-
-    if (!formData.nombre || !formData.email) {
-      setError("Completa todos los campos");
       return;
     }
 
