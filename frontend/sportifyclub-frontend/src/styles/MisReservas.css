@@ -56,7 +56,6 @@
 }
 .btn-search:hover {
   background-color: #4338ca;
-  transform: scale(1.05);
 }
 .reservas-grid {
   display: grid;

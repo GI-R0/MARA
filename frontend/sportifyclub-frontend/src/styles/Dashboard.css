@@ -52,7 +52,6 @@
   transition: all 0.3s;
 }
 .stat-card:hover {
-  transform: scale(1.05);
 }
 .stat-value {
   font-size: 3rem;

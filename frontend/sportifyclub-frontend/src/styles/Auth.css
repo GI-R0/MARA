@@ -111,7 +111,6 @@
     var(--barca-light-blue),
     var(--barca-gold)
   );
-  transform: scale(1.02);
 }
 .btn-submit:disabled {
   opacity: 0.5;
