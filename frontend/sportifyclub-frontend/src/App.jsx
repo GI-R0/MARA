@@ -19,6 +19,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminUsers from "./pages/AdminUsers";
 import AdminReservas from "./pages/AdminReservas";
 import GestionPistas from "./pages/GestionPistas";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -108,6 +109,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <Footer />

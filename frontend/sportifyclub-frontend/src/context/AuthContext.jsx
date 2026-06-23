@@ -25,21 +25,22 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const res = await API.post("/auth/login", { email, password });
     setUser(res.data.user);
+    return res;
   };
 
   const register = async (name, email, password) => {
     const res = await API.post("/auth/register", { name, email, password });
     setUser(res.data.user);
+    return res;
   };
 
   const logout = async () => {
     try {
       await API.post("/auth/logout");
-    } catch (err) {
-      console.warn("Error during logout:", err);
-    } finally {
-      setUser(null);
+    } catch (error) {
+      // ignore logout failures
     }
+    setUser(null);
   };
 
   return (

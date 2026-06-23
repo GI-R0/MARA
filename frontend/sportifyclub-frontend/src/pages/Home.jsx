@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap, MapPin, ShieldCheck, Clock } from "lucide-react";
+import { Zap, MapPin, ShieldCheck, Clock, Database, Key, Cloud } from "lucide-react";
 import "../styles/Home.css";
 
 export default function Home() {
@@ -34,23 +34,23 @@ export default function Home() {
           <h1 className="hero-title">SportifyClub</h1>
           <p className="hero-subtitle">Reserva pistas deportivas en minutos</p>
 
-          <div className="stats-container">
+          <div className="stats-container tech-stats">
             <div className="stat-item">
-              <div className="stat-number">+120</div>
-              <div className="stat-label">Pistas disponibles</div>
+              <div className="stat-number"><Database size={28} /></div>
+              <div className="stat-label">MERN Stack</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">24/7</div>
-              <div className="stat-label">Abierto siempre</div>
+              <div className="stat-number"><Key size={28} /></div>
+              <div className="stat-label">JWT Auth</div>
             </div>
             <div className="stat-item">
-              <div className="stat-number">4.9 ★</div>
-              <div className="stat-label">Valoración usuarios</div>
+              <div className="stat-number"><Cloud size={28} /></div>
+              <div className="stat-label">Cloud Ready</div>
             </div>
           </div>
 
           <Link to="/pistas" className="btn-hero">
-            Ver todas las pistas
+            Explorar pistas
           </Link>
         </div>
       </section>
@@ -80,12 +80,8 @@ export default function Home() {
       <section className="cta-section">
         <div className="container">
           <h2 className="cta-title">¿Listo para jugar?</h2>
-          <p className="cta-text">
-            Encuentra tu pista perfecta en menos de 1 minuto
-          </p>
-          <Link to="/pistas" className="btn-cta">
-            Reservar ahora
-          </Link>
+          <p className="cta-text">Encuentra tu pista perfecta rápidamente</p>
+          <Link to="/pistas" className="btn-cta">Reservar ya</Link>
         </div>
       </section>
     </>

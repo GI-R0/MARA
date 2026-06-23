@@ -26,16 +26,36 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [passwordValidations, setPasswordValidations] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    special: false,
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const validatePassword = (value) => ({
+    length: value.length >= 8,
+    uppercase: /[A-Z]/.test(value),
+    lowercase: /[a-z]/.test(value),
+    number: /[0-9]/.test(value),
+    special: /[@$!%*?&]/.test(value),
+  });
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setError("");
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (name === "password") {
+      setPasswordValidations(validatePassword(value));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -52,20 +72,16 @@ export default function Register() {
       return;
     }
 
-    if (formData.password.length < 8) {
-      setError("La contraseña debe tener al menos 8 caracteres");
+    const validations = validatePassword(formData.password);
+    setPasswordValidations(validations);
+
+    if (Object.values(validations).includes(false)) {
+      setError("La contraseña no cumple los requisitos mínimos");
       return;
     }
 
-    const hasUpper = /[A-Z]/.test(formData.password);
-    const hasLower = /[a-z]/.test(formData.password);
-    const hasNumber = /[0-9]/.test(formData.password);
-    const hasSpecial = /[@$!%*?&]/.test(formData.password);
-
-    if (!hasUpper || !hasLower || !hasNumber || !hasSpecial) {
-      setError(
-        "La contraseña debe incluir mayúscula, minúscula, número y carácter especial",
-      );
+    if (!formData.nombre || !formData.email) {
+      setError("Completa todos los campos");
       return;
     }
 
@@ -159,7 +175,6 @@ export default function Register() {
                     className="form-input"
                     placeholder="Crea una contraseña segura"
                     required
-                    minLength="8"
                     disabled={loading}
                     style={{ paddingRight: "40px" }}
                   />
