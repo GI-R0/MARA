@@ -18,18 +18,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /**
-   * Logout sincronizado - Se llama desde el interceptor cuando el token expira
-   * Esta función evita race conditions al actualizar el estado correctamente
-   */
   const handleInterceptorLogout = () => {
     setUser(null);
   };
 
-  // Registrar callback de logout en el interceptor
   useEffect(() => {
     registerLogoutCallback(handleInterceptorLogout);
-    // Cargar usuario al montar el componente
     loadUser();
   }, []);
 
@@ -49,7 +43,6 @@ export const AuthProvider = ({ children }) => {
     try {
       await API.post("/auth/logout");
     } catch (error) {
-      // Ignorar errores en logout
     } finally {
       setUser(null);
     }

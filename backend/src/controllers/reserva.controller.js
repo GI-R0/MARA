@@ -39,7 +39,6 @@ export const createReserva = async (req, res) => {
       return res.status(404).json({ msg: "Pista no encontrada" });
     }
 
-    // Calcular startTime y endTime de la nueva reserva
     const fechaStr = fechaDate.toISOString().split("T")[0];
     const startTime = new Date(`${fechaStr}T${hora}:00`);
     const endTime = addHours(startTime, duracion);
@@ -52,7 +51,6 @@ export const createReserva = async (req, res) => {
         .json({ msg: "No se pueden crear reservas en horarios pasados" });
     }
 
-    // Validar anticipación mínima de 2 horas
     const minAnticipationTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
     if (startTime < minAnticipationTime) {
       await session.abortTransaction();
@@ -61,7 +59,6 @@ export const createReserva = async (req, res) => {
         .json({ msg: "Debes reservar con al menos 2 horas de anticipación" });
     }
 
-    // Verificar que todos los intervalos de la reserva estén disponibles
     const requestedHours = Array.from({ length: duracion }, (_, index) => {
       const hour = startTime.getHours() + index;
       return `${String(hour).padStart(2, "0")}:00`;
@@ -79,8 +76,6 @@ export const createReserva = async (req, res) => {
       });
     }
 
-    // Verificar conflictos: buscar reservas en esa fecha y comparar intervalos en JS
-    // (startTime y endTime son virtuales de Mongoose, no existen en MongoDB)
     const reservasExistentes = await Reserva.find({
       pista: pistaId,
       estado: { $ne: "cancelada" },

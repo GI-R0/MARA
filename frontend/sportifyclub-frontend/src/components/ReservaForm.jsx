@@ -34,7 +34,6 @@ export default function ReservaForm({
 
     if (!isToday) return availableTimes;
 
-    // Requerir mínimo 2 horas de anticipación
     const minAnticipaciónTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
     return availableTimes.filter((h) => {
       const slotTime = new Date(`${date}T${h}:00`);
@@ -42,7 +41,6 @@ export default function ReservaForm({
     });
   })();
 
-  // Cargar horarios disponibles cuando cambie la fecha
   useEffect(() => {
     if (date && pistaId) {
       const cargarHorarios = async () => {
@@ -50,7 +48,7 @@ export default function ReservaForm({
           const res = await API.get(`/pistas/${pistaId}?fecha=${date}`);
           setAvailableTimes(res.data.horariosDisponibles || []);
         } catch (err) {
-          console.error("Error cargando horarios:", err);
+          console.error(err);
           setAvailableTimes(initialAvailableTimes);
         }
       };
@@ -60,7 +58,6 @@ export default function ReservaForm({
     }
   }, [date, pistaId, initialAvailableTimes]);
 
-  // Resetear hora si no está disponible en los nuevos horarios
   useEffect(() => {
     if (hour && !displayedTimes.includes(hour)) {
       setHour("");
@@ -159,7 +156,7 @@ export default function ReservaForm({
         "No se pudo completar la reserva. Intenta nuevamente";
 
       setError(mensaje);
-      console.error("Error en reserva:", err);
+      console.error(err);
     } finally {
       setLoading(false);
     }

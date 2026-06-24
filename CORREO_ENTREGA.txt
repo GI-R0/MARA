@@ -10,7 +10,7 @@ ASUNTO: ✅ SportifyClub – Proyecto entregado | Credenciales y variables de en
 
 Hola,
 
-Con gusto le informo que el proyecto **SportifyClub** ha sido preparado y está 
+Con gusto le informo que el proyecto **SportifyClub** ha sido preparado y está
 completamente listo para su evaluación y ejecución.
 
 ───────────────────────────────────────────────────────────────────────────────
@@ -133,7 +133,7 @@ Frontend:
 📞 CONTACTO / SOPORTE
 ───────────────────────────────────────────────────────────────────────────────
 
-En caso de cualquier duda o inconveniente durante la ejecución, no dude en 
+En caso de cualquier duda o inconveniente durante la ejecución, no dude en
 contactarme. El proyecto está completamente funcional y listo para evaluación.
 
 ───────────────────────────────────────────────────────────────────────────────

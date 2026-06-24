@@ -40,14 +40,12 @@ export const getPistaById = async (req, res) => {
 
     let horariosDisponibles = pista.horariosDisponibles;
 
-    // Si se pasa fecha, filtrar horarios ocupados por reservas
     if (req.query.fecha) {
       const fecha = new Date(req.query.fecha);
       if (isNaN(fecha)) {
         return res.status(400).json({ msg: "Fecha inválida" });
       }
 
-      // Obtener reservas para esa pista y fecha
       const reservas = await Reserva.find({
         pista: req.params.id,
         fecha: fecha,
@@ -56,7 +54,6 @@ export const getPistaById = async (req, res) => {
         .select("hora duracion")
         .lean();
 
-      // Calcular horarios ocupados
       const ocupados = new Set();
       reservas.forEach((reserva) => {
         const startHour = parseInt(reserva.hora.split(":")[0]);
@@ -66,7 +63,6 @@ export const getPistaById = async (req, res) => {
         }
       });
 
-      // Filtrar horarios disponibles
       horariosDisponibles = pista.horariosDisponibles.filter(
         (h) => !ocupados.has(h),
       );
