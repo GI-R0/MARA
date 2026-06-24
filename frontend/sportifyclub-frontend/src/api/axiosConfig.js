@@ -27,7 +27,7 @@ const refreshAuthToken = async () => {
       {},
       { withCredentials: true, timeout: 5000 },
     );
-  } catch (error) {
+  } catch {
     throw new Error("Token refresh failed");
   }
 };

@@ -42,13 +42,6 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
-  const [passwordValidations, setPasswordValidations] = useState({
-    length: false,
-    uppercase: false,
-    lowercase: false,
-    number: false,
-    special: false,
-  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -61,15 +54,6 @@ export default function Register() {
       ...formData,
       [name]: value,
     });
-    if (name === "password") {
-      setPasswordValidations({
-        length: value.length >= 8,
-        uppercase: /[A-Z]/.test(value),
-        lowercase: /[a-z]/.test(value),
-        number: /[0-9]/.test(value),
-        special: /[@$!%*?&]/.test(value),
-      });
-    }
   };
 
   const handleSubmit = async (e) => {
