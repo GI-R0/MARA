@@ -85,8 +85,8 @@ export const register = async (req, res) => {
     const userResponse = user.toJSON();
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       path: "/",
     };
 
@@ -136,8 +136,8 @@ export const login = async (req, res) => {
     const userResponse = user.toJSON();
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       path: "/",
     };
 
@@ -264,8 +264,8 @@ export const refreshToken = async (req, res) => {
     // Setear nuevas cookies
     const cookieOptions = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       path: "/",
     };
 
