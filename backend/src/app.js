@@ -26,6 +26,7 @@ try {
 }
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
@@ -60,3 +61,4 @@ const HOST = process.env.HOST || "0.0.0.0";
 app.listen(PORT, HOST, () =>
   logger.info(`Servidor corriendo en ${HOST}:${PORT}`),
 );
+
