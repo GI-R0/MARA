@@ -11,8 +11,8 @@ SportifyClub – Plataforma web para reservas de pistas deportivas
 ## Paso 1: Clonar el repositorio
 
 cd [ruta donde quieras clonar]
-git clone https://github.com/GI-R0/SPORTS.git
-cd SPORTS
+git clone https://github.com/GI-R0/MARA.git
+cd sportifyclub
 
 ## Paso 2: Instalar dependencias
 
@@ -94,12 +94,9 @@ Contraseña: Admin123!
 □ Documentación:
   ├─ README.md (raíz)
   ├─ backend/README.md
-  ├─ backend/MODELOS_BASE_DATOS.md
-  ├─ backend/DIAGRAMA_RELACIONES.md
-  ├─ backend/seed/README.md
   ├─ frontend/README.md
-  ├─ CHECKLIST_ENTREGA.txt (este proyecto)
-  ├─ CORREO_ENTREGA.txt
+  ├─ docs/README_COMPLETO.md
+  ├─ RAILWAY_FIX_CHECKLIST.md
   └─ QUICK_START.txt (este archivo)
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -108,15 +105,15 @@ Contraseña: Admin123!
 
 ┌─ "EADDRINUSE: address already in use :::4000"
 │  → Puerto 4000 ocupado. Cambia PORT en backend/.env o mata el proceso.
-│  
+│
 ├─ "Cannot connect to MongoDB"
 │  → Verifica MONGODB_URI en backend/.env
 │  → Asegúrate de que MongoDB Atlas esté accesible
-│  
+│
 ├─ "Frontend no conecta con backend"
 │  → Revisa que VITE_API_URL sea correcto en frontend/.env
 │  → Asegúrate de que backend esté corriendo (npm run dev)
-│  
+│
 └─ "Seed fallido"
    → Asegúrate de que MongoDB esté accesible
    → Verifica archivos CSV en backend/data/
@@ -146,8 +143,8 @@ FRONTEND (frontend/src/):
 ═══════════════════════════════════════════════════════════════════════════════
 
 Si tienes dudas o problemas:
-→ Abre un issue en https://github.com/GI-R0/SPORTS/issues
-→ Consulta la documentación en README.md
+→ Abre un issue en https://github.com/GI-R0/MARA/issues
+→ Consulta la documentación en README.md o RAILWAY_FIX_CHECKLIST.md
 
 ═══════════════════════════════════════════════════════════════════════════════
 
