@@ -79,7 +79,7 @@ SportifyClub es una **plataforma web completa** para la reserva de instalaciones
 ## 📁 Estructura del Proyecto
 
 ```
-SPORTS/
+sportifyclub/
 ├── backend/          # 🖥️ API REST (Node.js + Express)
 │   ├── src/
 │   │   ├── config/       # Conexión DB, Cloudinary, Mailer
@@ -93,16 +93,14 @@ SPORTS/
 ├── frontend/         # 🌐 Interfaz React
 │   └── sportifyclub-frontend/
 │       ├── public/          # Assets estáticos
-│       ├── scripts/         # Scripts de utilidades
-│       └── src/
-│           ├── api/         # Configuración Axios
-│           ├── components/  # Componentes reutilizables
-│           ├── context/     # Contextos React
-│           ├── hooks/       # Hooks personalizados
-│           ├── pages/       # Páginas principales
-│           ├── reducers/    # Reducers (reservaReducer)
-│           └── styles/      # Estilos CSS
-├── docs/                          # 📚 Documentación técnica
+│       ├── src/
+│       │   ├── api/         # Configuración Axios
+│       │   ├── components/  # Componentes reutilizables
+│       │   ├── context/     # Contextos React
+│       │   ├── hooks/       # Hooks personalizados
+│       │   ├── pages/       # Páginas principales
+│       │   ├── reducers/    # Reducers (reservaReducer)
+│       │   └── styles/      # Estilos CSS
 ├── QUICK_START.txt                # Inicio rápido local
 └── RAILWAY_FIX_CHECKLIST.md       # Guía de despliegue
 ```
@@ -162,9 +160,8 @@ Ver [`RAILWAY_FIX_CHECKLIST.md`](RAILWAY_FIX_CHECKLIST.md) para lista completa c
 
 ## 📚 Documentación
 
-- [Documentación Completa](docs/README_COMPLETO.md) - Detalles técnicos, arquitectura, API
-- [Backend](backend/README.md) - Configuración y uso del backend
-- [Frontend](frontend/README.md) - Configuración y uso del frontend
+- [Inicio Rápido](QUICK_START.txt) - Guía de 5 minutos para comenzar localmente
+- [Despliegue Railway](RAILWAY_FIX_CHECKLIST.md) - Configuración de variables de entorno en producción
 
 ## 📄 Licencia
 
