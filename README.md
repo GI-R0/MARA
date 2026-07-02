@@ -127,11 +127,9 @@ SPORTS/
 │           ├── pages/       # Páginas principales
 │           ├── reducers/    # Reducers (reservaReducer)
 │           └── styles/      # Estilos CSS
-├── docs/             # 📚 Documentación completa
-├── QUICK_START.txt   # Inicio rápido
-├── CHECKLIST_ENTREGA.txt  # Checklist de entrega
-├── CORREO_ENTREGA.txt     # Instrucciones de entrega
-└── INSTRUCCIONES_EJECUCION.md # Instrucciones paso a paso
+├── docs/                          # 📚 Documentación técnica
+├── QUICK_START.txt                # Inicio rápido local
+└── RAILWAY_FIX_CHECKLIST.md       # Guía de despliegue
 ```
 
 ## 🛠️ Tecnologías
@@ -201,7 +199,6 @@ Usuario ────1:N───→ Pista
 - **CORS**: Configuración segura de orígenes permitidos
 
 ## 🚀 Despliegue
-### Despliegue
 
 **Ambos en Railway** (Backend y Frontend)
 
