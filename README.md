@@ -28,31 +28,6 @@ SportifyClub es una **plataforma web completa** para la reserva de instalaciones
 - **🖼️ Gestión de Imágenes**: Upload de fotos de pistas (Cloudinary)
 - **🔒 Seguridad**: JWT, rate limiting, validaciones completas
 
-## 📈 Sentido del Proyecto
-
-SportifyClub resuelve un problema real en el mundo del deporte: la dificultad para encontrar y reservar instalaciones deportivas de manera eficiente. En muchas ciudades, los clubes deportivos tienen pistas subutilizadas mientras que los jugadores pierden tiempo buscando dónde jugar.
-
-### 🎯 Público Objetivo
-
-- **Jugadores individuales**: Personas que quieren practicar deportes sin necesidad de ser miembros de un club
-- **Equipos amateurs**: Grupos que necesitan pistas para entrenamientos o partidos
-- **Clubes deportivos**: Entidades que quieren digitalizar y optimizar la gestión de sus instalaciones
-- **Administradores**: Supervisores que necesitan controlar el sistema completo
-
-### 💡 Valor Propuesto
-
-1. **Para Jugadores**: Fácil acceso a pistas disponibles, reserva instantánea, comparación de precios
-2. **Para Clubes**: Mayor ocupación de pistas, reducción de llamadas telefónicas, gestión digital
-3. **Para el Sistema Deportivo**: Democratización del acceso al deporte, promoción de la actividad física
-
-### 🎨 UX/UI Philosophy
-
-- **Minimalista y Deportivo**: Diseño limpio inspirado en apps deportivas como Strava
-- **Mobile-First**: Optimizado para reservas rápidas desde móvil
-- **Colores Temáticos**: Azul Barça para confianza, rojo para energía, dorado para premium
-- **Navegación Intuitiva**: Flujo de reserva en 3 pasos máximo
-- **Accesibilidad**: Contraste alto, fuentes legibles, navegación por teclado
-
 ## 🚀 Inicio Rápido
 
 ### Prerrequisitos
@@ -66,7 +41,7 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 1. **Clonar el repositorio**
 
    ```bash
-   git clone https://github.com/GI-R0/SPORTS.git
+   git clone https://github.com/GI-R0/MARA.git
    cd sportifyclub
    ```
 
@@ -155,40 +130,6 @@ SPORTS/
 - **Lucide React**: Iconos consistentes
 - **React Context**: Gestión de estado global
 
-### Arquitectura
-
-- **MVC Pattern**: Separación clara de responsabilidades
-- **RESTful API**: Diseño de API estándar
-- **Componentización**: Reutilización máxima de componentes
-- **Custom Hooks**: Lógica reutilizable (useAuth, useFetch, useDebounce)
-- **Context API**: Estado global sin librerías externas
-- **Responsive Design**: Mobile-first approach
-
-## 📊 Base de Datos
-
-### Generación de Datos
-
-Los datos se generan automáticamente usando Faker.js y se exportan a CSV:
-
-```bash
-cd backend
-node src/tools/generateData.js
-```
-
-Esto crea 161 registros distribuidos en 3 colecciones relacionadas:
-
-- **Usuarios** (31): 1 Admin, 5 clubs y 25 jugadores
-- **Pistas** (30): Instalaciones deportivas con características
-- **Reservas** (100): Reservas que conectan usuarios con pistas
-
-### Relaciones
-
-```
-Usuario ────1:N───→ Pista
-   │
-   └────────1:N───→ Reserva
-```
-
 ## 🔐 Seguridad
 
 - **Autenticación JWT**: Tokens seguros con expiración
@@ -224,18 +165,6 @@ Ver [`RAILWAY_FIX_CHECKLIST.md`](RAILWAY_FIX_CHECKLIST.md) para lista completa c
 - [Documentación Completa](docs/README_COMPLETO.md) - Detalles técnicos, arquitectura, API
 - [Backend](backend/README.md) - Configuración y uso del backend
 - [Frontend](frontend/README.md) - Configuración y uso del frontend
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea tu rama (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📧 Contacto
-
-Para soporte o preguntas: ggimenezlima@gmail.com
 
 ## 📄 Licencia
 
