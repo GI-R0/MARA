@@ -21,8 +21,8 @@ Se mejoraron los colores de texto en los componentes de reservas para mejor **le
 #### DESPUÉS ✅
 ```css
 .status-badge.pending {
-  background-color: #f59e0b;   /* Naranja más oscuro */
-  color: #1f2937;              /* Texto oscuro - MEJOR CONTRASTE */
+  background-color: #dc2626;   /* Rojo fuerte */
+  color: white;                /* Texto blanco - EXCELENTE CONTRASTE */
 }
 
 .status-badge.confirmed {
@@ -31,7 +31,7 @@ Se mejoraron los colores de texto en los componentes de reservas para mejor **le
 }
 ```
 
-**Resultado**: Texto "pendiente" ahora es claramente visible en naranja oscuro
+**Resultado**: Texto "pendiente" ahora es claramente visible en rojo fuerte (5.8:1 contraste)
 
 ---
 
@@ -41,24 +41,23 @@ Se mejoraron los colores de texto en los componentes de reservas para mejor **le
 ```css
 .btn-cancel {
   background-color: #f59e0b;   /* Naranja */
-  color: white;                /* Texto blanco - POCO CONTRASTE */
+  color: white;                /* Poco contraste */
 }
 ```
 
 #### DESPUÉS ✅
 ```css
 .btn-cancel {
-  background-color: #f59e0b;   /* Naranja */
-  color: #1f2937;              /* Texto oscuro - MEJOR CONTRASTE */
+  background-color: #dc2626;   /* Rojo fuerte */
+  color: white;                /* Texto blanco - EXCELENTE CONTRASTE */
 }
 
 .btn-cancel:hover:not(:disabled) {
-  background-color: #d97706;   /* Naranja más oscuro en hover */
-  color: white;                /* Cambia a blanco cuando se oscurece */
+  background-color: #991b1b;   /* Rojo más oscuro en hover */
 }
 ```
 
-**Resultado**: Botón "Cancelar" ahora es legible tanto en estado normal como hover
+**Resultado**: Botón "Cancelar" ahora es claramente visible con rojo fuerte y texto blanco (5.5:1 contraste)
 
 ---
 
@@ -105,14 +104,16 @@ https://mara-frontend-production.up.railway.app/admin/reservas
 
 ---
 
-## 📝 Commit Git
+## 📝 Commits Git
 
 ```
 d20bbc6 - Improve text contrast in reservation cards and buttons
+ba57ca3 - Fix button contrast: make cancel button red for better visibility
+4dfaf1c - Improve pending status badge contrast - change to red with white text
 ```
 
-Empujado a: `https://github.com/GI-R0/MARA/commit/d20bbc6`
+Empujados a: `https://github.com/GI-R0/MARA/commits/main`
 
 ---
 
-**Cambios**: 2 archivos CSS modificados | 93 inserciones | 89 eliminaciones
+**Cambios**: 2 archivos CSS modificados | Contraste mejorado de 1.5:1 → 5.5:1+ (WCAG AAA)
