@@ -241,17 +241,17 @@
     cursor: not-allowed;
 }
 .btn-cancel {
-    background-color: #f59e0b;
-    color: #1f2937;
+    background-color: #dc2626;
+    color: white;
+    font-weight: 600;
 }
 .btn-cancel:hover:not(:disabled) {
-    background-color: #d97706;
-    color: white;
+    background-color: #991b1b;
     transform: scale(1.05);
 }
 .btn-cancel:disabled {
-    background-color: #fcd34d;
-    color: #4b5563;
+    background-color: #9ca3af;
+    color: white;
     cursor: not-allowed;
 }
 .btn-delete {
