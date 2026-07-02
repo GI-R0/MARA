@@ -173,7 +173,7 @@
     cursor: pointer;
 }
 .btn-secondary:hover {
-    background-color: #374151;
+    background-color: #0891b2;
 }
 .btn-danger {
     display: inline-block;
@@ -290,12 +290,14 @@
     padding: 1rem;
     text-align: left;
     font-weight: 600;
-    color: #374151;
+    color: #1f2937;
     border-bottom: 1px solid #e5e7eb;
 }
 .dashboard-table td {
     padding: 1rem;
     border-bottom: 1px solid #e5e7eb;
+    color: #1f2937;
+    font-weight: 500;
 }
 .dashboard-table tbody tr:hover {
     background-color: #f9fafb;
