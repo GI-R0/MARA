@@ -1,0 +1,134 @@
+================================================================================
+                    VARIABLES DE ENTORNO - REFERENCIA RÁPIDA
+================================================================================
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ VERCEL (Frontend - mara-frontend-production)                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+VARIABLE CRÍTICA (SIN ELLA NO FUNCIONA):
+────────────────────────────────────────
+Name:  VITE_API_URL
+Value: https://mara-production-7e59.up.railway.app/api
+Scope: Production, Preview, Development
+Status: ❌ ACTUALMENTE FALTA - AÑADIR INMEDIATAMENTE
+
+PASOS PARA AÑADIR:
+1. Vercel Dashboard → mara-frontend-production
+2. Click en "Settings"
+3. Left sidebar: "Environment Variables"
+4. Click "Add New Environment Variable"
+5. Pega los valores arriba
+6. Save
+7. Espera a que redeploy termine (✅ Ready)
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ RAILWAY (Backend - mara-production)                                        │
+└────────────────────────────────────────────────────────────────────────────┘
+
+VARIABLE IMPORTANTE (para CORS):
+────────────────────────────────
+Name:  CORS_ORIGIN
+Value: https://mara-frontend-production.up.railway.app
+Desc:  URL del frontend en Vercel
+Status: ✅ PROBABLEMENTE EXISTE - VERIFICAR
+
+
+VARIABLES REQUERIDAS (Verificar que existen):
+──────────────────────────────────────────────
+MONGODB_URI        → mongodb://... (conexión a BD)
+JWT_SECRET         → tu_secret_largo_y_complicado
+NODE_ENV           → production
+CLOUDINARY_CLOUD_NAME  → [tu cloud name]
+CLOUDINARY_API_KEY     → [tu api key]
+CLOUDINARY_API_SECRET  → [tu api secret]
+
+
+PASOS PARA VERIFICAR/MODIFICAR EN RAILWAY:
+1. Railway Dashboard → mara-production
+2. Variables → Environment
+3. Busca cada variable arriba
+4. Si no existe, añádela con el símbolo "+"
+5. Save/Deploy
+
+
+================================================================================
+                            TABLA COMPARATIVA
+================================================================================
+
+┌──────────────────┬─────────────────────────────────┬─────────────────────────────────┐
+│ ENTORNO          │ DESARROLLO LOCAL                │ PRODUCCIÓN                      │
+├──────────────────┼─────────────────────────────────┼─────────────────────────────────┤
+│ Frontend URL     │ http://localhost:5173           │ mara-frontend-production        │
+│ Backend URL      │ http://localhost:4000           │ mara-production-7e59            │
+│ VITE_API_URL     │ http://localhost:4000/api       │ https://mara-production-...     │
+│ CORS_ORIGIN      │ http://localhost:5173           │ https://mara-frontend-...       │
+│ NODE_ENV         │ development                     │ production                      │
+│ Rate Limiting    │ ❌ Deshabilitado                │ ✅ Habilitado                   │
+└──────────────────┴─────────────────────────────────┴─────────────────────────────────┘
+
+
+================================================================================
+                            TEST RÁPIDO
+================================================================================
+
+VERIFICA QUE TODO FUNCIONA:
+
+1. Backend levantado?
+   curl https://mara-production-7e59.up.railway.app/api/health
+   Esperado: {"ok":true}
+
+2. Frontend carga?
+   https://mara-frontend-production.up.railway.app
+   Esperado: ✅ Página de login visible
+
+3. Login funciona?
+   Email: admin@sportify.com
+   Password: Admin123!
+   Esperado: ✅ Entra al perfil
+
+
+================================================================================
+                            CHECKLIST FINAL
+================================================================================
+
+ANTES DE CONSIDERAR TERMINADO:
+
+Vercel (Frontend):
+☐ Variable VITE_API_URL existe
+☐ Valor es: https://mara-production-7e59.up.railway.app/api
+☐ Redeploy completado (✅ Ready)
+☐ Frontend carga en https://mara-frontend-production.up.railway.app
+
+Railway (Backend):
+☐ CORS_ORIGIN = https://mara-frontend-production.up.railway.app
+☐ NODE_ENV = production
+☐ MONGODB_URI existe
+☐ JWT_SECRET existe
+☐ Backend responde en /api/health
+
+Funcionalidad:
+☐ Login funciona
+☐ Registro funciona
+☐ Se puede ver perfil
+☐ No hay errores de CORS
+
+
+================================================================================
+                        REFERENCIAS RÁPIDAS
+================================================================================
+
+URLs Importantes:
+- Vercel Dashboard:  https://vercel.com/dashboard
+- Railway Dashboard: https://railway.app/dashboard
+- Frontend en Prod:  https://mara-frontend-production.up.railway.app
+- Backend en Prod:   https://mara-production-7e59.up.railway.app/api
+
+Documentación en el Proyecto:
+- DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md              → Lee esto PRIMERO
+- DEPLOYMENT_CONFIG/DIAGNÓSTICO_VISUAL.md            → Entiende el problema
+- DEPLOYMENT_CONFIG/VERCEL_ENVIRONMENT_SETUP.md      → Guía detallada Vercel
+- DEPLOYMENT_CONFIG/RAILWAY_ENVIRONMENT_SETUP.md     → Guía detallada Railway
+
+================================================================================

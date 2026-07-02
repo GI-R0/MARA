@@ -13,6 +13,7 @@
     }
   ],
   "env": {
-    "FRONTEND_URL": "https://mara-hta9.vercel.app"
+    "CORS_ORIGIN": "https://mara-frontend-production.up.railway.app",
+    "NODE_ENV": "production"
   }
 }

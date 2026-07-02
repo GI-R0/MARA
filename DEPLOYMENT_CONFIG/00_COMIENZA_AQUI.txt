@@ -1,0 +1,98 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║                    🚀 ARREGLA TU DESPLIEGUE EN 5 MINUTOS                   ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ TU PROBLEMA                                                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+✗ Frontend no se conecta a Backend
+✗ Login no funciona
+✗ Registro no funciona
+✗ Error de conexión en todas las acciones
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ TU SITUACIÓN                                                               │
+└────────────────────────────────────────────────────────────────────────────┘
+
+Frontend:  https://mara-frontend-production.up.railway.app (Railway ✅)
+Backend:   https://mara-production-7e59.up.railway.app/api (Railway ✅)
+
+Problema: Faltan variables de entorno en ambos proyectos Railway
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ LA SOLUCIÓN (5 MINUTOS)                                                    │
+└────────────────────────────────────────────────────────────────────────────┘
+
+Necesitas 2 cambios en Railway:
+
+1. BACKEND (mara-production):
+
+   Añade variable: CORS_ORIGIN
+   Valor:         https://mara-frontend-production.up.railway.app
+
+2. FRONTEND (mara-frontend-production):
+
+   Añade variable: VITE_API_URL
+   Valor:         https://mara-production-7e59.up.railway.app/api
+
+3. Espera redeploy de ambos (1-2 min por proyecto)
+
+4. Prueba:
+   https://mara-frontend-production.up.railway.app/login
+   Email: admin@sportify.com / Admin123!
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ INSTRUCCIONES DETALLADAS                                                   │
+└────────────────────────────────────────────────────────────────────────────┘
+
+Busca el archivo correcto según necesites:
+
+► Si quieres paso a paso detallado
+  → ACCION_INMEDIATA_RAILWAY.md
+
+► Si quieres verificar la configuración
+  → CONFIGURACION_RAILWAY_CORRECTA.md
+
+► Si quieres entender qué pasó
+  → DIAGNÓSTICO_VISUAL.md
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ ¿YA LO HICISTE Y FUNCIONA?                                                 │
+└────────────────────────────────────────────────────────────────────────────┘
+
+✅ Login funciona
+✅ Registro funciona
+✅ Puedo verme en el perfil
+
+→ Confirma: "Ya funciona, listo para revisión UX/UI"
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ ¿AÚN NO FUNCIONA?                                                          │
+└────────────────────────────────────────────────────────────────────────────┘
+
+1. ¿Esperaste a que Railway dijera ✅ "Success"?
+   → Sino, espera más tiempo
+
+2. ¿Las variables están exactas?
+   → Sin espacios extras, URL correcta
+
+3. ¿Backend está levantado?
+   → Abre: https://mara-production-7e59.up.railway.app/api/health
+   → Debe mostrar: {"ok":true}
+
+Si aún no funciona → Lee CONFIGURACION_RAILWAY_CORRECTA.md
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║  SIGUIENTE PASO: Lee ACCION_INMEDIATA_RAILWAY.md (paso a paso)            ║
+║  Tiempo estimado: 5 minutos                                               ║
+╚════════════════════════════════════════════════════════════════════════════╝

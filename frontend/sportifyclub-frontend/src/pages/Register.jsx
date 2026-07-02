@@ -154,6 +154,17 @@ export default function Register() {
 
               <div className="form-group">
                 <label className="form-label">Contraseña</label>
+                <small
+                  style={{
+                    color: "var(--gray-600)",
+                    fontSize: "0.75rem",
+                    marginBottom: "8px",
+                    display: "block",
+                  }}
+                >
+                  Mínimo 8 caracteres: mayúscula, minúscula, número y símbolo
+                  (@$!%*?&)
+                </small>
                 <div style={{ position: "relative" }}>
                   <input
                     type={showPassword ? "text" : "password"}
@@ -163,7 +174,7 @@ export default function Register() {
                     onFocus={() => setPasswordFocused(true)}
                     onBlur={() => setPasswordFocused(false)}
                     className="form-input"
-                    placeholder="Mínimo 8 caracteres: mayúscula, minúscula, número y símbolo (@$!%*?&)"
+                    placeholder="Tu contraseña"
                     required
                     disabled={loading}
                     style={{ paddingRight: "40px" }}
@@ -178,9 +189,10 @@ export default function Register() {
                       transform: "translateY(-50%)",
                       background: "none",
                       border: "none",
-                      color: "var(--gray-600)",
+                      color: "var(--barca-light-blue)",
                       cursor: "pointer",
                       padding: "4px",
+                      transition: "opacity 0.2s ease",
                     }}
                     aria-label={
                       showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
@@ -217,6 +229,16 @@ export default function Register() {
 
               <div className="form-group">
                 <label className="form-label">Confirmar contraseña</label>
+                <small
+                  style={{
+                    color: "var(--gray-600)",
+                    fontSize: "0.75rem",
+                    marginBottom: "8px",
+                    display: "block",
+                  }}
+                >
+                  Debe ser igual a la contraseña anterior
+                </small>
                 <div style={{ position: "relative" }}>
                   <input
                     type={showConfirmPassword ? "text" : "password"}
@@ -239,9 +261,10 @@ export default function Register() {
                       transform: "translateY(-50%)",
                       background: "none",
                       border: "none",
-                      color: "var(--gray-600)",
+                      color: "var(--barca-light-blue)",
                       cursor: "pointer",
                       padding: "4px",
+                      transition: "opacity 0.2s ease",
                     }}
                     aria-label={
                       showConfirmPassword
@@ -256,6 +279,23 @@ export default function Register() {
                     )}
                   </button>
                 </div>
+                {formData.confirmarPassword && (
+                  <small
+                    style={{
+                      color:
+                        formData.password === formData.confirmarPassword
+                          ? "var(--success)"
+                          : "var(--danger)",
+                      marginTop: "4px",
+                      display: "block",
+                      fontSize: "0.75rem",
+                    }}
+                  >
+                    {formData.password === formData.confirmarPassword
+                      ? "✓ Las contraseñas coinciden"
+                      : "✗ Las contraseñas no coinciden"}
+                  </small>
+                )}
               </div>
 
               <button type="submit" disabled={loading} className="btn-submit">

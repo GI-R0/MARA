@@ -80,7 +80,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-input"
-                    placeholder="Mínimo 8 caracteres, mayúscula, número y símbolo"
+                    placeholder="Tu contraseña"
                     required
                     disabled={loading}
                     autoComplete="current-password"
@@ -96,15 +96,28 @@ export default function Login() {
                       transform: "translateY(-50%)",
                       background: "none",
                       border: "none",
-                      color: "var(--gray-600)",
+                      color: "var(--barca-light-blue)",
                       cursor: "pointer",
-                      padding: "4px"
+                      padding: "4px",
+                      transition: "opacity 0.2s ease",
                     }}
-                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    aria-label={
+                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                    }
                   >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                 </div>
+                <small
+                  style={{
+                    color: "var(--gray-600)",
+                    fontSize: "0.75rem",
+                    marginTop: "4px",
+                    display: "block",
+                  }}
+                >
+                  Mínimo 8 caracteres: mayúscula, minúscula, número, símbolo
+                </small>
               </div>
 
               <button

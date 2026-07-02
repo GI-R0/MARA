@@ -1,0 +1,108 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                     RESUMEN EJECUTIVO - DESPLIEGUE                         ║
+║                           Última actualización: Hoy                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 🔴 ESTADO ACTUAL: DESPLIEGUE ROTO                                         │
+└────────────────────────────────────────────────────────────────────────────┘
+
+❌ Frontend no puede conectar a Backend
+❌ Login/Registro no funcionan
+❌ La causa: Variable de entorno faltante en Vercel
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ ✅ SOLUCIÓN RÁPIDA (2 MINUTOS)                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+1. Abre: https://vercel.com/dashboard
+
+2. Busca: mara-frontend-production
+
+3. Haz clic en Settings → Environment Variables
+
+4. Haz clic en "Add New Environment Variable"
+
+5. Copia esto exactamente:
+
+   Nombre:  VITE_API_URL
+   Valor:   https://mara-production-7e59.up.railway.app/api
+
+   (Selecciona: Production, Preview, Development)
+
+6. Haz clic en Save
+
+7. Espera ~2 minutos a que Vercel redeploy
+
+8. Prueba: https://mara-frontend-production.up.railway.app/login
+
+¡LISTO! Debería funcionar ahora.
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 🧪 VERIFICACIÓN                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+✅ Si LOGIN funciona:
+   - Email: admin@sportify.com
+   - Password: Admin123!
+
+   → Continúa con la revisión UX/UI
+
+❌ Si AÚN no funciona:
+   - Lee: DEPLOYMENT_CONFIG/DIAGNÓSTICO_VISUAL.md
+   - Verifica que esperaste a que Vercel terminara
+   - Comprueba que el backend está levantado
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 📚 DOCUMENTACIÓN COMPLETA                                                  │
+└────────────────────────────────────────────────────────────────────────────┘
+
+Si necesitas más detalles:
+
+1. ACCION_INMEDIATA.md
+   → Instrucciones paso a paso para Vercel
+
+2. DIAGNÓSTICO_VISUAL.md
+   → Entiende POR QUÉ estaba roto y cómo se arregla
+
+3. VERCEL_ENVIRONMENT_SETUP.md
+   → Guía completa si necesitas troubleshooting
+
+4. RAILWAY_ENVIRONMENT_SETUP.md
+   → Verificar que el backend está bien configurado
+
+5. VARIABLES_DE_ENTORNO.txt
+   → Referencia rápida de todas las variables
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ ⚙️ CONFIGURACIÓN TÉCNICA (PARA REFERENCIA)                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+Vercel (Frontend):
+  VITE_API_URL = https://mara-production-7e59.up.railway.app/api
+
+Railway (Backend):
+  CORS_ORIGIN = https://mara-frontend-production.up.railway.app
+  NODE_ENV = production
+  [+ otras variables de MongoDB, JWT, etc.]
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 🚀 PRÓXIMOS PASOS (DESPUÉS DE VERIFICAR QUE FUNCIONA)                    │
+└────────────────────────────────────────────────────────────────────────────┘
+
+1. ✅ Confirmar que login/registro funcionan
+2. ✅ Revisión UX/UI final
+3. ✅ Deploy a producción
+4. ✅ Monitoreo post-lanzamiento
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║  SIGUIENTE PASO: Abre DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md             ║
+║  Tiempo estimado: 2-5 minutos                                             ║
+╚════════════════════════════════════════════════════════════════════════════╝

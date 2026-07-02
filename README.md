@@ -97,7 +97,11 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 ### Acceso Desplegado (Producción)
 
 - **Frontend**: https://mara-frontend-production.up.railway.app
-- **Backend**: https://tu-backend-production.up.railway.app/api
+- **Backend**: https://mara-production-7e59.up.railway.app/api
+
+> ⚠️ **IMPORTANTE**: Si el despliegue no funciona, ver [`DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md`](DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md)
+
+> ⚠️ **IMPORTANTE:** Si el despliegue no funciona, ver [DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md
 
 ## 📁 Estructura del Proyecto
 

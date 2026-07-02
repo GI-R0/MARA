@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { apiLimiter } from "./middlewares/rateLimiter.js";
+import { getAllowedOrigins } from "./config/cookies.js";
 
 dotenv.config();
 
@@ -26,13 +27,28 @@ try {
 }
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins = getAllowedOrigins();
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(null, false);
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 app.use(morgan("dev"));

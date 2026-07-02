@@ -4,6 +4,7 @@ import RefreshToken from "../models/RefreshToken.js";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import { sendMail } from "../config/mailer.js";
+import { buildCookieOptions } from "../config/cookies.js";
 
 const generateResetToken = () => crypto.randomBytes(32).toString("hex");
 
@@ -41,7 +42,7 @@ const generateTokens = async (user) => {
   const accessToken = jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET,
-    { expiresIn: "2h" }, // Token de acceso corto
+    { expiresIn: "2h" }, 
   );
 
   const refreshToken = jwt.sign(
@@ -83,24 +84,26 @@ export const register = async (req, res) => {
     const { accessToken, refreshToken } = await generateTokens(user);
 
     const userResponse = user.toJSON();
-    const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    };
+    const cookieOptions = buildCookieOptions(req);
 
     res.cookie("token", accessToken, {
       ...cookieOptions,
       maxAge: 15 * 60 * 1000, // 15 minutos
+      sameSite: "none",
+      secure: true,
+      domain: undefined,
     });
     res.cookie("refreshToken", refreshToken, {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      sameSite: "none",
+      secure: true,
+      domain: undefined,
     });
     res.status(201).json({
       msg: "Registro completado con éxito",
       user: userResponse,
+      token: accessToken,
     });
 
     sendWelcomeEmail(user).catch((err) =>
@@ -134,22 +137,23 @@ export const login = async (req, res) => {
     const { accessToken, refreshToken } = await generateTokens(user);
 
     const userResponse = user.toJSON();
-    const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    };
+    const cookieOptions = buildCookieOptions(req);
 
     res.cookie("token", accessToken, {
       ...cookieOptions,
       maxAge: 15 * 60 * 1000, // 15 minutos
+      sameSite: "none",
+      secure: true,
+      domain: undefined,
     });
     res.cookie("refreshToken", refreshToken, {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      sameSite: "none",
+      secure: true,
+      domain: undefined,
     });
-    res.json({ user: userResponse });
+    res.json({ user: userResponse , token: accessToken });
   } catch (err) {
     console.error("[ERROR] Login:", err.message);
     res.status(500).json({ msg: "Error del servidor", error: err.message });
@@ -262,23 +266,24 @@ export const refreshToken = async (req, res) => {
     await RefreshToken.deleteOne({ _id: storedToken._id });
 
     // Setear nuevas cookies
-    const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    };
+    const cookieOptions = buildCookieOptions(req);
 
     res.cookie("token", accessToken, {
       ...cookieOptions,
       maxAge: 15 * 60 * 1000,
+      sameSite: "none",
+      secure: true,
+      domain: undefined,
     });
     res.cookie("refreshToken", newRefreshToken, {
       ...cookieOptions,
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: true,
+      domain: undefined,
     });
 
-    res.json({ msg: "Token refrescado exitosamente" });
+    res.json({ msg: "Token refrescado exitosamente", token: accessToken })
   } catch (err) {
     console.error("[ERROR] Refresh token:", err.message);
     res.status(401).json({ msg: "Error al refrescar token" });
