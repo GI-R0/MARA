@@ -99,9 +99,7 @@ SportifyClub resuelve un problema real en el mundo del deporte: la dificultad pa
 - **Frontend**: https://mara-frontend-production.up.railway.app
 - **Backend**: https://mara-production-7e59.up.railway.app/api
 
-> ⚠️ **IMPORTANTE**: Si el despliegue no funciona, ver [`DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md`](DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md)
-
-> ⚠️ **IMPORTANTE:** Si el despliegue no funciona, ver [DEPLOYMENT_CONFIG/ACCION_INMEDIATA.md
+> ⚠️ **IMPORTANTE**: Si el despliegue no funciona, ver [`RAILWAY_FIX_CHECKLIST.md`](RAILWAY_FIX_CHECKLIST.md) para configuración de variables de entorno
 
 ## 📁 Estructura del Proyecto
 
@@ -203,33 +201,26 @@ Usuario ────1:N───→ Pista
 - **CORS**: Configuración segura de orígenes permitidos
 
 ## 🚀 Despliegue
+### Despliegue
 
-### Backend (Railway)
+**Ambos en Railway** (Backend y Frontend)
 
-1. Conectar repositorio a Railway
-2. Configurar variables de entorno
-3. Desplegar automáticamente
-
-### Frontend (Vercel)
-
-1. Conectar repositorio a Vercel
-2. Configurar build settings
-3. Desplegar automáticamente
+1. ✅ Conectar repositorio a Railway
+2. ✅ Configurar variables de entorno (ver [`RAILWAY_FIX_CHECKLIST.md`](RAILWAY_FIX_CHECKLIST.md))
+3. ✅ Railway despliega automáticamente al hacer push a `main`
 
 ### Variables de Entorno Requeridas
 
-```env
-# Backend
-MONGODB_URI=mongodb://...
-JWT_SECRET=tu_jwt_secret_seguro
-CLOUDINARY_CLOUD_NAME=...
-CLOUDINARY_API_KEY=...
-CLOUDINARY_API_SECRET=...
-PORT=4000
+Ver [`RAILWAY_FIX_CHECKLIST.md`](RAILWAY_FIX_CHECKLIST.md) para lista completa con instrucciones.
 
-# Frontend
-VITE_API_URL=https://tu-backend-deployed.com
-```
+**Backend (Railway Variables):**
+- `CORS_ORIGIN`: URL exacta del frontend
+- `MONGODB_URI`: Connection string de MongoDB Atlas
+- `JWT_SECRET`: Secret seguro para tokens
+- `NODE_ENV`: `production`
+
+**Frontend (Railway Variables):**
+- `VITE_API_URL`: URL exacta del backend API
 
 ## 📚 Documentación
 
