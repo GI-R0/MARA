@@ -99,6 +99,12 @@
     font-size: var(--font-md);
     transition: all 0.3s ease;
     box-sizing: border-box;
+    background-color: #ffffff;
+    color: #1f2937;
+}
+.form-input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
 }
 .form-input:focus {
     outline: none;
