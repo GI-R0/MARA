@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../hooks/useAuth";
 import API from "../api/axiosConfig";
+import ConfirmModal from "../components/ConfirmModal";
 import "../styles/Dashboard.css";
 
 export default function AdminUsers() {
@@ -11,6 +13,7 @@ export default function AdminUsers() {
   const [error, setError] = useState(null);
   const [savingUserId, setSavingUserId] = useState(null);
   const [deletingUserId, setDeletingUserId] = useState(null);
+  const [confirmDeleteUserId, setConfirmDeleteUserId] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,6 +23,7 @@ export default function AdminUsers() {
       } catch (err) {
         console.error("Error fetching admin users:", err);
         setError("No se pudieron cargar los usuarios.");
+        toast.error("No se pudieron cargar los usuarios.");
       } finally {
         setLoading(false);
       }
@@ -39,33 +43,39 @@ export default function AdminUsers() {
     } catch (err) {
       console.error("Error updating user role:", err);
       setError("No se pudo actualizar el rol del usuario.");
+      toast.error("No se pudo actualizar el rol del usuario.");
+      return;
     } finally {
       setSavingUserId(null);
     }
+
+    toast.success("Rol actualizado correctamente.");
   };
 
-  const handleDeleteUser = async (userId) => {
+  const handleDeleteUser = (userId) => {
     if (currentUser?._id === userId) {
       setError("No puedes eliminar tu propia cuenta.");
+      toast.warning("No puedes eliminar tu propia cuenta.");
       return;
     }
 
-    if (
-      !window.confirm(
-        "¿Eliminar este usuario? Esta acción no se puede deshacer.",
-      )
-    ) {
-      return;
-    }
+    setConfirmDeleteUserId(userId);
+  };
 
-    setDeletingUserId(userId);
+  const confirmDeleteUser = async () => {
+    if (!confirmDeleteUserId) return;
+
+    setDeletingUserId(confirmDeleteUserId);
     try {
-      await API.delete(`/auth/users/${userId}`);
-      setUsers((prev) => prev.filter((user) => user._id !== userId));
+      await API.delete(`/auth/users/${confirmDeleteUserId}`);
+      setUsers((prev) => prev.filter((user) => user._id !== confirmDeleteUserId));
+      toast.success("Usuario eliminado correctamente.");
     } catch (err) {
       console.error("Error deleting user:", err);
       setError("No se pudo eliminar el usuario.");
+      toast.error("No se pudo eliminar el usuario.");
     } finally {
+      setConfirmDeleteUserId(null);
       setDeletingUserId(null);
     }
   };
@@ -158,6 +168,15 @@ export default function AdminUsers() {
           </div>
         )}
       </div>
+      <ConfirmModal
+        isOpen={!!confirmDeleteUserId}
+        title="Eliminar usuario"
+        message="¿Eliminar este usuario? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        onConfirm={confirmDeleteUser}
+        onCancel={() => setConfirmDeleteUserId(null)}
+        loading={!!deletingUserId}
+      />
     </div>
   );
 }

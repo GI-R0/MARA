@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import API from "../api/axiosConfig";
+import ConfirmModal from "../components/ConfirmModal";
 import "../styles/Dashboard.css";
 
 export default function AdminReservas() {
@@ -9,6 +11,7 @@ export default function AdminReservas() {
   const [error, setError] = useState(null);
   const [savingReservaId, setSavingReservaId] = useState(null);
   const [deletingReservaId, setDeletingReservaId] = useState(null);
+  const [confirmDeleteReservaId, setConfirmDeleteReservaId] = useState(null);
 
   useEffect(() => {
     const fetchReservas = async () => {
@@ -18,6 +21,7 @@ export default function AdminReservas() {
       } catch (err) {
         console.error("Error fetching admin reservas:", err);
         setError("No se pudieron cargar las reservas.");
+        toast.error("No se pudieron cargar las reservas.");
       } finally {
         setLoading(false);
       }
@@ -45,30 +49,35 @@ export default function AdminReservas() {
     } catch (err) {
       console.error("Error updating reserva estado:", err);
       setError("No se pudo actualizar el estado de la reserva.");
+      toast.error("No se pudo actualizar el estado de la reserva.");
+      return;
     } finally {
       setSavingReservaId(null);
     }
+
+    toast.success("Estado de reserva actualizado.");
   };
 
-  const handleDeleteReserva = async (reservaId) => {
-    if (
-      !window.confirm(
-        "¿Eliminar esta reserva? Esta acción no se puede deshacer.",
-      )
-    ) {
-      return;
-    }
+  const handleDeleteReserva = (reservaId) => {
+    setConfirmDeleteReservaId(reservaId);
+  };
 
-    setDeletingReservaId(reservaId);
+  const confirmDeleteReserva = async () => {
+    if (!confirmDeleteReservaId) return;
+
+    setDeletingReservaId(confirmDeleteReservaId);
     try {
-      await API.delete(`/reservas/${reservaId}`);
+      await API.delete(`/reservas/${confirmDeleteReservaId}`);
       setReservas((prev) =>
-        prev.filter((reserva) => reserva._id !== reservaId),
+        prev.filter((reserva) => reserva._id !== confirmDeleteReservaId),
       );
+      toast.success("Reserva eliminada correctamente.");
     } catch (err) {
       console.error("Error deleting reserva:", err);
       setError("No se pudo eliminar la reserva.");
+      toast.error("No se pudo eliminar la reserva.");
     } finally {
+      setConfirmDeleteReservaId(null);
       setDeletingReservaId(null);
     }
   };
@@ -177,6 +186,15 @@ export default function AdminReservas() {
           </div>
         )}
       </div>
+      <ConfirmModal
+        isOpen={!!confirmDeleteReservaId}
+        title="Eliminar reserva"
+        message="¿Eliminar esta reserva? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        onConfirm={confirmDeleteReserva}
+        onCancel={() => setConfirmDeleteReservaId(null)}
+        loading={!!deletingReservaId}
+      />
     </div>
   );
 }
