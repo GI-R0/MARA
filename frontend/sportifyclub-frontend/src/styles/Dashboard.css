@@ -13,20 +13,22 @@
     align-items: center;
     margin-bottom: 3rem;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 .dashboard-header > div {
     text-align: center;
     flex: 1;
+    min-width: 220px;
 }
 .dashboard-title {
     font-size: 3rem;
     font-weight: bold;
-    color: #4338ca;
+    color: #312e81;
     margin-bottom: 1rem;
 }
 .dashboard-subtitle {
     font-size: 1.25rem;
-    color: #374151;
+    color: #1f2937;
 }
 .dashboard-error {
     color: #dc2626;
@@ -57,6 +59,7 @@
     padding: 2rem;
     text-align: center;
     transition: all 0.3s;
+    color: #111827;
 }
 .stat-card:hover {
     transform: scale(1.05);
@@ -69,16 +72,17 @@
 }
 .stat-label {
     font-size: 1.125rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: #1f2937;
 }
 .text-blue {
-    color: #2563eb;
+    color: #1d4ed8;
 }
 .text-green {
-    color: #16a34a;
+    color: #166534;
 }
 .text-purple {
-    color: #9333ea;
+    color: #6d28d9;
 }
 .text-yellow {
     color: #ca8a04;
@@ -159,6 +163,7 @@
     display: flex;
     justify-content: center;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 .btn-secondary {
     display: inline-block;
@@ -173,7 +178,7 @@
     cursor: pointer;
 }
 .btn-secondary:hover {
-    background-color: #0891b2;
+    background-color: #1f2937;
 }
 .btn-danger {
     display: inline-block;
@@ -215,9 +220,9 @@
     font-size: 1.25rem;
     color: #374151;
 }
-.btn-confirm,
-.btn-cancel,
-.btn-delete {
+.dashboard-table .btn-confirm,
+.dashboard-table .btn-cancel,
+.dashboard-table .btn-delete {
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
     border: none;
@@ -225,50 +230,47 @@
     cursor: pointer;
     font-weight: 500;
     transition: all 0.2s;
-    margin-left: 0.4rem;
-    transform: scale(1);
+    margin: 0;
+    min-width: 96px;
 }
-.btn-confirm {
+.dashboard-table .btn-confirm {
     background-color: #16a34a;
     color: white;
 }
-.btn-confirm:hover:not(:disabled) {
+.dashboard-table .btn-confirm:hover:not(:disabled) {
     background-color: #15803d;
-    transform: scale(1.05);
 }
-.btn-confirm:disabled {
+.dashboard-table .btn-confirm:disabled {
     background-color: #86efac;
     cursor: not-allowed;
 }
-.btn-cancel {
+.dashboard-table .btn-cancel {
     background-color: #dc2626;
     color: white;
     font-weight: 600;
 }
-.btn-cancel:hover:not(:disabled) {
+.dashboard-table .btn-cancel:hover:not(:disabled) {
     background-color: #991b1b;
-    transform: scale(1.05);
 }
-.btn-cancel:disabled {
+.dashboard-table .btn-cancel:disabled {
     background-color: #9ca3af;
     color: white;
     cursor: not-allowed;
 }
-.btn-delete {
+.dashboard-table .btn-delete {
     background-color: #dc2626;
     color: white;
 }
-.btn-delete:hover:not(:disabled) {
+.dashboard-table .btn-delete:hover:not(:disabled) {
     background-color: #b91c1c;
-    transform: scale(1.05);
 }
-.btn-delete:disabled {
+.dashboard-table .btn-delete:disabled {
     background-color: #fca5a5;
     cursor: not-allowed;
 }
-.btn-confirm.small,
-.btn-cancel.small,
-.btn-delete.small {
+.dashboard-table .btn-confirm.small,
+.dashboard-table .btn-cancel.small,
+.dashboard-table .btn-delete.small {
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
 }
@@ -284,19 +286,19 @@
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 .dashboard-table thead {
-    background-color: #f3f4f6;
+    background-color: #e5e7eb;
 }
 .dashboard-table th {
     padding: 1rem;
     text-align: left;
     font-weight: 600;
-    color: #1f2937;
+    color: #111827;
     border-bottom: 1px solid #e5e7eb;
 }
 .dashboard-table td {
     padding: 1rem;
     border-bottom: 1px solid #e5e7eb;
-    color: #1f2937;
+    color: #111827;
     font-weight: 500;
 }
 .dashboard-table tbody tr:hover {
@@ -306,7 +308,8 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
+    align-content: flex-start;
 }
 .error-alert {
     padding: 1rem;

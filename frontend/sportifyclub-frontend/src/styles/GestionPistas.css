@@ -47,6 +47,26 @@
   margin-bottom: 1.5rem;
   border: 1px solid #fecaca;
 }
+
+.notification-banner {
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.notification-banner.success {
+  background-color: #ecfdf3;
+  color: #166534;
+  border-color: #a7f3d0;
+}
+
+.notification-banner.error {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
 .gestion-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -289,7 +309,7 @@
   border-top: 1px solid #f3f4f6;
   margin-top: 1.5rem;
 }
-.btn-cancel {
+.modal-footer .btn-cancel {
   padding: 0.5rem 1.5rem;
   color: #374151;
   background-color: #f3f4f6;
@@ -299,7 +319,7 @@
   font-weight: 500;
   transition: background-color 0.2s;
 }
-.btn-cancel:hover {
+.modal-footer .btn-cancel:hover {
   background-color: #e5e7eb;
 }
 .btn-save {

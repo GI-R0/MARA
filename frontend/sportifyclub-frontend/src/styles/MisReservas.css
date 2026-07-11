@@ -28,6 +28,26 @@
     padding: 4rem;
     text-align: center;
 }
+
+.notification-banner {
+    padding: 0.9rem 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.notification-banner.success {
+    background-color: #ecfdf3;
+    color: #166534;
+    border-color: #a7f3d0;
+}
+
+.notification-banner.error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border-color: #fecaca;
+}
 .empty-icon {
     font-size: 4rem;
     margin-bottom: 1.5rem;
@@ -133,6 +153,7 @@
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
+    align-items: stretch;
 }
 
 @media (min-width: 768px) {
@@ -143,8 +164,9 @@
 }
 
 .btn-details {
+.reserva-actions .btn-details {
     background-color: #e5e7eb;
-    color: #1f2937;
+    color: #111827;
     font-weight: bold;
     padding: 0.75rem 1.5rem;
     border-radius: 0.75rem;
@@ -157,13 +179,13 @@
     justify-content: center;
     font-size: 0.95rem;
 }
-.btn-details:hover {
+.reserva-actions .btn-details:hover {
     background-color: #d1d5db;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-confirm {
+.reserva-actions .btn-confirm {
     background-color: #22c55e;
     color: white;
     font-weight: bold;
@@ -174,13 +196,13 @@
     transition: all 0.2s;
     font-size: 0.95rem;
 }
-.btn-confirm:hover {
+.reserva-actions .btn-confirm:hover {
     background-color: #16a34a;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-cancel {
+.reserva-actions .btn-cancel {
     background-color: #dc2626;
     color: white;
     font-weight: bold;
@@ -191,7 +213,7 @@
     transition: all 0.2s;
     font-size: 0.95rem;
 }
-.btn-cancel:hover {
+.reserva-actions .btn-cancel:hover {
     background-color: #991b1b;
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
