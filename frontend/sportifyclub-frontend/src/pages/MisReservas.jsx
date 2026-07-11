@@ -2,6 +2,8 @@ import { useAuth } from "../hooks/useAuth";
 import { useReservas } from "../context/ReservaContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import ConfirmModal from "../components/ConfirmModal";
 import "../styles/MisReservas.css";
 
 export default function MisReservas() {
@@ -22,6 +24,7 @@ export default function MisReservas() {
 
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [confirmCancelReservaId, setConfirmCancelReservaId] = useState(null);
 
   useEffect(() => {
     fetchReservas();
@@ -39,27 +42,37 @@ export default function MisReservas() {
   };
 
   const handleCancelReserva = async (id) => {
-    if (window.confirm("¿Estás seguro de que quieres cancelar esta reserva?")) {
-      const result = await deleteReserva(id);
-      if (result.success) {
-        alert("Reserva cancelada exitosamente");
-      } else {
-        alert(result.error || "Error al cancelar la reserva");
-      }
+    setConfirmCancelReservaId(id);
+  };
+
+  const confirmCancelReserva = async () => {
+    if (!confirmCancelReservaId) return;
+
+    const result = await deleteReserva(confirmCancelReservaId);
+    if (result.success) {
+      toast.success("Reserva cancelada correctamente.");
+    } else {
+      toast.error(result.error || "Error al cancelar la reserva");
     }
+
+    setConfirmCancelReservaId(null);
   };
 
   const handleConfirmReserva = async (id) => {
     const result = await updateReserva(id, { estado: "confirmada" });
     if (result.success) {
-      alert("Reserva confirmada correctamente");
+      toast.success("Reserva confirmada correctamente.");
     } else {
-      alert(result.error || "Error al confirmar la reserva");
+      toast.error(result.error || "Error al confirmar la reserva");
     }
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return "Fecha no disponible";
+
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return "Fecha no disponible";
+
     return date.toLocaleDateString("es-ES", {
       day: "numeric",
       month: "short",
@@ -168,7 +181,7 @@ export default function MisReservas() {
         ) : (
           <div className="reservas-grid">
             {reservas.map((reserva) => (
-              <div key={reserva._id} className="reserva-card">
+              <div key={reserva._id || `${reserva.fecha}-${reserva.hora}`} className="reserva-card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <img 
                     src={(() => {
@@ -205,19 +218,19 @@ export default function MisReservas() {
                   />
                   <div className="reserva-info">
                     <h3>{reserva.pista?.nombre || "Pista"}</h3>
-                    <p className="reserva-id">Reserva #{reserva._id.slice(-6)}</p>
+                    <p className="reserva-id">Reserva #{String(reserva._id || "").slice(-6)}</p>
                   </div>
                 </div>
 
                 <div className="reserva-time">
                   <p className="reserva-date">{formatDate(reserva.fecha)}</p>
                   <p className="reserva-hours">
-                    {reserva.hora} ({reserva.duracion || 1.5}h)
+                    {reserva.hora || "--:--"} ({reserva.duracion || 1.5}h)
                   </p>
                 </div>
 
                 <div className="reserva-status">
-                  <p className="reserva-price">{reserva.total}€</p>
+                  <p className="reserva-price">{Number(reserva.total || 0).toFixed(2)}€</p>
                   <span
                     className={`status-badge ${
                       reserva.estado === "confirmada" ? "confirmed" : "pending"
@@ -229,7 +242,7 @@ export default function MisReservas() {
 
                 <div className="reserva-actions">
                   <Link
-                    to={`/pistas/${reserva.pista?._id}`}
+                    to={reserva.pista?._id ? `/pistas/${reserva.pista._id}` : "/pistas"}
                     className="btn-details"
                   >
                     Ver pista
@@ -254,6 +267,14 @@ export default function MisReservas() {
           </div>
         )}
       </div>
+      <ConfirmModal
+        isOpen={!!confirmCancelReservaId}
+        title="Cancelar reserva"
+        message="¿Estás seguro de que quieres cancelar esta reserva?"
+        confirmText="Cancelar reserva"
+        onConfirm={confirmCancelReserva}
+        onCancel={() => setConfirmCancelReservaId(null)}
+      />
     </div>
   );
 }

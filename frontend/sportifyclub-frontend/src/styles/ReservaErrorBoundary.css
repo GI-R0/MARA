@@ -1,0 +1,56 @@
+.reserva-error-boundary {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.reserva-error-card {
+  max-width: 640px;
+  width: 100%;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #fecaca;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  color: #111827;
+}
+
+.reserva-error-card h2 {
+  margin: 0 0 0.75rem;
+  color: #991b1b;
+  font-size: 1.375rem;
+}
+
+.reserva-error-card p {
+  margin: 0;
+  color: #374151;
+}
+
+.reserva-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.btn-retry-render,
+.btn-go-pistas {
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-retry-render {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+.btn-go-pistas {
+  background: #e5e7eb;
+  color: #111827;
+}

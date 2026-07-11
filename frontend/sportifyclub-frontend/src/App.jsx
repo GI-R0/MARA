@@ -4,6 +4,7 @@ import { ReservaProvider } from "./context/ReservaContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ReservaErrorBoundary from "./components/ReservaErrorBoundary";
 
 import Home from "./pages/Home";
 import Pistas from "./pages/Pistas";
@@ -37,7 +38,14 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/pistas" element={<Pistas />} />
-                <Route path="/pistas/:id" element={<PistaDetail />} />
+                <Route
+                  path="/pistas/:id"
+                  element={
+                    <ReservaErrorBoundary>
+                      <PistaDetail />
+                    </ReservaErrorBoundary>
+                  }
+                />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -54,9 +62,11 @@ export default function App() {
                 <Route
                   path="/mis-reservas"
                   element={
-                    <ProtectedRoute>
-                      <MisReservas />
-                    </ProtectedRoute>
+                    <ReservaErrorBoundary>
+                      <ProtectedRoute>
+                        <MisReservas />
+                      </ProtectedRoute>
+                    </ReservaErrorBoundary>
                   }
                 />
 

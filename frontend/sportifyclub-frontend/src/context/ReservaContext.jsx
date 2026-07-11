@@ -8,6 +8,31 @@ import API from "../api/axiosConfig";
 
 export const ReservaContext = createContext();
 
+const normalizeReserva = (reserva) => {
+  if (!reserva || typeof reserva !== "object") return null;
+
+  return {
+    ...reserva,
+    _id: reserva._id || reserva.id || `tmp-${Date.now()}`,
+    fecha: reserva.fecha || null,
+    hora: reserva.hora || "--:--",
+    total: Number.isFinite(Number(reserva.total)) ? Number(reserva.total) : 0,
+    duracion: Number.isFinite(Number(reserva.duracion))
+      ? Number(reserva.duracion)
+      : 1,
+    estado: reserva.estado || "pendiente",
+    pista:
+      reserva.pista && typeof reserva.pista === "object"
+        ? reserva.pista
+        : null,
+  };
+};
+
+const normalizeReservaList = (reservas) =>
+  (Array.isArray(reservas) ? reservas : [])
+    .map(normalizeReserva)
+    .filter(Boolean);
+
 export const ReservaProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reservaReducer, initialReservaState);
 
@@ -17,12 +42,15 @@ export const ReservaProvider = ({ children }) => {
       const res = await API.get("/reservas/mis-reservas");
       dispatch({
         type: reservaActions.SET_RESERVAS,
-        payload: res.data.reservas || [],
+        payload: normalizeReservaList(res.data?.reservas),
       });
     } catch (error) {
       dispatch({
         type: reservaActions.SET_ERROR,
-        payload: error.response?.data?.message || "Error al cargar reservas",
+        payload:
+          error.response?.data?.msg ||
+          error.response?.data?.message ||
+          "Error al cargar reservas",
       });
     }
   }, []);
@@ -31,11 +59,14 @@ export const ReservaProvider = ({ children }) => {
     dispatch({ type: reservaActions.SET_LOADING, payload: true });
     try {
       const res = await API.post("/reservas", reservaData);
-      dispatch({ type: reservaActions.ADD_RESERVA, payload: res.data });
-      return { success: true, data: res.data };
+      const normalized = normalizeReserva(res.data);
+      dispatch({ type: reservaActions.ADD_RESERVA, payload: normalized });
+      return { success: true, data: normalized };
     } catch (error) {
       const errorMsg =
-        error.response?.data?.message || "Error al crear reserva";
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        "Error al crear reserva";
       dispatch({ type: reservaActions.SET_ERROR, payload: errorMsg });
       return { success: false, error: errorMsg };
     }
@@ -45,11 +76,14 @@ export const ReservaProvider = ({ children }) => {
     dispatch({ type: reservaActions.SET_LOADING, payload: true });
     try {
       const res = await API.put(`/reservas/${id}`, reservaData);
-      dispatch({ type: reservaActions.UPDATE_RESERVA, payload: res.data });
-      return { success: true, data: res.data };
+      const normalized = normalizeReserva(res.data);
+      dispatch({ type: reservaActions.UPDATE_RESERVA, payload: normalized });
+      return { success: true, data: normalized };
     } catch (error) {
       const errorMsg =
-        error.response?.data?.message || "Error al actualizar reserva";
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        "Error al actualizar reserva";
       dispatch({ type: reservaActions.SET_ERROR, payload: errorMsg });
       return { success: false, error: errorMsg };
     }
@@ -63,7 +97,9 @@ export const ReservaProvider = ({ children }) => {
       return { success: true };
     } catch (error) {
       const errorMsg =
-        error.response?.data?.message || "Error al eliminar reserva";
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        "Error al eliminar reserva";
       dispatch({ type: reservaActions.SET_ERROR, payload: errorMsg });
       return { success: false, error: errorMsg };
     }
