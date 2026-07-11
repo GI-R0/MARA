@@ -11,6 +11,9 @@ import {
   DollarSign,
   Activity,
 } from "lucide-react";
+import { toast } from "react-toastify";
+import { normalizeHorariosDisponibles } from "../utils/horarios";
+import ConfirmModal from "../components/ConfirmModal";
 import "../styles/GestionPistas.css";
 
 export default function GestionPistas() {
@@ -20,6 +23,9 @@ export default function GestionPistas() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPista, setEditingPista] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [confirmDeletePistaId, setConfirmDeletePistaId] = useState(null);
+  const [deletingPistaId, setDeletingPistaId] = useState(null);
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -39,16 +45,23 @@ export default function GestionPistas() {
       let url = "/pistas";
       if (user && user.role === "club") {
         url = `/pistas/club/${user._id}`;
+      } else if (user && user.role === "admin") {
+        url = "/pistas?all=true";
       }
 
       const res = await API.get(url);
-      // Manejar tanto respuestas con paginación como arrays directos
-      const pistasList = res.data.pistas || res.data;
+      // Manejar respuestas paginadas, arrays directos o payloads envueltos.
+      const pistasList =
+        res.data?.pistas ||
+        res.data?.data?.pistas ||
+        (Array.isArray(res.data) ? res.data : []);
+
       setPistas(Array.isArray(pistasList) ? pistasList : []);
       setError(null);
     } catch (err) {
       console.error("Error fetching pistas:", err);
-      setError("No se pudieron cargar las pistas.");
+      setError(err.response?.data?.msg || "No se pudieron cargar las pistas.");
+      toast.error(err.response?.data?.msg || "No se pudieron cargar las pistas.");
     } finally {
       setLoading(false);
     }
@@ -71,7 +84,9 @@ export default function GestionPistas() {
       setEditingPista(pista);
       setFormData({
         ...pista,
-        horariosDisponibles: pista.horariosDisponibles.join(", "),
+        horariosDisponibles: normalizeHorariosDisponibles(
+          pista.horariosDisponibles,
+        ).join(", "),
       });
     } else {
       setEditingPista(null);
@@ -100,35 +115,50 @@ export default function GestionPistas() {
     try {
       const payload = {
         ...formData,
-        horariosDisponibles: formData.horariosDisponibles
-          .split(",")
-          .map((h) => h.trim())
-          .filter((h) => h),
+        horariosDisponibles: normalizeHorariosDisponibles(
+          formData.horariosDisponibles,
+        ),
       };
 
       if (editingPista) {
         await API.put(`/pistas/${editingPista._id}`, payload);
+        setNotification({ type: "success", message: "Pista actualizada correctamente." });
+        toast.success("Pista actualizada correctamente.");
       } else {
         await API.post("/pistas", payload);
+        setNotification({ type: "success", message: "Pista creada correctamente." });
+        toast.success("Pista creada correctamente.");
       }
 
       closeModal();
-      fetchPistas();
+      await fetchPistas();
     } catch (err) {
       console.error("Error saving pista:", err);
-      alert("Error al guardar la pista");
+      setNotification({ type: "error", message: "No se pudo guardar la pista." });
+      toast.error(err.response?.data?.msg || "No se pudo guardar la pista.");
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de que quieres eliminar esta pista?"))
-      return;
+  const handleDelete = (id) => {
+    setConfirmDeletePistaId(id);
+  };
+
+  const confirmDeletePista = async () => {
+    if (!confirmDeletePistaId) return;
+
+    setDeletingPistaId(confirmDeletePistaId);
     try {
-      await API.delete(`/pistas/${id}`);
-      fetchPistas();
+      await API.delete(`/pistas/${confirmDeletePistaId}`);
+      setNotification({ type: "success", message: "Pista eliminada correctamente." });
+      toast.success("Pista eliminada correctamente.");
+      await fetchPistas();
     } catch (err) {
       console.error("Error deleting pista:", err);
-      alert("Error al eliminar la pista");
+      setNotification({ type: "error", message: "No se pudo eliminar la pista." });
+      toast.error(err.response?.data?.msg || "No se pudo eliminar la pista.");
+    } finally {
+      setDeletingPistaId(null);
+      setConfirmDeletePistaId(null);
     }
   };
 
@@ -159,6 +189,12 @@ export default function GestionPistas() {
         </div>
 
         {error && <div className="error-alert">{error}</div>}
+
+        {notification && (
+          <div className={`notification-banner ${notification.type}`}>
+            {notification.message}
+          </div>
+        )}
 
         <div className="gestion-grid">
           {pistas.map((pista) => (
@@ -370,6 +406,15 @@ export default function GestionPistas() {
           </div>
         )}
       </div>
+      <ConfirmModal
+        isOpen={!!confirmDeletePistaId}
+        title="Eliminar pista"
+        message="¿Estás seguro de que quieres eliminar esta pista?"
+        confirmText="Eliminar"
+        onConfirm={confirmDeletePista}
+        onCancel={() => setConfirmDeletePistaId(null)}
+        loading={!!deletingPistaId}
+      />
     </div>
   );
 }

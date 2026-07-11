@@ -4,6 +4,22 @@ import { validationResult } from "express-validator";
 
 export const getPistas = async (req, res) => {
   try {
+    const shouldReturnAll = req.query.all === "true";
+
+    if (shouldReturnAll) {
+      const pistas = await Pista.find().populate("club", "name email").lean();
+
+      return res.json({
+        pistas,
+        pagination: {
+          page: 1,
+          limit: pistas.length,
+          total: pistas.length,
+          pages: 1,
+        },
+      });
+    }
+
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
@@ -27,6 +43,7 @@ export const getPistas = async (req, res) => {
       },
     });
   } catch (err) {
+    console.error("[ERROR] Get pistas:", err.message);
     res.status(500).json({ msg: "Error al obtener pistas" });
   }
 };
