@@ -15,3 +15,5 @@ node_modules_old/
 node_modules_backup_*/
 node_modules_stale_*/
 node_modules_old/
+
+repair-vite-env.cmd
