@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { normalizeHorariosDisponibles } from "../utils/horarios";
+import { getImageUrl, getSportFallbackImage } from "../utils/getImageUrl";
 import ConfirmModal from "../components/ConfirmModal";
 import "../styles/GestionPistas.css";
 
@@ -201,12 +202,13 @@ export default function GestionPistas() {
             <div key={pista._id} className="pista-manage-card">
               <div className="pista-manage-image-container">
                 <img
-                  src={
-                    pista.imagen ||
-                    "https://via.placeholder.com/600x300?text=Pista"
-                  }
+                  src={getImageUrl(pista)}
                   alt={pista.nombre}
                   className="pista-manage-image"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = getSportFallbackImage(pista);
+                  }}
                 />
                 <div className="pista-manage-badge">{pista.deporte}</div>
               </div>

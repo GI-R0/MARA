@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "seed": "node src/tools/seed.js"
+    "seed": "node src/tools/seed.js",
+    "repair:pista-images": "node src/tools/repairPistaImages.js"
   },
   "keywords": [],
   "author": "",

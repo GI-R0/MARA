@@ -2,18 +2,27 @@
  * Obtiene la URL de imagen apropiada para una pista
  * Maneja URLs remotas, imágenes locales y fallbacks
  */
+const defaultImages = {
+  pádel: "/fallback-ball.svg",
+  tenis: "/fallback-ball.svg",
+  "fútbol 5": "/futsal-court.png",
+  fútbol: "/futbol-user.jpg",
+  baloncesto: "/fallback-ball.svg",
+  voleibol: "/fallback-ball.svg",
+  default: "/fallback-ball.svg",
+};
+
+export const getSportFallbackImage = (pistaOrDeporte) => {
+  const deporte =
+    typeof pistaOrDeporte === "string"
+      ? pistaOrDeporte.toLowerCase()
+      : (pistaOrDeporte?.deporte || "").toLowerCase();
+
+  return defaultImages[deporte] || defaultImages.default;
+};
+
 export const getImageUrl = (pista) => {
   if (!pista) return "/fallback-ball.svg";
-
-  const defaultImages = {
-    pádel: "/fallback-ball.svg",
-    tenis: "/fallback-ball.svg",
-    "fútbol 5": "/futsal-court.png",
-    fútbol: "/futbol-user.jpg",
-    baloncesto: "/fallback-ball.svg",
-    voleibol: "/fallback-ball.svg",
-    default: "/fallback-ball.svg",
-  };
 
   // Si la pista tiene imagen
   if (pista.imagen) {
@@ -33,6 +42,5 @@ export const getImageUrl = (pista) => {
   }
 
   // Fallback basado en deporte
-  const deporte = (pista.deporte || "").toLowerCase();
-  return defaultImages[deporte] || defaultImages.default;
+  return getSportFallbackImage(pista);
 };

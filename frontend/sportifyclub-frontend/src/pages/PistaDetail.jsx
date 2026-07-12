@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../api/axiosConfig";
 import ReservaForm from "../components/ReservaForm";
-import { getImageUrl } from "../utils/getImageUrl";
+import { getImageUrl, getSportFallbackImage } from "../utils/getImageUrl";
 import "../styles/PistaDetail.css";
 
 export default function PistaDetail() {
@@ -58,6 +58,10 @@ export default function PistaDetail() {
           src={getImageUrl(pista)}
           alt={pista.nombre}
           className="pista-image"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = getSportFallbackImage(pista);
+          }}
         />
 
         <div className="pista-content">

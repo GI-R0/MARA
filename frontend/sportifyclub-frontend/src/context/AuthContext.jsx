@@ -39,7 +39,41 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const ensureNoActiveSession = async () => {
+    if (user) {
+      throw new Error(
+        "Ya hay una sesion activa. Cierra sesion antes de iniciar o crear otra cuenta.",
+      );
+    }
+
+    const existingToken = localStorage.getItem("token");
+    if (!existingToken) {
+      return;
+    }
+
+    try {
+      API.defaults.headers.common["Authorization"] = `Bearer ${existingToken}`;
+      const res = await API.get("/auth/me");
+      if (res.data) {
+        setUser(res.data);
+        throw new Error(
+          "Ya hay una sesion activa. Cierra sesion antes de iniciar o crear otra cuenta.",
+        );
+      }
+    } catch (error) {
+      if (error.message?.includes("Ya hay una sesion activa")) {
+        throw error;
+      }
+
+      localStorage.removeItem("token");
+      delete API.defaults.headers.common["Authorization"];
+      setUser(null);
+    }
+  };
+
   const login = async (email, password) => {
+    await ensureNoActiveSession();
+
     const res = await API.post("/auth/login", { email, password });
     if (res.data.token) {
       setAuthToken(res.data.token);
@@ -49,6 +83,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
+    await ensureNoActiveSession();
+
     const res = await API.post("/auth/register", { name, email, password });
     if (res.data.token) {
       setAuthToken(res.data.token);

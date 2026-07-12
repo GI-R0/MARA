@@ -12,7 +12,7 @@ import {
   forgotPassword,
   resetPassword,
 } from "../controllers/auth.controller.js";
-import { protect, authorize } from "../middlewares/auth.js";
+import { protect, authorize, requireNoActiveSession } from "../middlewares/auth.js";
 import {
   registerValidator,
   loginValidator,
@@ -23,9 +23,9 @@ import { loginLimiter, registerLimiter } from "../middlewares/rateLimiter.js";
 
 const router = Router();
 
-router.post("/register", registerLimiter, registerValidator, register);
+router.post("/register", requireNoActiveSession, registerLimiter, registerValidator, register);
 
-router.post("/login", loginLimiter, loginValidator, login);
+router.post("/login", requireNoActiveSession, loginLimiter, loginValidator, login);
 router.post("/forgot-password", forgotPasswordValidator, forgotPassword);
 router.post("/reset-password", resetPasswordValidator, resetPassword);
 router.get("/users", protect, authorize("admin"), getUsers);

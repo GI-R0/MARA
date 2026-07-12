@@ -92,7 +92,7 @@ export default function AdminReservas() {
               Todas las reservas registradas en el sistema
             </p>
           </div>
-          <Link to="/admin" className="btn-secondary">
+          <Link to="/admin" className="btn-volver">
             Volver al panel
           </Link>
         </div>

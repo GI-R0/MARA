@@ -68,6 +68,16 @@ app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
 
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true });
+});
+
+app.get("/version", (req, res) => {
+  res.json({
+    commit: process.env.RAILWAY_GIT_COMMIT_SHA || "unknown",
+  });
+});
+
 // Middleware de manejo de errores (debe ir al final)
 app.use(errorHandler);
 

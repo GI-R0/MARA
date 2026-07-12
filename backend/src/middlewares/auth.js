@@ -31,3 +31,26 @@ export const authorize = (...roles) => {
     next();
   };
 };
+
+export const requireNoActiveSession = async (req, res, next) => {
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return next();
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select("_id role");
+
+    if (user) {
+      return res.status(409).json({
+        msg: "Ya hay una sesion activa. Cierra sesion antes de iniciar o crear otra cuenta.",
+      });
+    }
+  } catch (err) {
+    // Token invalido/expirado: permitir continuar con login/registro.
+  }
+
+  return next();
+};

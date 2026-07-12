@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import API from "../api/axiosConfig";
+import { PASSWORD_MESSAGE, PASSWORD_REGEX } from "../utils/passwordPolicy";
 import "../styles/Auth.css";
 
 export default function ResetPassword() {
@@ -31,6 +32,11 @@ export default function ResetPassword() {
 
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden.");
+      return;
+    }
+
+    if (!PASSWORD_REGEX.test(password)) {
+      setError(PASSWORD_MESSAGE);
       return;
     }
 
@@ -90,6 +96,16 @@ export default function ResetPassword() {
                   disabled={loading}
                   autoComplete="new-password"
                 />
+                <small
+                  style={{
+                    color: "var(--gray-600)",
+                    fontSize: "0.75rem",
+                    marginTop: "4px",
+                    display: "block",
+                  }}
+                >
+                  {PASSWORD_MESSAGE}
+                </small>
               </div>
 
               <div className="form-group">

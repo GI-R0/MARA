@@ -2,34 +2,24 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
+import {
+  PASSWORD_MESSAGE,
+  PASSWORD_REGEX,
+  PASSWORD_RULES,
+} from "../utils/passwordPolicy";
 import "../styles/Auth.css";
 
-const PASSWORD_RULES = [
-  { id: "length", label: "Mínimo 8 caracteres", test: (p) => p.length >= 8 },
-  {
-    id: "upper",
-    label: "Al menos una mayúscula (A-Z)",
-    test: (p) => /[A-Z]/.test(p),
-  },
-  {
-    id: "lower",
-    label: "Al menos una minúscula (a-z)",
-    test: (p) => /[a-z]/.test(p),
-  },
-  {
-    id: "number",
-    label: "Al menos un número (0-9)",
-    test: (p) => /[0-9]/.test(p),
-  },
-  {
-    id: "special",
-    label: "Un carácter especial (@$!%*?&)",
-    test: (p) => /[@$!%*?&]/.test(p),
-  },
-];
+const ACTIVE_SESSION_MESSAGE =
+  "Ya hay una sesion activa. Cierra sesion antes de iniciar o crear otra cuenta.";
+
+const getDashboardPath = (currentUser) => {
+  if (currentUser?.role === "admin") return "/admin";
+  if (currentUser?.role === "club") return "/club";
+  return "/perfil";
+};
 
 function validatePassword(password) {
-  return PASSWORD_RULES.every((rule) => rule.test(password));
+  return PASSWORD_REGEX.test(password);
 }
 
 export default function Register() {
@@ -45,7 +35,32 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { register: authRegister } = useAuth();
+  const { register: authRegister, user, loading: authLoading } = useAuth();
+
+  if (authLoading) return null;
+
+  if (user) {
+    return (
+      <div className="login-container">
+        <div className="w-full max-w-md">
+          <div className="login-card">
+            <div className="login-header">
+              <h1 className="login-title">SportifyClub</h1>
+              <p className="login-subtitle">Registro bloqueado</p>
+            </div>
+            <div className="login-body">
+              <div className="login-error">
+                <span className="error-text">{ACTIVE_SESSION_MESSAGE}</span>
+              </div>
+              <Link to={getDashboardPath(user)} className="btn-submit" style={{ textAlign: "center" }}>
+                Ir a mi panel
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -71,20 +86,21 @@ export default function Register() {
     }
 
     if (!validatePassword(formData.password)) {
-      setError("La contraseña no cumple los requisitos mínimos");
+      setError(PASSWORD_MESSAGE);
       return;
     }
 
     setLoading(true);
 
     try {
-      await authRegister(
+      const response = await authRegister(
         formData.nombre.trim(),
         formData.email.toLowerCase().trim(),
         formData.password,
       );
 
-      navigate("/", {
+      navigate(getDashboardPath(response?.user), {
+        replace: true,
         state: {
           message: "¡Cuenta creada con éxito! Bienvenido a SportifyClub.",
         },
@@ -162,8 +178,7 @@ export default function Register() {
                     display: "block",
                   }}
                 >
-                  Mínimo 8 caracteres: mayúscula, minúscula, número y símbolo
-                  (@$!%*?&)
+                  {PASSWORD_MESSAGE}
                 </small>
                 <div style={{ position: "relative" }}>
                   <input
@@ -174,9 +189,10 @@ export default function Register() {
                     onFocus={() => setPasswordFocused(true)}
                     onBlur={() => setPasswordFocused(false)}
                     className="form-input"
-                    placeholder="Tu contraseña"
+                    placeholder="Ejemplo: Abcd1234! (sin espacios)"
                     required
                     disabled={loading}
+                    title={PASSWORD_MESSAGE}
                     style={{ paddingRight: "40px" }}
                   />
                   <button

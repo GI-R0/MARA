@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import API from "../api/axiosConfig";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { normalizeHorariosDisponibles } from "../utils/horarios";
 import "../styles/ReservaForm.css";
 
 export default function ReservaForm({
@@ -15,7 +16,9 @@ export default function ReservaForm({
   const [date, setDate] = useState("");
   const [hour, setHour] = useState("");
   const [duracion, setDuracion] = useState(1);
-  const [availableTimes, setAvailableTimes] = useState(initialAvailableTimes);
+  const [availableTimes, setAvailableTimes] = useState(
+    normalizeHorariosDisponibles(initialAvailableTimes),
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -46,7 +49,7 @@ export default function ReservaForm({
       const cargarHorarios = async () => {
         try {
           const res = await API.get(`/pistas/${pistaId}?fecha=${date}`);
-          setAvailableTimes(res.data.horariosDisponibles || []);
+          setAvailableTimes(normalizeHorariosDisponibles(res.data.horariosDisponibles));
         } catch (err) {
           console.error(err);
           setAvailableTimes(initialAvailableTimes);
@@ -54,7 +57,7 @@ export default function ReservaForm({
       };
       cargarHorarios();
     } else {
-      setAvailableTimes(initialAvailableTimes);
+      setAvailableTimes(normalizeHorariosDisponibles(initialAvailableTimes));
     }
   }, [date, pistaId, initialAvailableTimes]);
 

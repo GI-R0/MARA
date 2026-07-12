@@ -2,16 +2,51 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Eye, EyeOff } from "lucide-react";
+import { PASSWORD_MESSAGE } from "../utils/passwordPolicy";
 import "../styles/Auth.css";
 
+const ACTIVE_SESSION_MESSAGE =
+  "Ya hay una sesion activa. Cierra sesion antes de iniciar o crear otra cuenta.";
+
+const getDashboardPath = (currentUser) => {
+  if (currentUser?.role === "admin") return "/admin";
+  if (currentUser?.role === "club") return "/club";
+  return "/perfil";
+};
+
 export default function Login() {
-  const { login } = useAuth();
+  const { login, user, loading: authLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  if (authLoading) return null;
+
+  if (user) {
+    return (
+      <div className="login-container">
+        <div className="w-full max-w-md">
+          <div className="login-card">
+            <div className="login-header">
+              <h1 className="login-title">SportifyClub</h1>
+              <p className="login-subtitle">Inicio de sesión bloqueado</p>
+            </div>
+            <div className="login-body">
+              <div className="login-error">
+                <span className="error-text">{ACTIVE_SESSION_MESSAGE}</span>
+              </div>
+              <Link to={getDashboardPath(user)} className="btn-submit" style={{ textAlign: "center" }}>
+                Ir a mi panel
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,8 +56,8 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await login(email.toLowerCase().trim(), password);
-      navigate("/perfil", { replace: true });
+      const response = await login(email.toLowerCase().trim(), password);
+      navigate(getDashboardPath(response.user), { replace: true });
     } catch (err) {
       const msg =
         err.response?.data?.msg || err.message || "Credenciales inválidas";
@@ -116,7 +151,7 @@ export default function Login() {
                     display: "block",
                   }}
                 >
-                  Mínimo 8 caracteres: mayúscula, minúscula, número, símbolo
+                  {PASSWORD_MESSAGE}
                 </small>
               </div>
 

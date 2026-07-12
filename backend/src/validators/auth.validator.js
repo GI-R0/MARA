@@ -1,5 +1,9 @@
 import { body } from "express-validator";
 
+const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{8,128}$/;
+const PASSWORD_MESSAGE =
+  "La contraseña debe tener entre 8 y 128 caracteres e incluir al menos una mayúscula, una minúscula, un número y un símbolo permitido (@ $ ! % * ? & . _ -).";
+
 export const registerValidator = [
   body("name")
     .trim()
@@ -19,18 +23,10 @@ export const registerValidator = [
     .withMessage("El email no puede exceder 255 caracteres"),
 
   body("password")
-    .isLength({ min: 8 })
-    .withMessage("La contraseña debe tener al menos 8 caracteres")
-    .matches(/[A-Z]/)
-    .withMessage("La contraseña debe incluir al menos una mayúscula")
-    .matches(/[a-z]/)
-    .withMessage("La contraseña debe incluir al menos una minúscula")
-    .matches(/[0-9]/)
-    .withMessage("La contraseña debe incluir al menos un número")
-    .matches(/[@$!%*?&]/)
-    .withMessage("La contraseña debe incluir un carácter especial (@$!%*?&)")
-    .isLength({ max: 128 })
-    .withMessage("La contraseña no puede exceder 128 caracteres"),
+    .isLength({ min: 8, max: 128 })
+    .withMessage(PASSWORD_MESSAGE)
+    .matches(PASSWORD_REGEX)
+    .withMessage(PASSWORD_MESSAGE),
 ];
 
 export const loginValidator = [
@@ -58,16 +54,8 @@ export const forgotPasswordValidator = [
 export const resetPasswordValidator = [
   body("token").notEmpty().withMessage("El token es obligatorio"),
   body("password")
-    .isLength({ min: 8 })
-    .withMessage("La contraseña debe tener al menos 8 caracteres")
-    .matches(/[A-Z]/)
-    .withMessage("La contraseña debe incluir al menos una mayúscula")
-    .matches(/[a-z]/)
-    .withMessage("La contraseña debe incluir al menos una minúscula")
-    .matches(/[0-9]/)
-    .withMessage("La contraseña debe incluir al menos un número")
-    .matches(/[@$!%*?&]/)
-    .withMessage("La contraseña debe incluir un carácter especial (@$!%*?&)")
-    .isLength({ max: 128 })
-    .withMessage("La contraseña no puede exceder 128 caracteres"),
+    .isLength({ min: 8, max: 128 })
+    .withMessage(PASSWORD_MESSAGE)
+    .matches(PASSWORD_REGEX)
+    .withMessage(PASSWORD_MESSAGE),
 ];

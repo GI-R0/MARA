@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import ConfirmModal from "../components/ConfirmModal";
+import { getImageUrl, getSportFallbackImage } from "../utils/getImageUrl";
 import "../styles/MisReservas.css";
 
 export default function MisReservas() {
@@ -184,36 +185,12 @@ export default function MisReservas() {
               <div key={reserva._id || `${reserva.fecha}-${reserva.hora}`} className="reserva-card">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <img 
-                    src={(() => {
-                      const defaultImages = {
-                        pádel: "/fallback-ball.svg",
-                        tenis: "/fallback-ball.svg",
-                        "fútbol 5": "/futsal-court.png",
-                        fútbol: "/futbol-user.jpg",
-                        baloncesto: "/fallback-ball.svg",
-                        voleibol: "/fallback-ball.svg",
-                        default: "/fallback-ball.svg",
-                      };
-                      const deporte = (reserva.pista?.deporte || "").toLowerCase();
-                      const imagen = reserva.pista?.imagen;
-                      
-                      const isPlaceholderImage = (url) =>
-                        typeof url === "string" &&
-                        (url.includes("via.placeholder.com") || url.includes("placeholder.com") || url.includes("picsum.photos"));
-                    
-                      const isRemoteImage = (url) =>
-                        typeof url === "string" && /^https?:\/\//.test(url);
-
-                      if (imagen && !isPlaceholderImage(imagen)) {
-                        return imagen;
-                      }
-                      return defaultImages[deporte] || defaultImages.default;
-                    })()}
+                    src={getImageUrl(reserva.pista)}
                     alt={reserva.pista?.nombre || "Pista"} 
                     style={{ width: '80px', height: '80px', borderRadius: '12px', objectFit: 'cover', flexShrink: 0 }}
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = "/fallback-ball.svg";
+                      e.currentTarget.src = getSportFallbackImage(reserva.pista);
                     }}
                   />
                   <div className="reserva-info">

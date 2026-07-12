@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, DollarSign, Zap } from "lucide-react";
-import { getImageUrl } from "../utils/getImageUrl";
+import { getImageUrl, getSportFallbackImage } from "../utils/getImageUrl";
 import "../styles/Pistas.css";
 
 export default function CardPista({ pista, loading }) {
@@ -28,7 +28,7 @@ export default function CardPista({ pista, loading }) {
           className="card-image"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = "/fallback-ball.svg";
+            e.currentTarget.src = getSportFallbackImage(pista);
           }}
         />
         <div className="card-overlay">

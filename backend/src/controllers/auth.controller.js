@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import RefreshToken from "../models/RefreshToken.js";
 import jwt from "jsonwebtoken";
@@ -38,7 +39,14 @@ const sendPasswordResetEmail = async (user, resetToken) => {
 };
 
 // Función helper para generar tokens
+const clearAuthCookies = (res) => {
+  res.clearCookie("token", { path: "/" });
+  res.clearCookie("refreshToken", { path: "/" });
+};
+
 const generateTokens = async (user) => {
+  await RefreshToken.deleteMany({ user: user._id });
+
   const accessToken = jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET,
@@ -81,10 +89,26 @@ export const register = async (req, res) => {
       role: "user", // Solo permitir registro como user, admin/club requieren invitación
     });
 
+    // Verificacion defensiva: garantizar que el hash generado en registro
+    // pueda validarse inmediatamente con bcrypt.compare.
+    const createdWithPassword = await User.findById(user._id).select("+password");
+    const validHash =
+      !!createdWithPassword?.password &&
+      createdWithPassword.password.startsWith("$2") &&
+      (await bcrypt.compare(password, createdWithPassword.password));
+
+    if (!validHash) {
+      return res.status(500).json({
+        msg: "Error al registrar usuario: hash de contraseña inválido",
+      });
+    }
+
     const { accessToken, refreshToken } = await generateTokens(user);
 
     const userResponse = user.toJSON();
     const cookieOptions = buildCookieOptions(req);
+
+    clearAuthCookies(res);
 
     res.cookie("token", accessToken, {
       ...cookieOptions,
@@ -130,7 +154,19 @@ export const login = async (req, res) => {
       email: email.toLowerCase().trim(),
     }).select("+password");
 
-    if (!user || !(await user.comparePassword(password))) {
+    if (!user) {
+      return res.status(401).json({ msg: "Credenciales inválidas" });
+    }
+
+    let passwordMatch = false;
+    if (typeof user.password === "string" && user.password.startsWith("$2")) {
+      passwordMatch = await bcrypt.compare(password, user.password);
+    } else {
+      // Compatibilidad con cuentas legacy en texto plano; migra a hash en comparePassword.
+      passwordMatch = await user.comparePassword(password);
+    }
+
+    if (!passwordMatch) {
       return res.status(401).json({ msg: "Credenciales inválidas" });
     }
 
@@ -138,6 +174,8 @@ export const login = async (req, res) => {
 
     const userResponse = user.toJSON();
     const cookieOptions = buildCookieOptions(req);
+
+    clearAuthCookies(res);
 
     res.cookie("token", accessToken, {
       ...cookieOptions,

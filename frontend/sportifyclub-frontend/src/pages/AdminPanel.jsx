@@ -58,7 +58,7 @@ export default function AdminPanel() {
         </div>
 
         <div className="footer-buttons">
-          <Link to="/perfil" className="btn-secondary">
+          <Link to="/perfil" className="btn-volver" >
             Volver al perfil
           </Link>
           <button
