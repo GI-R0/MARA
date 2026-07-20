@@ -272,17 +272,13 @@
   line-height: 1.6;
 }
 
-.cta-section {
-  padding: 5rem 1.5rem;cls
-  background: linear-gradient(
-    135deg,
-    var(--barca-blue) 0%,
-    var(--barca-red) 100%
-  );
-  color: white;
+.cta-section { 
+  padding: 5rem 1.5rem;
+  background: linear-gradient(135deg, #004d98 0%, #a50044 100%);
   text-align: center;
-  position: relative;
-  z-index: 1;
+  border-radius: 1rem;
+  color: white;
+  ;
 }
 
 .cta-title {
