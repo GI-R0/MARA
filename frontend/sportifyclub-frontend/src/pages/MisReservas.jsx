@@ -16,7 +16,6 @@ export default function MisReservas() {
     error,
     fetchReservas,
     updateReserva,
-    deleteReserva,
     filterByStatus,
     sortReservas,
     resetFilters,
@@ -49,7 +48,7 @@ export default function MisReservas() {
   const confirmCancelReserva = async () => {
     if (!confirmCancelReservaId) return;
 
-    const result = await deleteReserva(confirmCancelReservaId);
+    const result = await updateReserva(confirmCancelReservaId, { estado: "cancelada" });
     if (result.success) {
       toast.success("Reserva cancelada correctamente.");
     } else {
