@@ -48,9 +48,12 @@ export default function MisReservas() {
   const confirmCancelReserva = async () => {
     if (!confirmCancelReservaId) return;
 
+    // Se unifica el estado a "cancelada"
     const result = await updateReserva(confirmCancelReservaId, { estado: "cancelada" });
     if (result.success) {
       toast.success("Reserva cancelada correctamente.");
+      await fetchReservas(); // ¡CRUCIAL! Volver a pedir las reservas para refrescar la vista
+      filterByStatus(selectedFilter); // Mantiene el filtro activo actualizado
     } else {
       toast.error(result.error || "Error al cancelar la reserva");
     }
@@ -62,6 +65,8 @@ export default function MisReservas() {
     const result = await updateReserva(id, { estado: "confirmada" });
     if (result.success) {
       toast.success("Reserva confirmada correctamente.");
+      await fetchReservas(); // Sincroniza el estado local
+      filterByStatus(selectedFilter);
     } else {
       toast.error(result.error || "Error al confirmar la reserva");
     }
@@ -113,29 +118,23 @@ export default function MisReservas() {
           </p>
         </div>
 
-        {reservas.length > 0 && (
+        {reservas.length > 0 || selectedFilter !== "all" ? (
           <div className="reservas-controls">
             <div className="filter-buttons">
               <button
-                className={`filter-btn ${
-                  selectedFilter === "all" ? "active" : ""
-                }`}
+                className={`filter-btn ${selectedFilter === "all" ? "active" : ""}`}
                 onClick={() => handleFilterChange("all")}
               >
                 Todas
               </button>
               <button
-                className={`filter-btn ${
-                  selectedFilter === "confirmada" ? "active" : ""
-                }`}
+                className={`filter-btn ${selectedFilter === "confirmada" ? "active" : ""}`}
                 onClick={() => handleFilterChange("confirmada")}
               >
                 Confirmadas
               </button>
               <button
-                className={`filter-btn ${
-                  selectedFilter === "cancelada" ? "active" : ""
-                }`}
+                className={`filter-btn ${selectedFilter === "cancelada" ? "active" : ""}`}
                 onClick={() => handleFilterChange("cancelada")}
               >
                 Canceladas
@@ -146,26 +145,26 @@ export default function MisReservas() {
               <button onClick={handleSortChange} className="sort-btn">
                 Ordenar por fecha {sortOrder === "asc" ? "↑" : "↓"}
               </button>
-              {filters.status !== "all" && (
-                <button onClick={resetFilters} className="reset-btn">
+              {selectedFilter !== "all" && (
+                <button onClick={() => handleFilterChange("all")} className="reset-btn">
                   Limpiar filtros
                 </button>
               )}
             </div>
           </div>
-        )}
+        ) : null}
 
         {reservas.length === 0 ? (
           <div className="reservas-empty">
             <p className="empty-icon">🎾</p>
             <h3 className="empty-title">
-              {filters.status !== "all"
-                ? `No tienes reservas ${filters.status}s`
+              {selectedFilter !== "all"
+                ? `No tienes reservas ${selectedFilter}as`
                 : "Aún no tienes reservas"}
             </h3>
             <p className="empty-desc">
-              {filters.status !== "all" ? (
-                <button onClick={resetFilters} className="btn-search">
+              {selectedFilter !== "all" ? (
+                <button onClick={() => handleFilterChange("all")} className="btn-search">
                   Ver todas las reservas
                 </button>
               ) : (
@@ -209,7 +208,11 @@ export default function MisReservas() {
                   <p className="reserva-price">{Number(reserva.total || 0).toFixed(2)}€</p>
                   <span
                     className={`status-badge ${
-                      reserva.estado === "confirmada" ? "confirmed" : "pending"
+                      reserva.estado?.toLowerCase() === "confirmada" 
+                        ? "confirmed" 
+                        : reserva.estado?.toLowerCase() === "cancelada" 
+                        ? "cancelled" 
+                        : "pending"
                     }`}
                   >
                     {reserva.estado}
@@ -223,7 +226,7 @@ export default function MisReservas() {
                   >
                     Ver pista
                   </Link>
-                  {reserva.estado === "pendiente" && (
+                  {reserva.estado?.toLowerCase() === "pendiente" && (
                     <button
                       onClick={() => handleConfirmReserva(reserva._id)}
                       className="btn-confirm"
@@ -231,12 +234,15 @@ export default function MisReservas() {
                       Confirmar
                     </button>
                   )}
-                  <button
-                    onClick={() => handleCancelReserva(reserva._id)}
-                    className="btn-cancel"
-                  >
-                    Cancelar
-                  </button>
+                  {/* Solo muestra el botón Cancelar si NO está cancelada ya */}
+                  {reserva.estado?.toLowerCase() !== "cancelada" && (
+                    <button
+                      onClick={() => handleCancelReserva(reserva._id)}
+                      className="btn-cancel"
+                    >
+                      Cancelar
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -247,7 +253,6 @@ export default function MisReservas() {
         isOpen={!!confirmCancelReservaId}
         title="Cancelar reserva"
         message="¿Estás seguro de que quieres cancelar esta reserva?"
-        confirmText="Cancelar reserva"
         onConfirm={confirmCancelReserva}
         onCancel={() => setConfirmCancelReservaId(null)}
       />
