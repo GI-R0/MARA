@@ -2,12 +2,27 @@ import Pista from "../models/Pista.js";
 import Reserva from "../models/Reserva.js";
 import { validationResult } from "express-validator";
 
+const runPistaQueryWithSafePopulate = async (queryFactory, context) => {
+  try {
+    return await queryFactory().populate("club", "name email").lean();
+  } catch (err) {
+    console.warn(
+      `[WARN] ${context}: fallo al poblar club. Se devuelve respuesta sin populate.`,
+      err.message,
+    );
+    return await queryFactory().lean();
+  }
+};
+
 export const getPistas = async (req, res) => {
   try {
     const shouldReturnAll = req.query.all === "true";
 
     if (shouldReturnAll) {
-      const pistas = await Pista.find().populate("club", "name email").lean();
+      const pistas = await runPistaQueryWithSafePopulate(
+        () => Pista.find(),
+        "getPistas(all=true)",
+      );
 
       return res.json({
         pistas,
@@ -25,11 +40,10 @@ export const getPistas = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const [pistas, total] = await Promise.all([
-      Pista.find()
-        .populate("club", "name email")
-        .skip(skip)
-        .limit(limit)
-        .lean(),
+      runPistaQueryWithSafePopulate(
+        () => Pista.find().skip(skip).limit(limit),
+        "getPistas(paginado)",
+      ),
       Pista.countDocuments(),
     ]);
 
@@ -50,9 +64,10 @@ export const getPistas = async (req, res) => {
 
 export const getPistaById = async (req, res) => {
   try {
-    const pista = await Pista.findById(req.params.id)
-      .populate("club", "name")
-      .lean();
+    const [pista] = await runPistaQueryWithSafePopulate(
+      () => Pista.find({ _id: req.params.id }),
+      "getPistaById",
+    );
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
 
     let horariosDisponibles = pista.horariosDisponibles;
@@ -106,9 +121,10 @@ export const getPistasByClub = async (req, res) => {
   try {
     const clubId = req.params.clubId;
 
-    const pistas = await Pista.find({ club: clubId })
-      .populate("club", "name email")
-      .lean();
+    const pistas = await runPistaQueryWithSafePopulate(
+      () => Pista.find({ club: clubId }),
+      "getPistasByClub",
+    );
 
     res.json(pistas);
   } catch (err) {
