@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import API from "../api/axiosConfig";
 import CardPista from "../components/CardPista";
 import { Search, Filter } from "lucide-react";
 import "../styles/Pistas.css";
 
+const FALLBACK_API_URL =
+  import.meta.env.VITE_API_FALLBACK_URL ||
+  "https://mara-production-7e59.up.railway.app/api";
+
+const normalizePistasResponse = (payload) => {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.pistas)) return payload.pistas;
+  return [];
+};
+
 export default function Pistas() {
   const [pistas, setPistas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [errorDetails, setErrorDetails] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDeporte, setFilterDeporte] = useState("Todos");
 
@@ -16,13 +28,37 @@ export default function Pistas() {
   }, []);
 
   const fetchPistas = async () => {
+    setError(null);
+    setErrorDetails("");
+
+    const attempts = [
+      () => API.get("/pistas", { params: { limit: 100 } }),
+      () => API.get("/pistas", { params: { all: true } }),
+      () => API.get("/pistas"),
+      () => axios.get(`${FALLBACK_API_URL}/pistas`, { params: { limit: 100 }, withCredentials: true }),
+      () => axios.get(`${FALLBACK_API_URL}/pistas`, { params: { all: true }, withCredentials: true }),
+    ];
+
     try {
       setLoading(true);
-      const res = await API.get("/pistas?limit=100");
-      setPistas(res.data.pistas);
+      for (const attempt of attempts) {
+        try {
+          const res = await attempt();
+          const pistasData = normalizePistasResponse(res.data);
+          if (pistasData.length > 0) {
+            setPistas(pistasData);
+            return;
+          }
+        } catch {
+          // Keep trying fallback endpoints.
+        }
+      }
+
+      throw new Error("No se pudo obtener la lista de pistas desde ningún endpoint.");
     } catch (err) {
       console.error("Error fetching pistas:", err);
-      setError("No se pudieron cargar las pistas");
+      setError("No se pudieron cargar las pistas. Intenta de nuevo en unos segundos.");
+      setErrorDetails(err?.response?.data?.msg || err.message || "Error desconocido");
     } finally {
       setLoading(false);
     }
@@ -85,7 +121,13 @@ export default function Pistas() {
             ))}
           </div>
         ) : error ? (
-          <div className="error-container">{error}</div>
+          <div className="error-container">
+            <p>{error}</p>
+            {errorDetails && <small>{errorDetails}</small>}
+            <button onClick={fetchPistas} className="btn-clear" style={{ marginTop: "1rem" }}>
+              Reintentar carga
+            </button>
+          </div>
         ) : filteredPistas.length > 0 ? (
           <div className="pistas-grid">
             {filteredPistas.map((pista) => (

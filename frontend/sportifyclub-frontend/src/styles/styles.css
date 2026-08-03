@@ -497,6 +497,7 @@ select:focus {
         transition: right 0.3s ease-in-out;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
         z-index: 999;
+        overflow-y: auto;
     }
 
     .navbar-nav.active {
@@ -516,6 +517,18 @@ select:focus {
         width: calc(100% - 3rem);
         box-sizing: border-box;
         padding: 0.75rem;
+    }
+
+    .menu-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        border: none;
+        padding: 0;
+        margin: 0;
+        z-index: 998;
+        cursor: pointer;
     }
 }
 
@@ -541,6 +554,10 @@ textarea {
 
 .mobile-menu-btn {
     display: none; /* hidden on desktop */
+}
+
+.menu-overlay {
+    display: none;
 }
 
 .loading-container-centered {

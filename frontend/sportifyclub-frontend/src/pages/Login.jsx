@@ -5,6 +5,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { PASSWORD_MESSAGE } from "../utils/passwordPolicy";
 import "../styles/Auth.css";
 
+const PASSWORD_SHORT_HELP = "Usa 8+ caracteres con mayúscula, minúscula, número y símbolo.";
+
 const ACTIVE_SESSION_MESSAGE =
   "Ya hay una sesion activa. Cierra sesion antes de iniciar o crear otra cuenta.";
 
@@ -144,15 +146,14 @@ export default function Login() {
                   </button>
                 </div>
                 <small
-                  style={{
-                    color: "var(--gray-600)",
-                    fontSize: "0.75rem",
-                    marginTop: "4px",
-                    display: "block",
-                  }}
+                  className="password-short-help"
                 >
-                  {PASSWORD_MESSAGE}
+                  {PASSWORD_SHORT_HELP}
                 </small>
+                <details className="password-policy-details">
+                  <summary>Ver política completa</summary>
+                  <p>{PASSWORD_MESSAGE}</p>
+                </details>
               </div>
 
               <button

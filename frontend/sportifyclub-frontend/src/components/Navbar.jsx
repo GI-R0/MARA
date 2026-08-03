@@ -1,14 +1,26 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Menu, X, Trophy, User } from "lucide-react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
   return (
     <nav className="navbar">
@@ -20,11 +32,17 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
+        <button
+          className="mobile-menu-btn"
+          onClick={toggleMenu}
+          aria-label="Abrir menú"
+          aria-expanded={isMenuOpen}
+          aria-controls="main-mobile-menu"
+        >
           {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
-        <div className={`navbar-nav ${isMenuOpen ? "active" : ""}`}>
+        <div id="main-mobile-menu" className={`navbar-nav ${isMenuOpen ? "active" : ""}`}>
           <Link to="/" className="navbar-link" onClick={closeMenu}>
             Inicio
           </Link>
@@ -68,6 +86,8 @@ export default function Navbar() {
             </>
           )}
         </div>
+
+        {isMenuOpen && <button className="menu-overlay" onClick={closeMenu} aria-label="Cerrar menú" />}
       </div>
     </nav>
   );

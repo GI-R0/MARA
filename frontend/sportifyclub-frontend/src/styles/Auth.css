@@ -278,3 +278,28 @@
 .password-match-hint.match-fail {
     color: #e53e3e;
 }
+
+.password-short-help {
+    color: var(--gray-600);
+    font-size: 0.75rem;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.password-policy-details {
+    margin-bottom: 8px;
+    font-size: 0.75rem;
+    color: var(--gray-600);
+}
+
+.password-policy-details summary {
+    cursor: pointer;
+    color: var(--barca-light-blue);
+    font-weight: 600;
+}
+
+.password-policy-details p {
+    margin-top: 6px;
+    line-height: 1.4;
+}
