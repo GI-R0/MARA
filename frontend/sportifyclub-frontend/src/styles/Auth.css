@@ -59,6 +59,24 @@
     animation: slideDown 0.3s ease;
 }
 
+.login-success {
+    margin-bottom: var(--spacing-lg);
+    background-color: #ecfdf3;
+    border-left: 4px solid #16a34a;
+    color: #166534;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius);
+    font-weight: 600;
+    animation: slideDown 0.3s ease;
+}
+
+.error-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -302,4 +320,77 @@
 .password-policy-details p {
     margin-top: 6px;
     line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+    .login-container {
+        padding: 1.25rem 0.75rem;
+        align-items: flex-start;
+    }
+
+    .login-card {
+        border-radius: 0.875rem;
+    }
+
+    .login-header {
+        padding: 1.25rem 1rem;
+    }
+
+    .login-title {
+        font-size: 1.8rem;
+    }
+
+    .login-subtitle {
+        font-size: 0.95rem;
+        margin-top: 0.35rem;
+    }
+
+    .login-body {
+        padding: 1.1rem 1rem 1.25rem;
+    }
+
+    .login-heading {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .login-form {
+        gap: 1rem;
+    }
+
+    .form-input {
+        font-size: 16px;
+        padding: 0.82rem 0.95rem;
+    }
+
+    .btn-submit {
+        font-size: 1rem;
+        padding: 0.85rem;
+    }
+
+    .password-short-help,
+    .password-policy-details,
+    .password-match-hint,
+    .requirement-item {
+        font-size: 0.72rem;
+    }
+
+    .password-requirements {
+        padding: 0.55rem 0.65rem;
+    }
+
+    .login-footer {
+        margin-top: 1.15rem;
+    }
+
+    .footer-text {
+        font-size: 0.9rem;
+        margin: 0.35rem 0;
+    }
+
+    .copyright {
+        margin-top: 0.85rem;
+        font-size: 0.75rem;
+        padding: 0 0.35rem;
+    }
 }
