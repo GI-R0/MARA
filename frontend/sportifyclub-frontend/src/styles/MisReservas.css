@@ -54,6 +54,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .btn-search {
+<<<<<<< HEAD
   display: inline-block;
   background-color: #22c55e;
   color: white;
@@ -64,6 +65,21 @@
   cursor: pointer;
   transition: all 0.2s;
   font-size: 0.95rem;
+=======
+    display: inline-block;
+    background-color: #4f46e5;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding: 1rem 2.5rem;
+    border-radius: 0.75rem;
+    border: none;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font: inherit;
+>>>>>>> 019102a (fix: align empty reservation button styling)
 }
 .btn-search:hover {
   background-color: #16a34a;
