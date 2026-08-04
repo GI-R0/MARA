@@ -1,19 +1,86 @@
 import Pista from "../models/Pista.js";
 import Reserva from "../models/Reserva.js";
 import { validationResult } from "express-validator";
+import { isMongoConnected } from "../config/dbState.js";
+import { getFallbackPistas } from "../data/fallback-pistas.js";
+
+const getFallbackPaginated = async (page = 1, limit = 10) => {
+  const pistas = await getFallbackPistas();
+  const safePage = Math.max(1, Number(page) || 1);
+  const safeLimit = Math.max(1, Number(limit) || 10);
+  const start = (safePage - 1) * safeLimit;
+  const paginated = pistas.slice(start, start + safeLimit);
+
+  return {
+    pistas: paginated,
+    pagination: {
+      page: safePage,
+      limit: safeLimit,
+      total: pistas.length,
+      pages: Math.max(1, Math.ceil(pistas.length / safeLimit)),
+    },
+  };
+};
+
+const runPistaQueryWithSafePopulate = async (queryFactory, context) => {
+  try {
+    return await queryFactory().populate("club", "name email").lean();
+  } catch (err) {
+    console.warn(
+      `[WARN] ${context}: fallo al poblar club. Se devuelve respuesta sin populate.`,
+      err.message,
+    );
+    return await queryFactory().lean();
+  }
+};
 
 export const getPistas = async (req, res) => {
   try {
+    if (!isMongoConnected()) {
+      if (req.query.all === "true") {
+        const pistas = await getFallbackPistas();
+        return res.json({
+          pistas,
+          pagination: {
+            page: 1,
+            limit: pistas.length,
+            total: pistas.length,
+            pages: 1,
+          },
+        });
+      }
+
+      const fallback = await getFallbackPaginated(req.query.page, req.query.limit);
+      return res.json(fallback);
+    }
+
+    const shouldReturnAll = req.query.all === "true";
+
+    if (shouldReturnAll) {
+      const pistas = await runPistaQueryWithSafePopulate(
+        () => Pista.find(),
+        "getPistas(all=true)",
+      );
+
+      return res.json({
+        pistas,
+        pagination: {
+          page: 1,
+          limit: pistas.length,
+          total: pistas.length,
+          pages: 1,
+        },
+      });
+    }
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
     const [pistas, total] = await Promise.all([
-      Pista.find()
-        .populate("club", "name email")
-        .skip(skip)
-        .limit(limit)
-        .lean(),
+      runPistaQueryWithSafePopulate(
+        () => Pista.find().skip(skip).limit(limit),
+        "getPistas(paginado)",
+      ),
       Pista.countDocuments(),
     ]);
 
@@ -27,15 +94,42 @@ export const getPistas = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ msg: "Error al obtener pistas" });
+    try {
+      if (req.query.all === "true") {
+        const pistas = await getFallbackPistas();
+        return res.json({
+          pistas,
+          pagination: {
+            page: 1,
+            limit: pistas.length,
+            total: pistas.length,
+            pages: 1,
+          },
+        });
+      }
+
+      const fallback = await getFallbackPaginated(req.query.page, req.query.limit);
+      return res.json(fallback);
+    } catch {
+      res.status(500).json({ msg: "Error al obtener pistas" });
+    }
   }
 };
 
 export const getPistaById = async (req, res) => {
   try {
-    const pista = await Pista.findById(req.params.id)
-      .populate("club", "name")
-      .lean();
+    if (!isMongoConnected()) {
+      const pistas = await getFallbackPistas();
+      const fallbackPista = pistas.find((p) => p._id === req.params.id);
+      if (!fallbackPista)
+        return res.status(404).json({ msg: "Pista no encontrada" });
+      return res.json(fallbackPista);
+    }
+
+    const [pista] = await runPistaQueryWithSafePopulate(
+      () => Pista.find({ _id: req.params.id }),
+      "getPistaById",
+    );
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
 
     let horariosDisponibles = pista.horariosDisponibles;
@@ -81,7 +175,15 @@ export const getPistaById = async (req, res) => {
 
     res.json({ ...pista, horariosDisponibles });
   } catch (err) {
-    res.status(500).json({ msg: "Error al buscar pista" });
+    try {
+      const pistas = await getFallbackPistas();
+      const fallbackPista = pistas.find((p) => p._id === req.params.id);
+      if (!fallbackPista)
+        return res.status(404).json({ msg: "Pista no encontrada" });
+      return res.json(fallbackPista);
+    } catch {
+      res.status(500).json({ msg: "Error al buscar pista" });
+    }
   }
 };
 
@@ -89,9 +191,10 @@ export const getPistasByClub = async (req, res) => {
   try {
     const clubId = req.params.clubId;
 
-    const pistas = await Pista.find({ club: clubId })
-      .populate("club", "name email")
-      .lean();
+    const pistas = await runPistaQueryWithSafePopulate(
+      () => Pista.find({ club: clubId }),
+      "getPistasByClub",
+    );
 
     res.json(pistas);
   } catch (err) {

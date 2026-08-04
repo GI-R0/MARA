@@ -20,9 +20,6 @@ try {
   logger.info("✅ Conectado a MongoDB");
 } catch (err) {
   logger.error("⚠️  Error conectando a MongoDB:", err.message);
-  if (process.env.NODE_ENV === "production") {
-    process.exit(1);
-  }
 }
 
 const app = express();
